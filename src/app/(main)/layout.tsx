@@ -73,7 +73,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={false}>
       <MainLayoutContent>{children}</MainLayoutContent>
     </SidebarProvider>
   );
