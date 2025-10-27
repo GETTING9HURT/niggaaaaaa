@@ -21,7 +21,7 @@ export default function TeamPage() {
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-6 text-center">
              <Image
-                src="https://i.ibb.co/35McZcQL/Screenshot-2025-10-27-163526.png"
+                src="https://i.ibb.co/B56hF0gD/shadcn.jpg"
                 alt="Aabid Hasan"
                 width={120}
                 height={120}
