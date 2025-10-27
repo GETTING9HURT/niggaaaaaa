@@ -78,6 +78,144 @@ export const plants: Plant[] = [
     imageUrl: "https://images.unsplash.com/photo-1565113423207-a492a62a70fe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhc2h3YWdhbmRoYSUyMHBsYW50fGVufDB8fHx8MTc2MTQ1NzUxM3ww&ixlib=rb-4.1.0&q=80&w=1080",
     imageHint: "ashwagandha plant"
   },
+  {
+    id: 4,
+    englishName: 'Turmeric',
+    hindiName: 'हल्दी',
+    scientificName: 'Curcuma longa',
+    family: 'Zingiberaceae',
+    isMedicinal: true,
+    isEndangered: false,
+    tribalNames: [
+        { language: 'Gondi', name: 'Hardi', pronunciation: 'har-dee' }
+    ],
+    medicinalUses: [
+        'Potent anti-inflammatory and antioxidant.',
+        'Used for healing wounds and skin problems.',
+        'Aids in digestion and liver function.'
+    ],
+    preparationMethods: [
+        'Rhizome powder mixed with milk (golden milk).',
+        'Paste of fresh rhizome applied to wounds.',
+        'Used as a spice in cooking.'
+    ],
+    precautions: ['High doses can cause stomach issues. Can act as a blood thinner.'],
+    imageUrl: "https://images.unsplash.com/photo-1587334234693-470090ac296a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0dXJtZXJpYyUyMHBsYW50fGVufDB8fHx8MTc2MjE5NjQ4N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+    imageHint: "turmeric plant"
+  },
+  {
+    id: 5,
+    englishName: 'Amla (Indian Gooseberry)',
+    hindiName: 'आंवला',
+    scientificName: 'Phyllanthus emblica',
+    family: 'Phyllanthaceae',
+    isMedicinal: true,
+    isEndangered: false,
+    tribalNames: [],
+    medicinalUses: [
+        'Extremely rich in Vitamin C, boosts immunity.',
+        'Promotes hair health and prevents premature graying.',
+        'Improves eyesight and purifies blood.'
+    ],
+    preparationMethods: [
+        'Eaten raw, pickled, or as a powder.',
+        'Juice consumed for health benefits.',
+        'Used in hair oils and masks.'
+    ],
+    precautions: ['May increase acidity in some individuals.'],
+    imageUrl: "https://images.unsplash.com/photo-1626543136275-565550244675?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhbWxhJTIwZnJ1aXR8ZW58MHx8fHwxNzYyMTk2NTIxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    imageHint: "amla fruit"
+  },
+  {
+    id: 6,
+    englishName: 'Brahmi',
+    hindiName: 'ब्राह्मी',
+    scientificName: 'Bacopa monnieri',
+    family: 'Plantaginaceae',
+    isMedicinal: true,
+    isEndangered: false,
+    tribalNames: [],
+    medicinalUses: [
+        'Enhances memory, concentration, and cognitive functions.',
+        'Reduces anxiety and stress.',
+        'Supports nervous system health.'
+    ],
+    preparationMethods: [
+        'Fresh leaves chewed or made into juice.',
+        'Powder mixed with ghee or honey.',
+        'Used in medicated oils for head massage.'
+    ],
+    precautions: ['Can cause stomach cramps and nausea on an empty stomach.'],
+    imageUrl: "https://images.unsplash.com/photo-1599228525049-55531a894a48?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxiYWNvcGElMjBtb25uaWVyaXxlbnwwfHx8fDE3NjIxOTY1NDl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    imageHint: "brahmi plant"
+  },
+  {
+    id: 7,
+    englishName: 'Aloe Vera',
+    hindiName: 'घृतकुमारी',
+    scientificName: 'Aloe barbadensis miller',
+    family: 'Asphodelaceae',
+    isMedicinal: true,
+    isEndangered: false,
+    tribalNames: [],
+    medicinalUses: [
+        'Soothes skin burns, irritations, and sunburns.',
+        'Promotes digestion and detoxification.',
+        'Moisturizes skin and hair.'
+    ],
+    preparationMethods: [
+        'Gel from leaves applied directly to the skin.',
+        'Juice consumed for internal benefits (with caution).',
+        'Used in numerous cosmetic products.'
+    ],
+    precautions: ['Latex from the leaf can be a potent laxative and cause cramps.'],
+    imageUrl: "https://images.unsplash.com/photo-1520038410233-7141be7e6f97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxBbG9lJTIwVmVyYSUyMHBsYW50fGVufDB8fHx8MTc2MjE5NjU3Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+    imageHint: "aloe vera"
+  },
+  {
+    id: 8,
+    englishName: 'Shatavari',
+    hindiName: 'शतावरी',
+    scientificName: 'Asparagus racemosus',
+    family: 'Asparagaceae',
+    isMedicinal: true,
+    isEndangered: false,
+    tribalNames: [],
+    medicinalUses: [
+        'Supports female reproductive health.',
+        'Acts as an adaptogen, helping the body manage stress.',
+        'Aids digestion and has antioxidant properties.'
+    ],
+    preparationMethods: [
+        'Root powder taken with milk.',
+        'Liquid extracts or capsules.',
+    ],
+    precautions: ['May have diuretic effects. People allergic to asparagus should avoid it.'],
+    imageUrl: "https://images.unsplash.com/photo-1604594418582-1459a9a3f283?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhc3BhcmFndXMlMjByYWNlbW9zdXN8ZW58MHx8fHwxNzYyMTk2NjAxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    imageHint: "shatavari plant"
+  },
+  {
+    id: 9,
+    englishName: 'Guggul',
+    hindiName: 'गुग्गुल',
+    scientificName: 'Commiphora wightii',
+    family: 'Burseraceae',
+    isMedicinal: true,
+    isEndangered: true,
+    tribalNames: [],
+    medicinalUses: [
+        'Helps in weight management.',
+        'Supports joint health and reduces inflammation.',
+        'Used to manage cholesterol levels.'
+    ],
+    preparationMethods: [
+        'Resin purified and used in tablet form.',
+        'Extracts standardized for guggulsterones.',
+    ],
+    precautions: ['Can cause skin rashes or digestive upset. Avoid during pregnancy.'],
+    imageUrl: "https://plus.unsplash.com/premium_photo-1678652238217-3d96903f837e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxDb21taXBob3JhJTIwd2lnaHRpaXxlbnwwfHx8fDE3NjIxOTY2MzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    imageHint: "guggul resin"
+  }
 ];
 
 export const tribalLanguages: TribalLanguage[] = [
