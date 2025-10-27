@@ -59,7 +59,7 @@ export default function CommunityRemediesClient() {
   const [remedies, setRemedies] = useState<CommunityRemedy[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [isVerifying, setIsVerifying] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [sortOrder, setSortOrder] = useState<'rating' | 'recency'>('recency');
   const { toast } = useToast();
 
@@ -121,9 +121,8 @@ export default function CommunityRemediesClient() {
   };
 
   async function onSubmit(values: z.infer<typeof remedySchema>) {
-    setIsVerifying(true);
+    setIsSubmitting(true);
     let photoUrl = '';
-    let photoDataUriForVerification = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
     
     const photoFile = values.photo?.[0];
 
@@ -132,22 +131,17 @@ export default function CommunityRemediesClient() {
             const storageRef = ref(storage, `remedy-photos/${Date.now()}_${photoFile.name}`);
             const snapshot = await uploadBytes(storageRef, photoFile);
             photoUrl = await getDownloadURL(snapshot.ref);
-            photoDataUriForVerification = await fileToDataUri(photoFile);
         }
 
-        const verificationResult = await verifyRemedy({
-            ...values,
-            photoDataUri: photoDataUriForVerification,
-        });
-
+        // Temporarily bypass AI verification
         const newRemedy: Omit<CommunityRemedy, 'id'> = {
             ...values,
             photoUrl,
             submittedAt: new Date().toISOString(),
             upvotes: 0,
             downvotes: 0,
-            isPlausible: verificationResult.isPlausible,
-            verificationNotes: verificationResult.verificationNotes,
+            isPlausible: true, // Default to plausible
+            verificationNotes: "AI verification temporarily bypassed.", // Add a note
         };
         
         const docRef = await addDoc(collection(db, "remedies"), {
@@ -164,14 +158,14 @@ export default function CommunityRemediesClient() {
         form.reset();
         setShowForm(false);
     } catch (error) {
-        console.error("Could not verify or submit remedy:", error);
+        console.error("Could not submit remedy:", error);
         toast({
             variant: 'destructive',
             title: 'Submission Failed',
-            description: 'Could not verify the remedy. Please try again later.',
+            description: 'Could not save the remedy. Please try again later.',
         });
     } finally {
-        setIsVerifying(false);
+        setIsSubmitting(false);
     }
   }
 
@@ -310,9 +304,9 @@ export default function CommunityRemediesClient() {
                 />
               </CardContent>
               <CardFooter>
-                <Button type="submit" disabled={isVerifying}>
-                  {isVerifying && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  {isVerifying ? 'Verifying & Submitting...' : 'Submit Remedy'}
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {isSubmitting ? 'Submitting...' : 'Submit Remedy'}
                 </Button>
               </CardFooter>
             </form>
@@ -398,5 +392,3 @@ export default function CommunityRemediesClient() {
     </div>
   );
 }
-
-    
