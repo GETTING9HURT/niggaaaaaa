@@ -43,7 +43,7 @@ export default function LanguageGameClient() {
     try {
       const result = await translatePlantName({ plantName: pName, languageName });
       setTranslation(result);
-    } catch (error) => {
+    } catch (error) {
       console.error("Translation error:", error);
       toast({
         variant: "destructive",
