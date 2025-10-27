@@ -97,7 +97,7 @@ export default function TeamPage() {
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-6 text-center">
              <Image
-                src="https://picsum.photos/seed/aniruddh/120/120"
+                src="https://i.ibb.co/qLX86x07/vector-1750073338486-ddf5eb2a456d-ixlib-rb-4-1.png"
                 alt="Aniruddh Singh"
                 width={120}
                 height={120}
