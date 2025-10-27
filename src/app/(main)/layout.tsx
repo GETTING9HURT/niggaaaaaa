@@ -1,3 +1,6 @@
+
+"use client";
+
 import {
   Sidebar,
   SidebarContent,
@@ -6,6 +9,7 @@ import {
   SidebarProvider,
   SidebarFooter,
   SidebarTrigger,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { Header } from "@/components/layout/header";
 import { SidebarNav } from "@/components/layout/sidebar-nav";
@@ -13,13 +17,21 @@ import { Logo } from "@/components/icons/logo";
 import { Separator } from "@/components/ui/separator";
 import { PanelLeft } from "lucide-react";
 
-export default function MainLayout({
+function MainLayoutContent({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { openMobile, setOpenMobile } = useSidebar();
+
+  const handleContentClick = () => {
+    if (openMobile) {
+      setOpenMobile(false);
+    }
+  };
+
   return (
-    <SidebarProvider>
+    <>
       <Sidebar collapsible="icon">
         <SidebarHeader className="p-2">
             <div className="flex h-12 items-center justify-center p-2 group-data-[collapsible=icon]:hidden">
@@ -46,10 +58,23 @@ export default function MainLayout({
             </div>
         </SidebarFooter>
       </Sidebar>
-      <SidebarInset className="flex flex-col">
+      <SidebarInset className="flex flex-col" onClick={handleContentClick}>
         <Header />
         <main className="flex-1 overflow-y-auto">{children}</main>
       </SidebarInset>
+    </>
+  );
+}
+
+
+export default function MainLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <SidebarProvider>
+      <MainLayoutContent>{children}</MainLayoutContent>
     </SidebarProvider>
   );
 }
