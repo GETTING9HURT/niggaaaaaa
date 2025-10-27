@@ -28,7 +28,9 @@ const prompt = ai.definePrompt({
   name: 'medicinalKnowledgeChatbotPrompt',
   input: {schema: MedicinalKnowledgeChatbotInputSchema},
   output: {schema: MedicinalKnowledgeChatbotOutputSchema},
-  prompt: `You are a helpful AI chatbot that answers questions about medicinal plants.
+  prompt: `You are a helpful AI chatbot that answers questions about medicinal plants, with a deep focus on the traditional knowledge of India (Bharat). Your responses should be grounded in Ayurvedic, Siddha, Unani, and other traditional Indian medicinal systems, including tribal and folk wisdom.
+
+  Prioritize information and context relevant to Indian culture and geography.
 
   Use the following information to answer the user's question:
 
