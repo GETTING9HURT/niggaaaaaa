@@ -73,47 +73,47 @@ export function KnowledgeChatbot() {
   };
 
   return (
-    <div className="h-[60vh] flex flex-col border rounded-lg shadow-inner">
+    <div className="h-[70vh] flex flex-col border rounded-lg shadow-inner">
       <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div className="flex items-start gap-3">
-            <Avatar>
-              <AvatarFallback><Bot /></AvatarFallback>
+            <Avatar className="h-8 w-8">
+              <AvatarFallback><Bot className="h-4 w-4" /></AvatarFallback>
             </Avatar>
-            <div className="bg-muted p-3 rounded-lg max-w-md">
-              <p className="font-semibold">PharmaVaidya Bot</p>
+            <div className="bg-muted p-2 rounded-lg max-w-md">
+              <p className="font-semibold text-sm">PharmaVaidya Bot</p>
               <p className="text-sm">Hello! How can I help you learn about medicinal plants today?</p>
             </div>
           </div>
           {messages.map((message, index) => (
             <div key={index} className={`flex items-start gap-3 ${message.role === 'user' ? 'justify-end' : ''}`}>
               {message.role === 'bot' && (
-                <Avatar>
-                  <AvatarFallback><Bot /></AvatarFallback>
+                <Avatar className="h-8 w-8">
+                  <AvatarFallback><Bot className="h-4 w-4" /></AvatarFallback>
                 </Avatar>
               )}
               <div
-                className={`p-3 rounded-lg max-w-md ${
+                className={`p-2 rounded-lg max-w-md ${
                   message.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'
                 }`}
               >
-                {message.role === 'bot' && <p className="font-semibold">PharmaVaidya Bot</p>}
+                {message.role === 'bot' && <p className="font-semibold text-sm">PharmaVaidya Bot</p>}
                 <p className="text-sm whitespace-pre-wrap">{message.content}</p>
               </div>
               {message.role === 'user' && (
-                <Avatar>
-                  <AvatarFallback><User /></AvatarFallback>
+                <Avatar className="h-8 w-8">
+                  <AvatarFallback><User className="h-4 w-4" /></AvatarFallback>
                 </Avatar>
               )}
             </div>
           ))}
           {isLoading && (
             <div className="flex items-start gap-3">
-              <Avatar>
-                <AvatarFallback><Bot /></AvatarFallback>
+              <Avatar className="h-8 w-8">
+                <AvatarFallback><Bot className="h-4 w-4" /></AvatarFallback>
               </Avatar>
-              <div className="bg-muted p-3 rounded-lg max-w-md">
-                <p className="font-semibold">PharmaVaidya Bot</p>
+              <div className="bg-muted p-2 rounded-lg max-w-md">
+                <p className="font-semibold text-sm">PharmaVaidya Bot</p>
                 <div className="flex items-center gap-2 text-sm">
                   <Loader2 className="h-4 w-4 animate-spin" />
                   Thinking...
