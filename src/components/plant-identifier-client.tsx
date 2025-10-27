@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from 'react';
@@ -249,7 +250,18 @@ export default function PlantIdentifierClient() {
               <span>{result.otherNames.join(', ')}</span>
             </div>
              <div>
-              <h4 className="font-semibold flex items-center gap-2"><Leaf /> Plant Description</h4>
+              <h4 className="font-semibold flex items-center gap-2">
+                <Leaf /> Plant Description
+                 <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handlePlayAudio(result.description)}
+                  disabled={isSpeaking !== null}
+                  className="h-6 w-6"
+                >
+                  {isSpeaking === result.description ? <Loader2 className="animate-spin" /> : <Volume2 />}
+                </Button>
+              </h4>
               <p className="text-sm mt-1">{result.description}</p>
             </div>
           </div>
