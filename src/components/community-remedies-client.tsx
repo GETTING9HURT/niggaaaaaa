@@ -7,8 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { ArrowDown, ArrowUp, CheckCircle, Clock, File, Image as ImageIcon, Loader2, PlusCircle, Sparkles, ThumbsDown, ThumbsUp, XCircle } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
-import { collection, addDoc, getDocs, query, orderBy, doc, updateDoc, increment } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -22,10 +21,9 @@ import { useToast } from '@/hooks/use-toast';
 import { verifyRemedy, VerifyRemedyOutput } from '@/ai/flows/community-remedy-verification';
 import { suggestRemedyFromImage } from '@/ai/flows/remedy-suggestion-flow';
 import { Alert, AlertDescription, AlertTitle } from './ui/alert';
-import { db, storage } from '@/lib/firebase';
 import { Skeleton } from './ui/skeleton';
 import { initialRemedies } from '@/lib/initial-remedies';
-
+import useLocalStorage from '@/hooks/use-local-storage';
 
 const remedySchema = z.object({
   plantName: z.string().min(1, 'Plant name is required'),
@@ -40,9 +38,7 @@ const TimeAgo = ({ date }: { date: any }) => {
     const [timeAgo, setTimeAgo] = useState('...');
   
     useEffect(() => {
-        if (date && typeof date.toDate === 'function') {
-            setTimeAgo(formatDistanceToNow(date.toDate(), { addSuffix: true }));
-        } else if (typeof date === 'string') {
+        if (date) {
             setTimeAgo(formatDistanceToNow(new Date(date), { addSuffix: true }));
         }
     }, [date]);
@@ -57,6 +53,7 @@ const TimeAgo = ({ date }: { date: any }) => {
 
 
 export default function CommunityRemediesClient() {
+  const [storedRemedies, setStoredRemedies] = useLocalStorage<CommunityRemedy[]>('community-remedies', []);
   const [remedies, setRemedies] = useState<CommunityRemedy[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -76,33 +73,17 @@ export default function CommunityRemediesClient() {
   });
 
    useEffect(() => {
-    const fetchRemedies = async () => {
-      setIsLoading(true);
-      try {
-        const q = query(collection(db, "remedies"), orderBy('submittedAt', 'desc'));
-        const querySnapshot = await getDocs(q);
-        const firestoreRemedies = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as CommunityRemedy));
-
-        const allRemedies = [...initialRemedies.map((r, i) => ({ ...r, id: `initial-${i}`})), ...firestoreRemedies];
-        
-        setRemedies(allRemedies);
-
-      } catch (error) {
-        console.error("Error fetching remedies: ", error);
-        setRemedies(initialRemedies.map((r, i) => ({...r, id: `initial-${i}`})));
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchRemedies();
-  }, []);
+    setIsLoading(true);
+    const allRemedies = [...initialRemedies.map((r, i) => ({ ...r, id: `initial-${i}`})), ...storedRemedies];
+    setRemedies(allRemedies);
+    setIsLoading(false);
+  }, [storedRemedies]);
 
   useEffect(() => {
     const sortedRemedies = [...remedies].sort((a, b) => {
         if (sortOrder === 'recency') {
-            const dateA = a.submittedAt.toDate ? a.submittedAt.toDate() : new Date(a.submittedAt);
-            const dateB = b.submittedAt.toDate ? b.submittedAt.toDate() : new Date(b.submittedAt);
+            const dateA = new Date(a.submittedAt);
+            const dateB = new Date(b.submittedAt);
             return dateB.getTime() - dateA.getTime();
         } else { // rating
             return b.upvotes - a.upvotes;
@@ -173,41 +154,38 @@ export default function CommunityRemediesClient() {
 
   async function onSubmit(values: z.infer<typeof remedySchema>) {
     setIsSubmitting(true);
-    let photoUrl = '';
-    let verificationResult: VerifyRemedyOutput = {
-      isPlausible: true,
-      verificationNotes: 'AI verification was not performed.',
-    };
-
+    
     try {
+      let photoUrl = '';
       const photoFile = values.photo?.[0];
-
       if (photoFile) {
-        const storageRef = ref(storage, `remedy-photos/${Date.now()}_${photoFile.name}`);
-        const snapshot = await uploadBytes(storageRef, photoFile);
-        photoUrl = await getDownloadURL(snapshot.ref);
-
-        try {
-          const dataUri = await fileToDataUri(photoFile);
-          verificationResult = await verifyRemedy({
-            ...values,
-            photoDataUri: dataUri,
-          });
-        } catch (aiError) {
-          console.error("AI Verification failed, but proceeding with submission:", aiError);
-          verificationResult = {
-            isPlausible: true,
-            verificationNotes: 'AI verification could not be completed, but the remedy was submitted for community review.',
-          };
-          toast({
-            variant: 'default',
-            title: 'AI Check Skipped',
-            description: 'Could not reach the AI verifier, but your remedy was submitted!',
-          });
-        }
+        photoUrl = await fileToDataUri(photoFile);
       }
 
-      const newRemedy: Omit<CommunityRemedy, 'id'> = {
+      let verificationResult: VerifyRemedyOutput = {
+        isPlausible: true,
+        verificationNotes: 'AI verification skipped for local submission.',
+      };
+
+      if (photoFile) {
+         try {
+            const dataUri = await fileToDataUri(photoFile);
+            verificationResult = await verifyRemedy({
+                ...values,
+                photoDataUri: dataUri,
+            });
+         } catch (aiError) {
+             console.error("AI Verification failed, but proceeding with submission:", aiError);
+             toast({
+                variant: 'default',
+                title: 'AI Check Skipped',
+                description: 'Could not reach the AI verifier, but your remedy was submitted locally.',
+            });
+         }
+      }
+
+      const newRemedy: CommunityRemedy = {
+        id: uuidv4(),
         ...values,
         photoUrl,
         submittedAt: new Date().toISOString(),
@@ -217,16 +195,13 @@ export default function CommunityRemediesClient() {
         verificationNotes: verificationResult.verificationNotes,
       };
 
-      const docRef = await addDoc(collection(db, "remedies"), {
-        ...newRemedy,
-        submittedAt: new Date(),
-      });
-
-      setRemedies(prev => [{ ...newRemedy, id: docRef.id }, ...prev]);
+      setStoredRemedies(prev => [...prev, newRemedy]);
+      
       toast({
         title: 'Remedy Submitted!',
-        description: 'Thank you for sharing your knowledge with the community.',
+        description: 'Thank you for sharing your knowledge. Your remedy is saved in this browser.',
       });
+      
       form.reset();
       setShowForm(false);
 
@@ -235,7 +210,7 @@ export default function CommunityRemediesClient() {
       toast({
         variant: 'destructive',
         title: 'Submission Failed',
-        description: 'Could not save the remedy. Please check your connection and try again.',
+        description: 'Could not save the remedy locally. Please try again.',
       });
     } finally {
       setIsSubmitting(false);
@@ -251,21 +226,14 @@ export default function CommunityRemediesClient() {
         });
         return;
     }
-
-    const remedyRef = doc(db, 'remedies', id);
-    try {
-        await updateDoc(remedyRef, {
-            [type === 'up' ? 'upvotes' : 'downvotes']: increment(1)
-        });
-        setRemedies(remedies.map(r => {
-          if (r.id === id) {
-            return type === 'up' ? { ...r, upvotes: r.upvotes + 1 } : { ...r, downvotes: r.downvotes + 1 };
-          }
-          return r;
-        }));
-    } catch (error) {
-        console.error("Error voting:", error);
-    }
+    
+    const updatedRemedies = storedRemedies.map(r => {
+      if (r.id === id) {
+        return type === 'up' ? { ...r, upvotes: r.upvotes + 1 } : { ...r, downvotes: r.downvotes + 1 };
+      }
+      return r;
+    });
+    setStoredRemedies(updatedRemedies);
   };
 
 
@@ -477,3 +445,5 @@ export default function CommunityRemediesClient() {
     </div>
   );
 }
+
+    
