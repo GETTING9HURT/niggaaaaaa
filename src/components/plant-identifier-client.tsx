@@ -403,7 +403,7 @@ export default function PlantIdentifierClient() {
         </Alert>
       )}
 
-       <Alert className="mt-8 border-primary/50 text-primary-foreground bg-primary/10">
+       <Alert className="mt-8 border-primary/50 text-foreground bg-primary/10">
           <ShieldCheck className="h-4 w-4 !text-primary" />
           <AlertTitle>Privacy First</AlertTitle>
           <AlertDescription>
@@ -413,3 +413,5 @@ export default function PlantIdentifierClient() {
     </div>
   );
 }
+
+    
