@@ -71,7 +71,7 @@ export default function TeamPage() {
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-6 text-center">
              <Image
-                src="https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxpbGx1c3RyYXRpb24lMjB8ZW58MHx8fHwxNzYxNTYzMTUxfDA&ixlib=rb-4.1.0&q=80&w=1080"
+                src="https://picsum.photos/seed/samir/120/120"
                 alt="Samir Ansari"
                 width={120}
                 height={120}
@@ -97,7 +97,7 @@ export default function TeamPage() {
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-6 text-center">
              <Image
-                src="https://images.unsplash.com/photo-1649783466121-b5c5dc1d67de?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxM3x8dmVjdG9yfGVufDB8fHx8MTc2MTU2MzA1Nnww&ixlib=rb-4.1.0&q=80&w=1080"
+                src="https://picsum.photos/seed/aniruddh/120/120"
                 alt="Aniruddh Singh"
                 width={120}
                 height={120}
