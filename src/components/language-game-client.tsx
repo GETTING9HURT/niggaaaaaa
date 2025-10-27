@@ -23,6 +23,7 @@ type GameState = 'idle' | 'listening' | 'evaluating' | 'result' | 'fetching';
 
 export default function LanguageGameClient() {
   const [plantName, setPlantName] = useState<string>(plants[0].englishName);
+  const [inputValue, setInputValue] = useState<string>(plants[0].englishName);
   const [selectedLanguage, setSelectedLanguage] = useState(tribalLanguages[0]);
   const [translation, setTranslation] = useState<TranslatePlantNameOutput | null>(null);
   const [gameState, setGameState] = useState<GameState>('fetching');
@@ -37,7 +38,7 @@ export default function LanguageGameClient() {
   const { toast } = useToast();
 
   const fetchTranslation = useCallback(async (pName: string, languageName: string) => {
-    if (!pName) return;
+    if (!pName || !pName.trim()) return;
     setGameState('fetching');
     setTranslation(null);
     try {
@@ -57,8 +58,16 @@ export default function LanguageGameClient() {
   }, [toast]);
 
   useEffect(() => {
-    fetchTranslation(plantName, selectedLanguage.name);
-  }, [plantName, selectedLanguage, fetchTranslation]);
+    const handler = setTimeout(() => {
+        if (inputValue) {
+            fetchTranslation(inputValue, selectedLanguage.name);
+        }
+    }, 500); // Debounce API calls
+
+    return () => {
+        clearTimeout(handler);
+    };
+  }, [inputValue, selectedLanguage, fetchTranslation]);
 
 
   const handleSpeak = useCallback(async () => {
@@ -89,7 +98,7 @@ export default function LanguageGameClient() {
     }
     
     const recognition = new (window as any).webkitSpeechRecognition();
-    recognition.lang = 'en-US'; 
+    recognition.lang = selectedLanguage.name.startsWith('en') ? 'en-US' : 'hi-IN';
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
@@ -142,9 +151,9 @@ export default function LanguageGameClient() {
     setIsCorrect(null);
     const newPlant = plants[Math.floor(Math.random() * plants.length)];
     const newLang = tribalLanguages[Math.floor(Math.random() * tribalLanguages.length)];
-    setPlantName(newPlant.englishName);
+    setInputValue(newPlant.englishName);
     setSelectedLanguage(newLang);
-    fetchTranslation(newPlant.englishName, newLang.name);
+    // The useEffect will trigger the fetchTranslation
   };
   
   const handleLanguageChange = (languageName: string) => {
@@ -166,7 +175,7 @@ export default function LanguageGameClient() {
                   aria-expanded={popoverOpen}
                   className="w-full justify-between"
                 >
-                  {plantName || "Select or type a plant..."}
+                  {inputValue || "Select or type a plant..."}
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </PopoverTrigger>
@@ -174,7 +183,8 @@ export default function LanguageGameClient() {
                 <Command>
                   <CommandInput 
                     placeholder="Search or type plant name..."
-                    onValueChange={setPlantName}
+                    value={inputValue}
+                    onValueChange={setInputValue}
                    />
                   <CommandList>
                     <CommandEmpty>No plant found. Type any name to translate.</CommandEmpty>
@@ -184,14 +194,14 @@ export default function LanguageGameClient() {
                           key={plant.id}
                           value={plant.englishName}
                           onSelect={(currentValue) => {
-                            setPlantName(currentValue === plantName ? "" : currentValue);
+                            setInputValue(currentValue === inputValue ? "" : currentValue);
                             setPopoverOpen(false);
                           }}
                         >
                           <CheckCircle
                             className={cn(
                               "mr-2 h-4 w-4",
-                              plantName === plant.englishName ? "opacity-100" : "opacity-0"
+                              inputValue === plant.englishName ? "opacity-100" : "opacity-0"
                             )}
                           />
                           {plant.englishName}
@@ -262,3 +272,5 @@ export default function LanguageGameClient() {
     </div>
   );
 }
+
+    
