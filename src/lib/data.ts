@@ -24,7 +24,7 @@ export const plants: Plant[] = [
       'Decoction of bark for fevers.',
     ],
     precautions: ['Excessive internal use can cause liver damage. Not recommended for pregnant women.'],
-    imageUrl: "https://picsum.photos/seed/106/400/300",
+    imageUrl: "https://images.unsplash.com/photo-1704380881202-ead38b580d9a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxuZWVtJTIwdHJlZXxlbnwwfHx8fDE3NjE0NTc1MTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
     imageHint: "neem tree"
   },
   {
@@ -50,7 +50,7 @@ export const plants: Plant[] = [
       'Used in religious ceremonies.',
     ],
     precautions: ['Can lower blood sugar, so diabetics should be cautious. May have anti-fertility effects.'],
-    imageUrl: "https://picsum.photos/seed/107/400/300",
+    imageUrl: "https://images.unsplash.com/photo-1696397279839-a2b8785c2113?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx0dWxzaSUyMHBsYW50fGVufDB8fHx8MTc2MTUyODA3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
     imageHint: "tulsi plant"
   },
   {
