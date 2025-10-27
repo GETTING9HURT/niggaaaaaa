@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Logo } from "@/components/icons/logo";
+import { VelocityScroll } from "@/components/ui/scroll-based-velocity";
 
 export default function LandingPage() {
   const heroImage = PlaceHolderImages.find(p => p.id === 'hero-image');
@@ -204,6 +205,15 @@ export default function LandingPage() {
                     </div>
                 </div>
             </div>
+        </section>
+
+        {/* Velocity Scroll Section */}
+        <section className="w-full py-16 md:py-24">
+            <VelocityScroll
+              text="Preserve • Revitalize • Empower"
+              default_velocity={2}
+              className="font-headline text-center text-4xl font-bold tracking-[-0.02em] text-foreground/80 md:text-6xl"
+            />
         </section>
 
       </main>
