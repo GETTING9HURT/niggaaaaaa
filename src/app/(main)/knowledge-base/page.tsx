@@ -1,31 +1,16 @@
 
 "use client";
 
-import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { KnowledgeChatbot } from '@/components/knowledge-chatbot';
 import { plants } from '@/lib/data';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Loader2 } from 'lucide-react';
-
-const INITIAL_DISPLAY_COUNT = 6;
-const LOAD_MORE_COUNT = 10;
+import { ArrowRight } from 'lucide-react';
 
 export default function KnowledgeBasePage() {
-  const [displayedCount, setDisplayedCount] = useState(INITIAL_DISPLAY_COUNT);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleLoadMore = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setDisplayedCount(prevCount => prevCount + LOAD_MORE_COUNT);
-      setIsLoading(false);
-    }, 500); // Simulate network delay
-  };
-
-  const displayedPlants = plants.slice(0, displayedCount);
+  const displayedPlants = plants;
 
   return (
     <div className="flex flex-col h-full p-4 md:p-8 gap-8">
@@ -65,20 +50,6 @@ export default function KnowledgeBasePage() {
           </Card>
         ))}
         </div>
-        {displayedCount < plants.length && (
-          <div className="text-center mt-4">
-            <Button onClick={handleLoadMore} disabled={isLoading}>
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Loading...
-                </>
-              ) : (
-                'Load More Plants'
-              )}
-            </Button>
-          </div>
-        )}
       </div>
     </div>
   );
