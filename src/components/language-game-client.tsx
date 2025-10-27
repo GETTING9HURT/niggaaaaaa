@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Volume2, Mic, Check, X, RefreshCw, Loader2 } from 'lucide-react';
+import { Volume2, Mic, Check, X, RefreshCw, Loader2, ChevronsUpDown, CheckCircle } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -14,12 +14,15 @@ import useLocalStorage from '@/hooks/use-local-storage';
 import { Progress } from './ui/progress';
 import { translatePlantName, type TranslatePlantNameOutput } from '@/ai/flows/translate-plant-name-flow';
 import { textToSpeech } from '@/ai/flows/text-to-speech-flow';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { cn } from '@/lib/utils';
 
 
 type GameState = 'idle' | 'listening' | 'evaluating' | 'result' | 'fetching';
 
 export default function LanguageGameClient() {
-  const [selectedPlant, setSelectedPlant] = useState<Plant>(plants[0]);
+  const [plantName, setPlantName] = useState<string>(plants[0].englishName);
   const [selectedLanguage, setSelectedLanguage] = useState(tribalLanguages[0]);
   const [translation, setTranslation] = useState<TranslatePlantNameOutput | null>(null);
   const [gameState, setGameState] = useState<GameState>('fetching');
@@ -29,16 +32,18 @@ export default function LanguageGameClient() {
   const [progressData, setProgressData] = useLocalStorage('user-progress', { points: 0, languageTests: {} });
   const [isSpeaking, setIsSpeaking] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [popoverOpen, setPopoverOpen] = useState(false);
 
   const { toast } = useToast();
 
-  const fetchTranslation = useCallback(async (plantName: string, languageName: string) => {
+  const fetchTranslation = useCallback(async (pName: string, languageName: string) => {
+    if (!pName) return;
     setGameState('fetching');
     setTranslation(null);
     try {
-      const result = await translatePlantName({ plantName, languageName });
+      const result = await translatePlantName({ plantName: pName, languageName });
       setTranslation(result);
-    } catch (error) {
+    } catch (error) => {
       console.error("Translation error:", error);
       toast({
         variant: "destructive",
@@ -52,8 +57,8 @@ export default function LanguageGameClient() {
   }, [toast]);
 
   useEffect(() => {
-    fetchTranslation(selectedPlant.englishName, selectedLanguage.name);
-  }, [selectedPlant, selectedLanguage, fetchTranslation]);
+    fetchTranslation(plantName, selectedLanguage.name);
+  }, [plantName, selectedLanguage, fetchTranslation]);
 
 
   const handleSpeak = useCallback(async () => {
@@ -137,18 +142,11 @@ export default function LanguageGameClient() {
     setIsCorrect(null);
     const newPlant = plants[Math.floor(Math.random() * plants.length)];
     const newLang = tribalLanguages[Math.floor(Math.random() * tribalLanguages.length)];
-    setSelectedPlant(newPlant);
+    setPlantName(newPlant.englishName);
     setSelectedLanguage(newLang);
     fetchTranslation(newPlant.englishName, newLang.name);
   };
   
-  const handlePlantChange = (plantId: string) => {
-      const plant = plants.find(p => p.id === parseInt(plantId));
-      if(plant) {
-        setSelectedPlant(plant);
-      }
-  }
-
   const handleLanguageChange = (languageName: string) => {
       const lang = tribalLanguages.find(l => l.name === languageName);
       if(lang) {
@@ -160,12 +158,51 @@ export default function LanguageGameClient() {
   return (
     <div className="space-y-6">
        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Select onValueChange={handlePlantChange} defaultValue={String(selectedPlant.id)}>
-                <SelectTrigger><SelectValue placeholder="Select a Plant" /></SelectTrigger>
-                <SelectContent>
-                    {plants.map(p => <SelectItem key={p.id} value={String(p.id)}>{p.englishName}</SelectItem>)}
-                </SelectContent>
-            </Select>
+            <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={popoverOpen}
+                  className="w-full justify-between"
+                >
+                  {plantName || "Select or type a plant..."}
+                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
+                <Command>
+                  <CommandInput 
+                    placeholder="Search or type plant name..."
+                    onValueChange={setPlantName}
+                   />
+                  <CommandList>
+                    <CommandEmpty>No plant found. Type any name to translate.</CommandEmpty>
+                    <CommandGroup>
+                      {plants.map((plant) => (
+                        <CommandItem
+                          key={plant.id}
+                          value={plant.englishName}
+                          onSelect={(currentValue) => {
+                            setPlantName(currentValue === plantName ? "" : currentValue);
+                            setPopoverOpen(false);
+                          }}
+                        >
+                          <CheckCircle
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              plantName === plant.englishName ? "opacity-100" : "opacity-0"
+                            )}
+                          />
+                          {plant.englishName}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+
             <Select onValueChange={handleLanguageChange} value={selectedLanguage.name}>
                 <SelectTrigger><SelectValue placeholder="Select a Language" /></SelectTrigger>
                 <SelectContent>
