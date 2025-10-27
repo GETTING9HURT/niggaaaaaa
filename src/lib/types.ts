@@ -30,7 +30,7 @@ export interface CommunityRemedy {
   remedyDescription: string;
   language: string;
   effectivenessRating: number;
-  submittedAt: string;
+  submittedAt: any;
   upvotes: number;
   downvotes: number;
   photoDataUri?: string; // Optional as it might be large

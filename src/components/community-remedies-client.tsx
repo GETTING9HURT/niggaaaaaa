@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { ArrowDown, ArrowUp, CheckCircle, Clock, File, Image as ImageIcon, Loader2, PlusCircle, ThumbsDown, ThumbsUp, XCircle } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
+import { collection, addDoc, getDocs, query, orderBy, doc, updateDoc, increment } from 'firebase/firestore';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,10 +18,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { plants, tribalLanguages } from '@/lib/data';
 import type { CommunityRemedy } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
-import useLocalStorage from '@/hooks/use-local-storage';
 import { verifyRemedy } from '@/ai/flows/community-remedy-verification';
 import { Alert, AlertDescription, AlertTitle } from './ui/alert';
-import { initialRemedies } from '@/lib/initial-remedies';
+import { db } from '@/lib/firebase';
+import { Skeleton } from './ui/skeleton';
+
 
 const remedySchema = z.object({
   plantName: z.string().min(1, 'Plant name is required'),
@@ -31,11 +33,13 @@ const remedySchema = z.object({
 });
 
 // A new client component to handle the time display
-const TimeAgo = ({ date }: { date: string }) => {
+const TimeAgo = ({ date }: { date: any }) => {
     const [timeAgo, setTimeAgo] = useState('...');
   
     useEffect(() => {
-      setTimeAgo(formatDistanceToNow(new Date(date), { addSuffix: true }));
+        if (date && typeof date.toDate === 'function') {
+            setTimeAgo(formatDistanceToNow(date.toDate(), { addSuffix: true }));
+        }
     }, [date]);
   
     return (
@@ -48,7 +52,8 @@ const TimeAgo = ({ date }: { date: string }) => {
 
 
 export default function CommunityRemediesClient() {
-  const [remedies, setRemedies] = useLocalStorage<CommunityRemedy[]>('community-remedies', initialRemedies);
+  const [remedies, setRemedies] = useState<CommunityRemedy[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [sortOrder, setSortOrder] = useState<'rating' | 'recency'>('recency');
@@ -63,6 +68,30 @@ export default function CommunityRemediesClient() {
       effectivenessRating: 3,
     },
   });
+
+   useEffect(() => {
+    const fetchRemedies = async () => {
+      setIsLoading(true);
+      try {
+        const q = query(collection(db, "remedies"), orderBy(sortOrder === 'recency' ? 'submittedAt' : 'upvotes', 'desc'));
+        const querySnapshot = await getDocs(q);
+        const remediesData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as CommunityRemedy));
+        setRemedies(remediesData);
+      } catch (error) {
+        console.error("Error fetching remedies: ", error);
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Could not fetch remedies from the database.",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchRemedies();
+  }, [sortOrder, toast]);
+
 
   const fileToDataUri = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -79,7 +108,6 @@ export default function CommunityRemediesClient() {
     if (values.photo && values.photo.length > 0) {
       photoDataUri = await fileToDataUri(values.photo[0]);
     } else {
-        // Fallback for verification if no image is provided
         photoDataUri = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
     }
 
@@ -89,8 +117,7 @@ export default function CommunityRemediesClient() {
             photoDataUri,
         });
 
-        const newRemedy: CommunityRemedy = {
-            id: new Date().toISOString(),
+        const newRemedy: Omit<CommunityRemedy, 'id'> = {
             ...values,
             photoDataUri,
             submittedAt: new Date().toISOString(),
@@ -99,8 +126,14 @@ export default function CommunityRemediesClient() {
             isPlausible: verificationResult.isPlausible,
             verificationNotes: verificationResult.verificationNotes,
         };
+        
+        const docRef = await addDoc(collection(db, "remedies"), {
+            ...newRemedy,
+            submittedAt: new Date(),
+        });
+        
+        setRemedies([{...newRemedy, id: docRef.id}, ...remedies]);
 
-        setRemedies([newRemedy, ...remedies]);
         toast({
             title: 'Remedy Submitted!',
             description: 'Thank you for sharing your knowledge with the community.',
@@ -119,21 +152,28 @@ export default function CommunityRemediesClient() {
     }
   }
 
-  const handleVote = (id: string, type: 'up' | 'down') => {
-    setRemedies(remedies.map(r => {
-      if (r.id === id) {
-        return type === 'up' ? { ...r, upvotes: r.upvotes + 1 } : { ...r, downvotes: r.downvotes + 1 };
-      }
-      return r;
-    }));
+  const handleVote = async (id: string, type: 'up' | 'down') => {
+    const remedyRef = doc(db, 'remedies', id);
+    try {
+        await updateDoc(remedyRef, {
+            [type === 'up' ? 'upvotes' : 'downvotes']: increment(1)
+        });
+        setRemedies(remedies.map(r => {
+          if (r.id === id) {
+            return type === 'up' ? { ...r, upvotes: r.upvotes + 1 } : { ...r, downvotes: r.downvotes + 1 };
+          }
+          return r;
+        }));
+    } catch (error) {
+        console.error("Error voting:", error);
+        toast({
+            variant: 'destructive',
+            title: 'Vote Failed',
+            description: 'Could not register your vote. Please try again.',
+        });
+    }
   };
 
-  const sortedRemedies = [...remedies].sort((a, b) => {
-    if (sortOrder === 'rating') {
-      return (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes);
-    }
-    return new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime();
-  });
 
   return (
     <div className="space-y-8">
@@ -259,9 +299,26 @@ export default function CommunityRemediesClient() {
             <Button variant={sortOrder === 'recency' ? 'default' : 'outline'} onClick={() => setSortOrder('recency')}>Most Recent</Button>
             <Button variant={sortOrder === 'rating' ? 'default' : 'outline'} onClick={() => setSortOrder('rating')}>Top Rated</Button>
         </div>
-        {sortedRemedies.length > 0 ? (
+        {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[...Array(3)].map((_, i) => (
+                    <Card key={i}>
+                        <CardHeader>
+                            <Skeleton className="h-6 w-1/2" />
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <Skeleton className="h-24 w-full" />
+                            <Skeleton className="h-4 w-full" />
+                        </CardContent>
+                        <CardFooter>
+                            <Skeleton className="h-10 w-full" />
+                        </CardFooter>
+                    </Card>
+                ))}
+            </div>
+        ) : remedies.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sortedRemedies.map(remedy => (
+            {remedies.map(remedy => (
               <Card key={remedy.id} className="flex flex-col">
                 <CardHeader>
                   <CardTitle>{remedy.plantName}</CardTitle>
