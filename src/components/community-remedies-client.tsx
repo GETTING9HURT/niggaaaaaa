@@ -183,10 +183,12 @@ export default function CommunityRemediesClient() {
         setIsSubmitting(false);
         return;
       }
+      
+      const { photo, ...restOfValues } = values;
 
       const newRemedy: CommunityRemedy = {
         id: uuidv4(),
-        ...values,
+        ...restOfValues,
         photoUrl,
         submittedAt: new Date().toISOString(),
         upvotes: 0,
@@ -446,3 +448,4 @@ export default function CommunityRemediesClient() {
   );
 }
 
+    
