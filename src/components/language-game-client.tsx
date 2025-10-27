@@ -48,8 +48,8 @@ export default function LanguageGameClient() {
       console.error("Translation error:", error);
       toast({
         variant: "destructive",
-        title: "Translation Failed",
-        description: "Could not fetch the translation for the selected language.",
+        title: "An error occurred",
+        description: "Could not fetch translation. Please try again later.",
       });
       setTranslation({ translatedName: 'Not Available', pronunciation: '' });
     } finally {
@@ -84,8 +84,8 @@ export default function LanguageGameClient() {
       console.error('TTS Error:', error);
       toast({
         variant: 'destructive',
-        title: 'Audio Error',
-        description: 'Could not play audio.',
+        title: 'An error occurred',
+        description: 'Could not play audio. Please try again later.',
       });
       setIsSpeaking(false);
     }

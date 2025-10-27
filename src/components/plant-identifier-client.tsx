@@ -156,7 +156,13 @@ export default function PlantIdentifierClient() {
         throw new Error('This does not appear to be a plant. Please try another image.');
       }
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'An unknown error occurred.');
+       console.error('Identification Error:', e);
+      setError('An error occurred during identification. Please try again later.');
+      toast({
+          variant: "destructive",
+          title: "An error occurred",
+          description: "Could not identify the plant. Please try again later.",
+      });
       clearInterval(interval);
     } finally {
       setIsLoading(false);
@@ -413,5 +419,3 @@ export default function PlantIdentifierClient() {
     </div>
   );
 }
-
-    

@@ -61,7 +61,7 @@ export function SidebarNav() {
         const isActive = pathname === link.href;
         return (
           <SidebarMenuItem key={link.label}>
-            <Link href={link.href}>
+            <Link href={link.href} prefetch={false}>
               <SidebarMenuButton
                 isActive={isActive}
                 tooltip={{ children: link.label }}
@@ -102,7 +102,7 @@ export function SidebarNav() {
                     const isActive = pathname.startsWith(link.href);
                     return (
                         <SidebarMenuItem key={link.label}>
-                            <Link href={link.href}>
+                            <Link href={link.href} prefetch={false}>
                                 <SidebarMenuButton
                                     isActive={isActive}
                                     tooltip={{ children: link.label }}

@@ -175,8 +175,8 @@ export default function CommunityRemediesClient() {
         console.error(error);
         toast({
             variant: 'destructive',
-            title: 'Submission Failed',
-            description: 'Could not verify or save the remedy. Please try again.',
+            title: 'An error occurred',
+            description: 'Could not verify or save the remedy. Please try again later.',
         });
     } finally {
         setIsVerifying(false);

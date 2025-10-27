@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -107,7 +108,7 @@ export default function DashboardPage() {
             </CardContent>
             <CardFooter>
               <Button asChild variant="outline" className="w-full text-primary border-primary hover:bg-primary/10 hover:text-primary">
-                <Link href={feature.link}>
+                <Link href={feature.link} prefetch={false}>
                   Go to {feature.title} <ArrowRight className="ml-2" />
                 </Link>
               </Button>

@@ -77,10 +77,9 @@ export function KnowledgeChatbot() {
       toast({
         variant: 'destructive',
         title: 'An error occurred',
-        description: 'Failed to get a response from the chatbot. Please try again.',
+        description: 'Please try again later.',
       });
-      const errorMessage: Message = { role: 'bot', content: "Sorry, I couldn't process that. Please try again." };
-      setMessages(prev => [...prev, errorMessage]);
+      // Do not add the bot error message to the chat history to avoid confusing the user
     } finally {
       setIsLoading(false);
     }
