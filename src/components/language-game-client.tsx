@@ -83,7 +83,7 @@ export default function LanguageGameClient() {
 
   const handleListen = () => {
     if (typeof window === 'undefined' || !('webkitSpeechRecognition' in window)) {
-        toast({ variant: 'destructive', title: 'Browser not supported', description: 'Speech recognition is not supported in your browser. Try Chrome.' });
+        toast({ title: 'Browser not supported', description: 'Speech recognition is not supported in your browser. Try Chrome.' });
         return;
     }
     
@@ -267,3 +267,5 @@ export default function LanguageGameClient() {
     </div>
   );
 }
+
+    

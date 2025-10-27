@@ -14,7 +14,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/componentsui/select';
 import { plants, tribalLanguages } from '@/lib/data';
 import type { CommunityRemedy } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
@@ -109,7 +109,6 @@ export default function CommunityRemediesClient() {
 
     if (!photoFile) {
       toast({
-        variant: 'destructive',
         title: 'No Photo Uploaded',
         description: 'Please upload a photo of the plant first.',
       });
@@ -117,7 +116,6 @@ export default function CommunityRemediesClient() {
     }
     if (!plantName) {
       toast({
-        variant: 'destructive',
         title: 'No Plant Selected',
         description: 'Please select the plant name before scanning.',
       });
@@ -142,7 +140,6 @@ export default function CommunityRemediesClient() {
     } catch (error) {
       console.error('AI Scan failed:', error);
       toast({
-        variant: 'destructive',
         title: 'AI Scan Failed',
         description: 'Could not generate AI suggestions at this time. Please try again.',
       });
@@ -159,7 +156,6 @@ export default function CommunityRemediesClient() {
       const photoFile = values.photo?.[0];
       if (!photoFile) {
         toast({
-          variant: 'destructive',
           title: 'Photo Required',
           description: 'Please upload a photo to submit a remedy.',
         });
@@ -181,7 +177,6 @@ export default function CommunityRemediesClient() {
 
       if (!verificationResult.isPlausible) {
         toast({
-          variant: 'destructive',
           title: 'Submission Rejected by AI',
           description: `Reason: ${verificationResult.verificationNotes}`,
         });
@@ -215,7 +210,6 @@ export default function CommunityRemediesClient() {
     } catch (error) {
       console.error("Could not submit remedy:", error);
       toast({
-        variant: 'destructive',
         title: 'Submission Failed',
         description: 'An unexpected error occurred. Please try again.',
       });

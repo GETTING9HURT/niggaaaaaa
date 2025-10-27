@@ -54,7 +54,6 @@ export default function PlantIdentifierClient() {
           console.error('Error accessing camera:', error);
           setHasCameraPermission(false);
           toast({
-            variant: 'destructive',
             title: 'Camera Access Denied',
             description: 'Please enable camera permissions in your browser settings to use this feature.',
           });
@@ -86,7 +85,6 @@ export default function PlantIdentifierClient() {
     if (fileRejections.length > 0) {
       const message = fileRejections[0].errors[0].message;
       toast({
-        variant: 'destructive',
         title: 'File Upload Error',
         description: message,
       });
@@ -365,7 +363,7 @@ export default function PlantIdentifierClient() {
                 <canvas ref={canvasRef} className="hidden" />
 
                 {hasCameraPermission === false && (
-                    <Alert variant="destructive" className="mt-4">
+                    <Alert>
                         <AlertTitle>Camera Access Required</AlertTitle>
                         <AlertDescription>
                         Please allow camera access in your browser to use this feature.
@@ -393,7 +391,7 @@ export default function PlantIdentifierClient() {
       )}
       
       {error && (
-        <Alert variant="destructive">
+        <Alert>
           <AlertTitle>Identification Failed</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
@@ -409,3 +407,5 @@ export default function PlantIdentifierClient() {
     </div>
   );
 }
+
+    

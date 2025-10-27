@@ -56,7 +56,7 @@ export function KnowledgeChatbot() {
   }, []);
 
   const handleQuery = async (query: string) => {
-    if (!query.trim() || isLoading) return;
+    if (!query || !query.trim() || isLoading) return;
 
     const userMessage: Message = { role: 'user', content: query };
     setMessages(prev => [...prev, userMessage]);
@@ -102,7 +102,7 @@ export function KnowledgeChatbot() {
   
   const handleMicClick = () => {
     if (!recognitionRef.current) {
-      toast({ variant: 'destructive', title: 'Browser Not Supported', description: 'Speech recognition is not available in your browser.' });
+      toast({ title: 'Browser Not Supported', description: 'Speech recognition is not available in your browser.' });
       return;
     }
     if (isRecording) {
@@ -193,3 +193,5 @@ export function KnowledgeChatbot() {
     </div>
   );
 }
+
+    
