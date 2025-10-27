@@ -27,13 +27,13 @@ export default function KnowledgeBasePage() {
         <h2 className="text-2xl font-bold font-headline">Browse Plants</h2>
         <div className="flex-1 overflow-y-auto space-y-4 pr-2">
         {plants.map(plant => (
-          <Card key={plant.id} className="hover:shadow-md transition-shadow">
-            <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-               <Image src={plant.imageUrl} alt={plant.englishName} width={64} height={64} className="rounded-md object-cover w-16 h-16" data-ai-hint={plant.imageHint} />
-              <div>
+          <Card key={plant.id} className="overflow-hidden hover:shadow-md transition-shadow">
+            <div className="relative h-32 w-full">
+              <Image src={plant.imageUrl} alt={plant.englishName} fill className="object-cover" data-ai-hint={plant.imageHint} />
+            </div>
+            <CardHeader>
                 <CardTitle className="text-lg">{plant.englishName}</CardTitle>
                 <CardDescription>{plant.scientificName}</CardDescription>
-              </div>
             </CardHeader>
             <CardFooter>
               <Button variant="link" asChild className="p-0 h-auto">
