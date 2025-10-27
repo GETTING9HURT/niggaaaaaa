@@ -2,45 +2,45 @@
   "placeholderImages": [
     {
       "id": "hero-image",
-      "description": "A vibrant, sunlit image of various medicinal herbs and plants.",
-      "imageUrl": "https://images.unsplash.com/photo-1654761296080-384340397a2c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtZWRpY2luYWwlMjBoZXJic3xlbnwwfHx8fDE3NjE1MjgwNzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "medicinal herbs"
+      "description": "A vibrant, sunlit image of various medicinal herbs and plants, with a focus on Indian botanicals.",
+      "imageUrl": "https://images.unsplash.com/photo-1600155792942-7d2a58872f7d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxpbmRpYW4lMjBoZXJic3xlbnwwfHx8fDE3NjIyOTQ1OTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "indian herbs"
     },
     {
       "id": "plant-identification-card",
-      "description": "Close-up of a person's hand holding a leaf up to a phone for identification.",
-      "imageUrl": "https://images.unsplash.com/photo-1739311739304-2a29f720ac1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwbGFudCUyMGlkZW50aWZpY2F0aW9ufGVufDB8fHx8MTc2MTUyNDk5NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "Close-up of a person's hand holding a lush green leaf, symbolizing nature and care.",
+      "imageUrl": "https://images.unsplash.com/photo-1596238257211-e18a478a5b28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwbGFudCUyMGlkZW50aWZpY2F0aW9uJTIwaGFuZHxlbnwwfHx8fDE3NjIyOTQ3MjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "plant identification"
     },
     {
       "id": "medicinal-knowledge-card",
-      "description": "An open book with illustrations of plants, next to a mortar and pestle.",
-      "imageUrl": "https://images.unsplash.com/photo-1497796742626-fe30f204ec54?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNHx8a25vd2xlZGdlfGVufDB8fHx8MTc2MTU0MDQ5MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "An open, old-style book with illustrations of plants, next to a mortar and pestle filled with herbs.",
+      "imageUrl": "https://images.unsplash.com/photo-1491841550275-5b462bf975db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxoZXJib2xvZ3klMjBib29rfGVufDB8fHx8MTc2MjI5NDc5M3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "herbal book"
     },
     {
       "id": "language-learning-card",
-      "description": "A collection of illustrated flashcards with plant names in different scripts.",
-      "imageUrl": "https://images.unsplash.com/photo-1555431189-0fabf2667795?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxMYW5ndWFnZXxlbnwwfHx8fDE3NjE1NDAzODZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "language cards"
+      "description": "A vibrant collage of different Indian scripts and languages, representing linguistic diversity.",
+      "imageUrl": "https://images.unsplash.com/photo-1621947082128-4f8e04b4c698?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxpbmRpYW4lMjBsYW5ndWFnZXxlbnwwfHx8fDE3NjIyOTQ4NTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "indian languages"
     },
     {
       "id": "community-remedies-card",
-      "description": "A group of people sitting together, sharing knowledge and looking at plants.",
-      "imageUrl": "https://images.unsplash.com/photo-1553073520-80b5ad5ec870?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxM3x8Q29tbXVuaXR5fGVufDB8fHx8MTc2MTU0MDUwOXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "community sharing"
+      "description": "A group of diverse people from an Indian village sitting together, sharing knowledge and looking at plants.",
+      "imageUrl": "https://images.unsplash.com/photo-1629210289697-85b20f384c98?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjB2aWxsYWdlJTIwY29tbXVuaXR5fGVufDB8fHx8MTc2MjI5NDkyMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "indian community"
     },
     {
       "id": "about-us-image",
-      "description": "A diverse team of people collaborating in a natural, green environment.",
-      "imageUrl": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx0ZWFtJTIwY29sbGFib3JhdGlvbnxlbnwwfHx8fDE3NjE1MTg5MTR8MA&ixlibrb-4.1.0&q=80&w=1080",
+      "description": "A diverse team of people collaborating around a table with laptops and plants, in a modern, bright setting.",
+      "imageUrl": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0ZWFtJTIwY29sbGFib3JhdGlvbnxlbnwwfHx8fDE3NjE1MTg5MTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "team collaboration"
     },
     {
       "id": "leaderboard-card",
-      "description": "A stylized image of a trophy or a winners' podium.",
-      "imageUrl": "https://images.unsplash.com/photo-1533237264985-ee62f6d342bb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxXaW5uZXIlMjBsZWFkZXJib2FyZHxlbnwwfHx8fDE3NjE1NDA0MTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "trophy award"
+      "description": "A stylized image of a golden trophy with a leaf emblem, glowing against a dark background.",
+      "imageUrl": "https://images.unsplash.com/photo-1598453482229-8732598c48a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxnb2xkZW4lMjB0cm9waHl8ZW58MHx8fHwxNzYyMjk0OTkxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "golden trophy"
     },
     {
       "id": "neem-plant",
