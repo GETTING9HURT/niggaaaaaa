@@ -72,13 +72,15 @@ export default function PlantDetailClient({ plant }: { plant: Plant }) {
                 </AlertDescription>
             </Alert>
             
-            {isClient && (
-              <Link href={`/knowledge-base?query=Tell me more about ${plant.englishName}`} className="block">
-                <StarBorder as="div">
-                  <HelpCircle className="mr-2 h-4 w-4" /> Ask AI about this plant
-                </StarBorder>
-              </Link>
-            )}
+            <div className="min-h-[44px]">
+              {isClient && (
+                <Link href={`/knowledge-base?query=Tell me more about ${plant.englishName}`} className="block">
+                  <StarBorder as="div">
+                    <HelpCircle className="mr-2 h-4 w-4" /> Ask AI about this plant
+                  </StarBorder>
+                </Link>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>
