@@ -3,6 +3,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { CornerDownLeft, Loader2, Mic, Bot, Sparkles, User } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
@@ -27,6 +28,7 @@ export function TribalLanguageChatbotClient() {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
   const { toast } = useToast();
+  const searchParams = useSearchParams();
   
   useEffect(() => {
     if (typeof window !== 'undefined' && 'webkitSpeechRecognition' in window) {
@@ -83,6 +85,16 @@ export function TribalLanguageChatbotClient() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    const query = searchParams.get('query');
+    if (query) {
+      handleQuery(query);
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
 
   useEffect(() => {
     if (scrollAreaRef.current) {
