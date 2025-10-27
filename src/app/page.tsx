@@ -61,7 +61,7 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative w-full py-20 md:py-32 lg:py-40">
+        <section className="relative w-full h-[50vh] flex items-center justify-center">
            {heroImage && (
             <Image
               src={heroImage.imageUrl}
@@ -248,4 +248,6 @@ export default function LandingPage() {
     </div>
   );
 }
+    
+
     
