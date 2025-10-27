@@ -35,16 +35,16 @@ function MainLayoutContent({
     <>
       <Sidebar collapsible="icon">
         <SidebarHeader className="p-2">
-            <Link href="/dashboard" className="flex h-12 items-center justify-center p-2 group-data-[collapsible=icon]:hidden">
+            <Link href="/dashboard" className="flex h-16 items-center justify-center p-2 group-data-[collapsible=icon]:hidden">
                <div className="flex items-center gap-2">
-                <Logo className="size-10" />
+                <Logo className="size-12" />
                 <span className="text-xl font-semibold text-sidebar-foreground">
                   PharmaVaidya
                 </span>
               </div>
             </Link>
-            <Link href="/dashboard" className="hidden h-12 w-12 items-center justify-center p-2 group-data-[collapsible=icon]:flex">
-               <Logo className="size-12" />
+            <Link href="/dashboard" className="hidden h-16 w-full items-center justify-center group-data-[collapsible=icon]:flex">
+               <Logo className="size-14" />
             </Link>
         </SidebarHeader>
         <SidebarContent>
