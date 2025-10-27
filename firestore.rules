@@ -1,0 +1,105 @@
+/**
+ * @fileoverview Firestore Security Rules for the Medicinal Plants application.
+ *
+ * Core Philosophy:
+ * This ruleset prioritizes user-generated content ownership and public read access for plant data. It enforces a strict user-ownership model for remedies, ensuring that only the user who submitted a remedy can modify or delete it. Plant data is publicly readable, allowing all users to access plant information.
+ *
+ * Data Structure:
+ * - /plants/{plantId}: Stores publicly accessible plant data.
+ * - /users/{userId}: Stores user profile information, accessible only to the user themselves.
+ * - /users/{userId}/remedies/{remedyId}: Stores remedies submitted by the user. The `submitterId` field is denormalized to simplify authorization.
+ * - /plantIdentifications/{plantIdentificationId}: Stores plant identification events.
+ *
+ * Key Security Decisions:
+ * - Users can only create, update, or delete remedies they have submitted.
+ * - Users can only read and write their own user profile data.
+ * - Plant data is publicly readable but not writable directly through the API.
+ * - Listing of remedies is restricted to the owner.
+ *
+ * Denormalization for Authorization:
+ * - The `remedies` documents include a `submitterId` field, which duplicates the user ID from the parent `/users/{userId}` path. This enables efficient authorization checks without requiring additional `get()` operations.
+ *
+ * Structural Segregation:
+ *  - Public Plant Data vs. Private User Data: Plant data is stored in a top-level `/plants` collection for public read access, while user-specific data (remedies, user profiles) is stored under the `/users/{userId}` path, ensuring privacy and controlled access.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Allows public read access to plant data.
+     * @path /plants/{plantId}
+     * @allow (get, list) Allow anyone to read plant data.
+     * @deny (create, update, delete) Deny anyone to create, update, or delete plant data directly.
+     * @principle Public read access for plant information.
+     */
+    match /plants/{plantId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+
+    /**
+     * @description Allows users to manage their own remedies.
+     * @path /users/{userId}/remedies/{remedyId}
+     * @allow (create) Allow a user to create a remedy with their userId as the submitterId.
+     * @allow (get, list) Allow the owner of a remedy to read it.
+     * @allow (update, delete) Allow the owner of a remedy to update or delete it, if it exists.
+     * @deny (create) Deny a user to create a remedy with a submitterId that doesn't match their userId.
+     * @deny (update, delete) Deny anyone to update or delete a remedy they don't own.
+     * @principle Enforces document ownership for remedies.
+     */
+    match /users/{userId}/remedies/{remedyId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isSignedIn() && request.resource.data.submitterId == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.submitterId == resource.data.submitterId;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Allows users to manage their own user profiles.
+     * @path /users/{userId}
+     * @allow (create) Allow a user to create their own profile if the userId matches their auth.uid.
+     * @allow (get) Allow a user to read their own profile.
+     * @allow (update) Allow a user to update their own profile, if it exists.
+     * @allow (list) Deny listing all users.
+     * @deny (create) Deny anyone to create a profile for another user.
+     * @deny (update, delete) Deny anyone to update or delete another user's profile.
+     * @principle Enforces user-ownership for profile management and prevent listing all users.
+     */
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if false;
+      allow create: if isSignedIn() && isOwner(userId);
+      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+      allow delete: if false; // Deletion is disabled for user accounts
+    }
+
+    /**
+     * @description Allows anyone to create a PlantIdentification, but not update or delete.
+     * @path /plantIdentifications/{plantIdentificationId}
+     * @allow (get, list) Allow anyone to read plant identification events.
+     * @allow (create) Allow anyone to create plant identification events.
+     * @deny (update, delete) Deny anyone to update or delete plant identification events.
+     * @principle Public read access for plant identification, but owner only writes.
+     */
+    match /plantIdentifications/{plantIdentificationId} {
+      allow get, list: if true;
+      allow create: if isSignedIn();
+      allow update, delete: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+  }
+}

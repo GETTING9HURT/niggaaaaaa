@@ -1,0 +1,264 @@
+{
+  "entities": {
+    "Plant": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Plant",
+      "type": "object",
+      "description": "Represents a plant with its various names, characteristics, and medicinal uses.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the plant entity."
+        },
+        "englishName": {
+          "type": "string",
+          "description": "The common English name of the plant."
+        },
+        "hindiName": {
+          "type": "string",
+          "description": "The Hindi name of the plant."
+        },
+        "tribalNames": {
+          "type": "array",
+          "description": "An array of tribal names for the plant.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "family": {
+          "type": "string",
+          "description": "The family the plant belongs to."
+        },
+        "genus": {
+          "type": "string",
+          "description": "The genus the plant belongs to."
+        },
+        "isEndangered": {
+          "type": "boolean",
+          "description": "Indicates whether the plant is endangered."
+        },
+        "isMedicinal": {
+          "type": "boolean",
+          "description": "Indicates whether the plant has medicinal properties."
+        },
+        "medicinalUses": {
+          "type": "array",
+          "description": "An array of medicinal uses for the plant.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "englishName",
+        "hindiName",
+        "family",
+        "genus"
+      ]
+    },
+    "Remedy": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Remedy",
+      "type": "object",
+      "description": "Represents a traditional remedy involving a plant, submitted by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the remedy entity."
+        },
+        "plantId": {
+          "type": "string",
+          "description": "Reference to the Plant used in this remedy. (Relationship: Plant 1:N Remedy)"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the remedy."
+        },
+        "language": {
+          "type": "string",
+          "description": "The language in which the remedy is described."
+        },
+        "effectivenessRating": {
+          "type": "number",
+          "description": "User-provided rating of the remedy's effectiveness."
+        },
+        "submitterId": {
+          "type": "string",
+          "description": "Reference to the User who submitted this remedy. (Relationship: User 1:N Remedy)"
+        },
+        "upvotes": {
+          "type": "number",
+          "description": "Number of upvotes for this remedy."
+        },
+        "downvotes": {
+          "type": "number",
+          "description": "Number of downvotes for this remedy."
+        }
+      },
+      "required": [
+        "id",
+        "plantId",
+        "description",
+        "language",
+        "effectivenessRating",
+        "submitterId"
+      ]
+    },
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the application, tracking their contributions and progress.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user entity."
+        },
+        "plantIdsIdentified": {
+          "type": "array",
+          "description": "References to Plants identified by the user. (Relationship: User 1:N PlantIdentification)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "languageProgress": {
+          "type": "number",
+          "description": "User's progress in learning tribal languages."
+        },
+        "remedyIdsContributed": {
+          "type": "array",
+          "description": "References to Remedies contributed by the user. (Relationship: User 1:N Remedy)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "badges": {
+          "type": "array",
+          "description": "An array of badges earned by the user.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "PlantIdentification": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "PlantIdentification",
+      "type": "object",
+      "description": "Represents a plant identification event performed by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the plant identification entity."
+        },
+        "plantId": {
+          "type": "string",
+          "description": "Reference to the identified Plant. (Relationship: PlantIdentification 1:1 Plant)"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the User who performed the identification. (Relationship: User 1:N PlantIdentification)"
+        },
+        "identificationDate": {
+          "type": "string",
+          "description": "Date and time when the plant identification was performed.",
+          "format": "date-time"
+        },
+        "certainty": {
+          "type": "number",
+          "description": "The AI's certainty percentage for plant identification."
+        }
+      },
+      "required": [
+        "id",
+        "plantId",
+        "userId",
+        "identificationDate",
+        "certainty"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/plants/{plantId}",
+        "definition": {
+          "entityName": "Plant",
+          "schema": {
+            "$ref": "#/backend/entities/Plant"
+          },
+          "description": "Stores plant information.  No denormalized authorization fields are needed as all plants are globally accessible for read.",
+          "params": [
+            {
+              "name": "plantId",
+              "description": "Unique identifier for the plant."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/remedies/{remedyId}",
+        "definition": {
+          "entityName": "Remedy",
+          "schema": {
+            "$ref": "#/backend/entities/Remedy"
+          },
+          "description": "Stores remedies submitted by users. Includes denormalized 'submitterId' field for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "Unique identifier for the user who submitted the remedy."
+            },
+            {
+              "name": "remedyId",
+              "description": "Unique identifier for the remedy."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profiles.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "Unique identifier for the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/plantIdentifications/{plantIdentificationId}",
+        "definition": {
+          "entityName": "PlantIdentification",
+          "schema": {
+            "$ref": "#/backend/entities/PlantIdentification"
+          },
+          "description": "Stores plant identification events performed by users.",
+          "params": [
+            {
+              "name": "plantIdentificationId",
+              "description": "Unique identifier for the plant identification event."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to be simple and scalable, prioritizing path-based ownership for user-generated content (Remedies) and a flat collection for global data (Plants).  It adheres to the principles of Authorization Independence and Structural Segregation. The remedies are stored under the user's ID to simplify security rules, ensuring that only the submitting user has write access. All plant data is stored in a flat collection with uniform security requirements, allowing secure `list` operations.  The structure facilitates integrity of ownership and easy querying of data. The denormalization strategy is applied to `remedies`, where `submitterId` is present, enabling rules to check the submitter's ID directly on the document without needing to perform `get()` operations on parent documents."
+  }
+}
