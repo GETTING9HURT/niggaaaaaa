@@ -234,7 +234,7 @@ export default function LandingPage() {
                   </p>
               </div>
               <div className="relative flex h-64 w-full items-center justify-center overflow-hidden rounded-lg border bg-background/50 md:h-96 md:w-1/2 md:shadow-xl">
-                <Globe className="top-12 md:top-0" />
+                <Globe />
               </div>
             </div>
           </div>
