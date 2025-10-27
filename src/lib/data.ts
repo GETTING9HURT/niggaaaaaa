@@ -288,6 +288,28 @@ export const plants: Plant[] = [
   }
 ];
 
+export const plantNames: string[] = [
+  'Aloe Vera', 'Tulsi', 'Neem', 'Mint', 'Basil', 'Coriander', 'Parsley', 'Rosemary', 
+  'Thyme', 'Oregano', 'Sage', 'Lavender', 'Chamomile', 'Dandelion', 'Peppermint', 'Ginger', 
+  'Turmeric', 'Garlic', 'Onion', 'Spinach', 'Tomato', 'Potato', 'Chili', 'Carrot', 'Cabbage', 
+  'Broccoli', 'Cauliflower', 'Radish', 'Beetroot', 'Cucumber', 'Zucchini', 'Pumpkin', 'Squash', 
+  'Bitter Gourd', 'Bottle Gourd', 'Ash Gourd', 'Snake Gourd', 'Ivy Gourd', 'Drumstick', 'Moringa', 
+  'Fenugreek', 'Mustard', 'Lettuce', 'Celery', 'Leek', 'Chives', 'Amaranth', 'Purslane', 
+  'Jasmine', 'Hibiscus', 'Marigold', 'Sunflower', 'Lotus', 'Orchid', 'Lily', 'Rose', 
+  'Bougainvillea', 'Ixora', 'Begonia', 'Petunia', 'Daisy', 'Foxglove', 'Magnolia', 'Azalea', 
+  'Camellia', 'Gardenia', 'Heather', 'Hydrangea', 'Peony', 'Violet', 'Pansy', 'Primrose', 
+  'Geranium', 'Verbena', 'Yarrow', 'Aster', 'Freesia', 'Snapdragon', 'Salvia', 'Bluebell', 
+  'Clematis', 'Cyclamen', 'Forget-me-not', 'Carnation', 'Rhododendron', 'Dahlia', 'Lobelia', 
+  'Zinnia', 'Calendula', 'Cosmos', 'Sweet Pea', 'Moss', 'Fern', 'Bamboo', 'Oak', 'Pine', 'Maple', 
+  'Birch', 'Cedar', 'Spruce', 'Willow', 'Sycamore', 'Teak', 'Coconut', 'Banana', 'Mango', 'Papaya', 
+  'Guava', 'Apple', 'Berry', 'Date', 'Fig', 'Grape', 'Peach', 'Plum', 'Pear', 'Orange', 'Lemon', 
+  'Lime', 'Chiku', 'Jackfruit', 'Avocado', 'Cashew', 'Tamarind', 'Coffee', 'Tea', 'Rubber', 
+  'Sugarcane', 'Wheat', 'Rice', 'Barley', 'Maize', 'Sorghum', 'Millet', 'Oats', 'Rye', 'Quinoa', 
+  'Chia', 'Buckwheat', 'Sesame', 'Saffron', 'Clove', 'Cardamom', 'Cinnamon', 'Nutmeg', 
+  'Star Anise', 'Fennel', 'Poppy', 'Castor', 'Sunhemp', 'Jute', 'Cotton', 'Flax'
+];
+
+
 export const tribalLanguages: TribalLanguage[] = [
     { id: 1, name: 'Santhali', region: 'East India' },
     { id: 2, name: 'Gondi', region: 'Central India' },

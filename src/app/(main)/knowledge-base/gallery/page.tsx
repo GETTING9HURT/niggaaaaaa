@@ -1,10 +1,9 @@
 
 import Link from 'next/link';
-import Image from 'next/image';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { plants } from '@/lib/data';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { plantNames } from '@/lib/data';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, HelpCircle } from 'lucide-react';
+import { HelpCircle } from 'lucide-react';
 
 export default function PlantGalleryPage() {
   return (
@@ -12,29 +11,24 @@ export default function PlantGalleryPage() {
       <div className="text-left mb-8">
         <h1 className="text-3xl md:text-4xl font-bold font-headline">Plant Gallery</h1>
         <p className="mt-2 text-muted-foreground">
-          Browse our collection of medicinal plants and ask the AI for more information.
+          Browse our collection of plants and ask the AI for more information.
         </p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {plants.map(plant => (
-          <Card key={plant.id} className="overflow-hidden hover:shadow-md transition-shadow flex flex-col">
-            <div className="relative h-48 w-full">
-              <Image src={plant.imageUrl} alt={plant.englishName} fill className="object-cover" data-ai-hint={plant.imageHint} />
-            </div>
-            <CardHeader className="flex-grow">
-                <CardTitle className="text-lg">{plant.englishName}</CardTitle>
-                <CardDescription>{plant.scientificName}</CardDescription>
-            </CardHeader>
-            <CardFooter>
-              <Button variant="outline" asChild className="w-full">
-                <Link href={`/knowledge-base?query=Tell me everything about ${plant.englishName}`}>
-                  Ask AI <HelpCircle className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </CardFooter>
-          </Card>
-        ))}
-      </div>
+      <Card>
+        <CardContent className="p-6">
+          <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {plantNames.map(plantName => (
+              <li key={plantName}>
+                <Button variant="link" asChild className="p-0 h-auto justify-start">
+                  <Link href={`/knowledge-base?query=Tell me everything about ${plantName}`}>
+                    {plantName}
+                  </Link>
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
     </div>
   );
 }
