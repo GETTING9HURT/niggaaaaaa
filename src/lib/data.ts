@@ -101,7 +101,7 @@ export const plants: Plant[] = [
         'Used as a spice in cooking.'
     ],
     precautions: ['High doses can cause stomach issues. Can act as a blood thinner.'],
-    imageUrl: "https://images.unsplash.com/photo-1587334234693-470090ac296a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0dXJtZXJpYyUyMHBsYW50fGVufDB8fHx8MTc2MjE5NjQ4N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+    imageUrl: "https://images.unsplash.com/photo-1702041295331-840d4d9aa7c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxUdXJtZXJpY3xlbnwwfHx8fDE3NjE1NDI0NDF8MA&ixlib=rb-4.1.0&q=80&w=1080",
     imageHint: "turmeric plant"
   },
   {
