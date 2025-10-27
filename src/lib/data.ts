@@ -216,6 +216,75 @@ export const plants: Plant[] = [
     precautions: ['Can cause skin rashes or digestive upset. Avoid during pregnancy.'],
     imageUrl: "https://plus.unsplash.com/premium_photo-1678652238217-3d96903f837e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxDb21taXBob3JhJTIwd2lnaHRpaXxlbnwwfHx8fDE3NjIxOTY2MzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
     imageHint: "guggul resin"
+  },
+  {
+    id: 10,
+    englishName: 'Moringa',
+    hindiName: 'सहजन',
+    scientificName: 'Moringa oleifera',
+    family: 'Moringaceae',
+    isMedicinal: true,
+    isEndangered: false,
+    tribalNames: [],
+    medicinalUses: [
+      'Highly nutritious, rich in vitamins and minerals.',
+      'Has anti-inflammatory and antioxidant properties.',
+      'Can help lower blood sugar and cholesterol levels.'
+    ],
+    preparationMethods: [
+      'Leaves cooked and eaten as a vegetable.',
+      'Leaf powder added to smoothies or tea.',
+      'Pods used in curries.'
+    ],
+    precautions: ['Roots and root extracts should be avoided during pregnancy.'],
+    imageUrl: "https://images.unsplash.com/photo-1632349944365-5933c09f3032?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtb3JpbmdhJTIwb2xlaWZlcmF8ZW58MHx8fHwxNzYyMTk4NjU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    imageHint: "moringa tree"
+  },
+  {
+    id: 11,
+    englishName: 'Giloy',
+    hindiName: 'गिलोय',
+    scientificName: 'Tinospora cordifolia',
+    family: 'Menispermaceae',
+    isMedicinal: true,
+    isEndangered: false,
+    tribalNames: [],
+    medicinalUses: [
+      'Boosts immunity and helps fight fevers (antipyretic).',
+      'Supports liver function and detoxification.',
+      'Helps manage respiratory issues.'
+    ],
+    preparationMethods: [
+      'Juice extracted from the stem.',
+      'Decoction of the stem.',
+      'Powdered stem used in formulations.'
+    ],
+    precautions: ['May cause constipation for some. Autoimmune patients should consult a doctor.'],
+    imageUrl: "https://images.unsplash.com/photo-1721115328229-23a5abc9a3e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxUaW5vc3BvcmElMjBjb3JkaWZvbGlhfGVufDB8fHx8MTc2MjE5ODY4N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+    imageHint: "giloy vine"
+  },
+  {
+    id: 12,
+    englishName: 'Kalmegh',
+    hindiName: 'कालमेघ',
+    scientificName: 'Andrographis paniculata',
+    family: 'Acanthaceae',
+    isMedicinal: true,
+    isEndangered: false,
+    tribalNames: [],
+    medicinalUses: [
+      'Effective for common cold, flu, and upper respiratory infections.',
+      'Supports liver health and function.',
+      'Has strong anti-inflammatory and antiviral properties.'
+    ],
+    preparationMethods: [
+      'Decoction of the whole plant.',
+      'Powdered leaves and stem.',
+      'Extracts in capsule form.'
+    ],
+    precautions: ['Very bitter taste. Can cause dizziness and stomach upset in high doses.'],
+    imageUrl: "https://images.unsplash.com/photo-1707923483320-94f48a17387a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxBbmRyb2dyYXBoaXMlMjBwYW5pY3VsYXRhfGVufDB8fHx8MTc2MjE5ODcxOHww&ixlib=rb-4.1.0&q=80&w=1080",
+    imageHint: "kalmegh plant"
   }
 ];
 
