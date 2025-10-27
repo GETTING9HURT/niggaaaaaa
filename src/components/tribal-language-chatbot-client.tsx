@@ -7,7 +7,7 @@ import ReactMarkdown from 'react-markdown';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { tribalLanguageChatbot } from '@/ai/flows/tribal-language-chatbot';
 import { useToast } from '@/hooks/use-toast';
@@ -62,9 +62,9 @@ export function TribalLanguageChatbotClient() {
   };
 
   return (
-    <div className="h-[70vh] flex flex-col border rounded-lg shadow-inner">
-      <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
-        <div className="space-y-4">
+    <div className="h-full flex flex-col border rounded-lg shadow-inner">
+      <ScrollArea className="flex-1 p-4">
+        <div className="space-y-4" ref={scrollAreaRef}>
           <div className="flex items-start gap-3">
             <Avatar className="h-8 w-8">
               <AvatarFallback><Bot className="h-4 w-4" /></AvatarFallback>
@@ -117,6 +117,7 @@ export function TribalLanguageChatbotClient() {
             </div>
           )}
         </div>
+        <ScrollBar />
       </ScrollArea>
       <div className="p-4 border-t">
         <form onSubmit={handleSubmit} className="relative">

@@ -8,7 +8,7 @@ import ReactMarkdown from 'react-markdown';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { medicinalKnowledgeChatbot } from '@/ai/flows/medicinal-knowledge-chatbot';
 import { useToast } from '@/hooks/use-toast';
@@ -77,8 +77,8 @@ export function KnowledgeChatbot() {
 
   return (
     <div className="flex-1 flex flex-col border rounded-lg shadow-inner min-h-0">
-      <ScrollArea className="flex-1 p-4" viewportRef={scrollViewportRef}>
-        <div className="space-y-4">
+      <ScrollArea className="flex-1 p-4">
+        <div className="space-y-4" ref={scrollViewportRef}>
           <div className="flex items-start gap-3">
             <Avatar className="h-8 w-8">
               <AvatarFallback><Bot className="h-4 w-4" /></AvatarFallback>
@@ -131,6 +131,7 @@ export function KnowledgeChatbot() {
             </div>
           )}
         </div>
+        <ScrollBar />
       </ScrollArea>
       <div className="p-4 border-t">
         <form onSubmit={handleSubmit} className="relative">

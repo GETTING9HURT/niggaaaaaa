@@ -12,7 +12,7 @@ export default function LanguageBotPage() {
               Ask me anything about the tribal languages of India, their scripts, origins, and cultural significance.
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex-1 flex flex-col h-[75vh]">
+          <CardContent className="flex-1 flex flex-col min-h-0">
             <TribalLanguageChatbotClient />
           </CardContent>
         </Card>
