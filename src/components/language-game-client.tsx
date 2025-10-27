@@ -7,8 +7,7 @@ import { Volume2, Mic, Check, X, RefreshCw, Loader2, ChevronsUpDown, CheckCircle
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { plants, tribalLanguages } from '@/lib/data';
-import type { Plant } from '@/lib/types';
+import { plantNames, tribalLanguages } from '@/lib/data';
 import { useToast } from '@/hooks/use-toast';
 import useLocalStorage from '@/hooks/use-local-storage';
 import { Progress } from './ui/progress';
@@ -22,8 +21,7 @@ import { cn } from '@/lib/utils';
 type GameState = 'idle' | 'listening' | 'evaluating' | 'result' | 'fetching';
 
 export default function LanguageGameClient() {
-  const [plantName, setPlantName] = useState<string>(plants[0].englishName);
-  const [inputValue, setInputValue] = useState<string>(plants[0].englishName);
+  const [inputValue, setInputValue] = useState<string>(plantNames[0]);
   const [selectedLanguage, setSelectedLanguage] = useState(tribalLanguages[0]);
   const [translation, setTranslation] = useState<TranslatePlantNameOutput | null>(null);
   const [gameState, setGameState] = useState<GameState>('fetching');
@@ -149,9 +147,9 @@ export default function LanguageGameClient() {
     setGameState('idle');
     setUserTranscript('');
     setIsCorrect(null);
-    const newPlant = plants[Math.floor(Math.random() * plants.length)];
+    const newPlant = plantNames[Math.floor(Math.random() * plantNames.length)];
     const newLang = tribalLanguages[Math.floor(Math.random() * tribalLanguages.length)];
-    setInputValue(newPlant.englishName);
+    setInputValue(newPlant);
     setSelectedLanguage(newLang);
     // The useEffect will trigger the fetchTranslation
   };
@@ -189,10 +187,10 @@ export default function LanguageGameClient() {
                   <CommandList>
                     <CommandEmpty>No plant found. Type any name to translate.</CommandEmpty>
                     <CommandGroup>
-                      {plants.map((plant) => (
+                      {plantNames.map((plantName) => (
                         <CommandItem
-                          key={plant.id}
-                          value={plant.englishName}
+                          key={plantName}
+                          value={plantName}
                           onSelect={(currentValue) => {
                             setInputValue(currentValue === inputValue ? "" : currentValue);
                             setPopoverOpen(false);
@@ -201,10 +199,10 @@ export default function LanguageGameClient() {
                           <CheckCircle
                             className={cn(
                               "mr-2 h-4 w-4",
-                              inputValue === plant.englishName ? "opacity-100" : "opacity-0"
+                              inputValue.toLowerCase() === plantName.toLowerCase() ? "opacity-100" : "opacity-0"
                             )}
                           />
-                          {plant.englishName}
+                          {plantName}
                         </CommandItem>
                       ))}
                     </CommandGroup>
