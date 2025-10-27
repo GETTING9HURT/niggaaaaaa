@@ -156,32 +156,32 @@ export default function CommunityRemediesClient() {
     setIsSubmitting(true);
     
     try {
-      let photoUrl = '';
       const photoFile = values.photo?.[0];
-      if (photoFile) {
-        photoUrl = await fileToDataUri(photoFile);
+      if (!photoFile) {
+        toast({
+          variant: 'destructive',
+          title: 'Photo Required',
+          description: 'Please upload a photo to submit a remedy.',
+        });
+        setIsSubmitting(false);
+        return;
       }
 
-      let verificationResult: VerifyRemedyOutput = {
-        isPlausible: true,
-        verificationNotes: 'AI verification skipped for local submission.',
-      };
+      const photoUrl = await fileToDataUri(photoFile);
+      
+      const verificationResult = await verifyRemedy({
+        ...values,
+        photoDataUri: photoUrl,
+      });
 
-      if (photoFile) {
-         try {
-            const dataUri = await fileToDataUri(photoFile);
-            verificationResult = await verifyRemedy({
-                ...values,
-                photoDataUri: dataUri,
-            });
-         } catch (aiError) {
-             console.error("AI Verification failed, but proceeding with submission:", aiError);
-             toast({
-                variant: 'default',
-                title: 'AI Check Skipped',
-                description: 'Could not reach the AI verifier, but your remedy was submitted locally.',
-            });
-         }
+      if (!verificationResult.isPlausible) {
+        toast({
+          variant: 'destructive',
+          title: 'Submission Rejected by AI',
+          description: `Reason: ${verificationResult.verificationNotes}`,
+        });
+        setIsSubmitting(false);
+        return;
       }
 
       const newRemedy: CommunityRemedy = {
@@ -199,7 +199,7 @@ export default function CommunityRemediesClient() {
       
       toast({
         title: 'Remedy Submitted!',
-        description: 'Thank you for sharing your knowledge. Your remedy is saved in this browser.',
+        description: 'Thank you for sharing your knowledge. Your remedy has been approved and saved.',
       });
       
       form.reset();
@@ -210,7 +210,7 @@ export default function CommunityRemediesClient() {
       toast({
         variant: 'destructive',
         title: 'Submission Failed',
-        description: 'Could not save the remedy locally. Please try again.',
+        description: 'An unexpected error occurred. Please try again.',
       });
     } finally {
       setIsSubmitting(false);
@@ -446,4 +446,3 @@ export default function CommunityRemediesClient() {
   );
 }
 
-    
