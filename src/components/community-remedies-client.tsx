@@ -87,11 +87,6 @@ export default function CommunityRemediesClient() {
 
       } catch (error) {
         console.error("Error fetching remedies: ", error);
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: "Could not fetch remedies. Displaying initial data.",
-        });
         setRemedies(initialRemedies.map((r, i) => ({...r, id: `initial-${i}`})));
       } finally {
         setIsLoading(false);
@@ -99,7 +94,7 @@ export default function CommunityRemediesClient() {
     };
 
     fetchRemedies();
-  }, [toast]);
+  }, []);
 
   useEffect(() => {
     const sortedRemedies = [...remedies].sort((a, b) => {
@@ -173,11 +168,6 @@ export default function CommunityRemediesClient() {
         setShowForm(false);
     } catch (error) {
         console.error(error);
-        toast({
-            variant: 'destructive',
-            title: 'An error occurred',
-            description: 'Could not verify or save the remedy. Please try again later.',
-        });
     } finally {
         setIsVerifying(false);
     }
@@ -205,11 +195,6 @@ export default function CommunityRemediesClient() {
         }));
     } catch (error) {
         console.error("Error voting:", error);
-        toast({
-            variant: 'destructive',
-            title: 'Vote Failed',
-            description: 'Could not register your vote. Please try again.',
-        });
     }
   };
 

@@ -45,11 +45,6 @@ export function TribalLanguageChatbotClient() {
 
       recognition.onerror = (event: any) => {
         console.error('Speech recognition error:', event.error);
-        toast({
-          variant: 'destructive',
-          title: 'Speech Recognition Error',
-          description: event.error === 'not-allowed' ? 'Microphone access denied.' : 'Could not understand audio. Please try again.',
-        });
         setIsRecording(false);
       };
 
@@ -59,7 +54,7 @@ export function TribalLanguageChatbotClient() {
 
       recognitionRef.current = recognition;
     }
-  }, [toast]);
+  }, []);
 
   const handleQuery = async (query: string) => {
     if (!query.trim() || isLoading) return;
@@ -75,12 +70,8 @@ export function TribalLanguageChatbotClient() {
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
       console.error('Chatbot error:', error);
-      toast({
-        variant: 'destructive',
-        title: 'An error occurred',
-        description: 'Please try again later.',
-      });
-      // Do not add the bot error message to the chat history
+      const botMessage: Message = { role: 'bot', content: "Sorry, I couldn't process that. Please try again." };
+      setMessages(prev => [...prev, botMessage]);
     } finally {
       setIsLoading(false);
     }

@@ -153,16 +153,11 @@ export default function PlantIdentifierClient() {
         }
 
       } else {
-        throw new Error('This does not appear to be a plant. Please try another image.');
+        setError('This does not appear to be a plant. Please try another image.');
       }
     } catch (e) {
        console.error('Identification Error:', e);
       setError('An error occurred during identification. Please try again later.');
-      toast({
-          variant: "destructive",
-          title: "An error occurred",
-          description: "Could not identify the plant. Please try again later.",
-      });
       clearInterval(interval);
     } finally {
       setIsLoading(false);
@@ -188,11 +183,6 @@ export default function PlantIdentifierClient() {
       audio.onended = () => setIsSpeaking(null);
     } catch (error) {
       console.error('TTS Error:', error);
-      toast({
-        variant: 'destructive',
-        title: 'Audio Error',
-        description: 'Could not play audio. Please try again.',
-      });
       setIsSpeaking(null);
     }
   };

@@ -46,16 +46,11 @@ export default function LanguageGameClient() {
       setTranslation(result);
     } catch (error) {
       console.error("Translation error:", error);
-      toast({
-        variant: "destructive",
-        title: "An error occurred",
-        description: "Could not fetch translation. Please try again later.",
-      });
       setTranslation({ translatedName: 'Not Available', pronunciation: '' });
     } finally {
       setGameState('idle');
     }
-  }, [toast]);
+  }, []);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -82,14 +77,9 @@ export default function LanguageGameClient() {
       audio.onended = () => setIsSpeaking(false);
     } catch (error) {
       console.error('TTS Error:', error);
-      toast({
-        variant: 'destructive',
-        title: 'An error occurred',
-        description: 'Could not play audio. Please try again later.',
-      });
       setIsSpeaking(false);
     }
-  }, [translation, isSpeaking, toast]);
+  }, [translation, isSpeaking]);
 
   const handleListen = () => {
     if (typeof window === 'undefined' || !('webkitSpeechRecognition' in window)) {
@@ -113,7 +103,6 @@ export default function LanguageGameClient() {
 
     recognition.onerror = (event: any) => {
         console.error('Speech recognition error:', event.error);
-        toast({ variant: 'destructive', title: 'Recognition Error', description: 'Could not understand audio. Please try again.' });
         setGameState('idle');
     };
     
