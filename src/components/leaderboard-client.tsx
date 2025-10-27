@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Award, BookOpen, Leaf, Users } from 'lucide-react';
@@ -14,7 +15,8 @@ const initialProgress: UserProgress = {
 };
 
 export default function LeaderboardClient() {
-  const [progress, setProgress] = useLocalStorage<UserProgress>('user-progress', initialProgress);
+  const [progressData] = useLocalStorage<UserProgress>('user-progress', initialProgress);
+  const progress = progressData || initialProgress;
 
   const allBadges: Omit<BadgeType, 'unlocked'>[] = [
     { id: 'first_plant', name: 'Plant Novice', description: 'Identify your first plant.', icon: Leaf },
@@ -26,10 +28,13 @@ export default function LeaderboardClient() {
   
   const unlockedBadges: BadgeType[] = allBadges.map(badge => {
     let unlocked = false;
-    if (badge.id === 'first_plant' && progress.identifiedPlants.length >= 1) unlocked = true;
-    if (badge.id === 'five_plants' && progress.identifiedPlants.length >= 5) unlocked = true;
+    const identifiedPlants = progress.identifiedPlants || [];
+    const languageTests = progress.languageTests || {};
+
+    if (badge.id === 'first_plant' && identifiedPlants.length >= 1) unlocked = true;
+    if (badge.id === 'five_plants' && identifiedPlants.length >= 5) unlocked = true;
     if (badge.id === 'first_remedy' && progress.remediesContributed >= 1) unlocked = true;
-    if (badge.id === 'first_word' && Object.keys(progress.languageTests).length > 0) unlocked = true;
+    if (badge.id === 'first_word' && Object.keys(languageTests).length > 0) unlocked = true;
     if (badge.id === '100_points' && progress.points >= 100) unlocked = true;
     return { ...badge, unlocked };
   });
@@ -49,8 +54,8 @@ export default function LeaderboardClient() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-5xl font-bold">{progress.points}</p>
-            <Progress value={progress.points % 100} className="mt-2" />
+            <p className="text-5xl font-bold">{progress.points || 0}</p>
+            <Progress value={(progress.points || 0) % 100} className="mt-2" />
           </CardContent>
         </Card>
         <Card className="shadow-lg">
@@ -60,7 +65,7 @@ export default function LeaderboardClient() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-5xl font-bold">{progress.identifiedPlants.length}</p>
+            <p className="text-5xl font-bold">{progress.identifiedPlants?.length || 0}</p>
           </CardContent>
         </Card>
         <Card className="shadow-lg">
@@ -70,7 +75,7 @@ export default function LeaderboardClient() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-5xl font-bold">{progress.remediesContributed}</p>
+            <p className="text-5xl font-bold">{progress.remediesContributed || 0}</p>
           </CardContent>
         </Card>
       </div>
