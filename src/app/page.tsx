@@ -226,15 +226,16 @@ export default function LandingPage() {
         {/* Globe Section */}
         <section className="w-full py-12 md:py-24 bg-muted">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-4xl mx-auto">
-              <div className="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
+            <div className="flex flex-col md:flex-row items-center justify-between w-full max-w-6xl mx-auto">
+              <div className="md:w-1/2 text-center md:text-left mb-8 md:mb-0 max-w-md">
                   <h2 className="text-3xl font-bold font-headline">A Global Heritage</h2>
                   <p className="mt-2 text-muted-foreground">
                     The knowledge of medicinal plants is a treasure shared by indigenous communities across the world. Our mission is to connect and preserve this wisdom on a global scale.
                   </p>
               </div>
-              <div className="relative flex h-64 w-full items-center justify-center overflow-hidden rounded-lg border bg-background/50 md:h-96 md:w-1/2 md:shadow-xl">
-                <Globe />
+              <div className="relative flex h-96 w-full items-center justify-center overflow-hidden rounded-lg border bg-background/50 md:w-1/2 md:shadow-xl">
+                  <Globe />
+                  <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]" />
               </div>
             </div>
           </div>
