@@ -47,7 +47,7 @@ export default function AboutPage() {
             <CardTitle>Technology</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>Built with Next.js and powered by advanced AI, this app runs powerful models for plant identification and knowledge queries, ensuring privacy and speed through secure serverless functions.</p>
+            <p>Powered by advanced, privacy-focused AI, our app runs powerful models for plant identification and knowledge queries, ensuring a fast and secure experience through modern serverless functions.</p>
           </CardContent>
         </Card>
         <Card>
