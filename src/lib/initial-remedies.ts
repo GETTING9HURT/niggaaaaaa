@@ -60,7 +60,7 @@ export const initialRemedies: Omit<CommunityRemedy, "id">[] = [
     downvotes: 1,
     isPlausible: true,
     verificationNotes: 'Ginger is a well-known carminative and antiemetic. Its use for nausea and digestive issues is highly plausible and supported by numerous studies.',
-    photoUrl: "",
+    photoUrl: "https://images.unsplash.com/photo-1620989339031-a3875320516a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxnaW5nZXIlMjByb290fGVufDB8fHx8MTc2MjE5OTQ0Nnww&ixlib=rb-4.1.0&q=80&w=1080",
   },
   {
     plantName: 'Ashwagandha',
@@ -108,7 +108,7 @@ export const initialRemedies: Omit<CommunityRemedy, "id">[] = [
     downvotes: 0,
     isPlausible: true,
     verificationNotes: 'The menthol in peppermint acts as a natural decongestant. Steam inhalation is a common method for this purpose, making the remedy plausible.',
-    photoUrl: "",
+    photoUrl: "https://images.unsplash.com/photo-1596495691452-f2acedfd808c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwZXBwZXJtaW50JTIwbGVhdmVzfGVufDB8fHx8MTc2MjE5OTQ4OHww&ixlib=rb-4.1.0&q=80&w=1080",
   },
   {
     plantName: 'Giloy',
@@ -132,7 +132,7 @@ export const initialRemedies: Omit<CommunityRemedy, "id">[] = [
     downvotes: 10,
     isPlausible: false,
     verificationNotes: 'The remedy describes a negative effect. While tomato is acidic and could irritate sensitive skin, this submission appears to be a warning rather than a remedy. The AI flags it as not a plausible positive remedy.',
-    photoUrl: "",
+    photoUrl: "https://images.unsplash.com/photo-1582284540020-8acbe03fec79?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0b21hdG9lcyUyMG9uJTIwdmluZXxlbnwwfHx8fDE3NjIyMDAyOTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
   },
   {
     plantName: 'Moringa',

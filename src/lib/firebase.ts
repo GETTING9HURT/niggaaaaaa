@@ -2,15 +2,16 @@
 import {initializeApp, getApps, getApp} from 'firebase/app';
 import {getFirestore} from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
+import { firebaseConfig as config } from '@/firebase/config';
 
 // Your web app's Firebase configuration is confidential.
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  apiKey: config.apiKey,
+  authDomain: config.authDomain,
+  projectId: config.projectId,
   storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_APP_ID,
+  messagingSenderId: config.messagingSenderId,
+  appId: config.appId,
 };
 
 // Initialize Firebase
