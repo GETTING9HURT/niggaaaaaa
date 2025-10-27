@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
@@ -11,30 +12,69 @@ import type { Plant } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 import useLocalStorage from '@/hooks/use-local-storage';
 import { Progress } from './ui/progress';
+import { translatePlantName, type TranslatePlantNameOutput } from '@/ai/flows/translate-plant-name-flow';
+import { textToSpeech } from '@/ai/flows/text-to-speech-flow';
 
-type GameState = 'idle' | 'listening' | 'evaluating' | 'result';
+
+type GameState = 'idle' | 'listening' | 'evaluating' | 'result' | 'fetching';
 
 export default function LanguageGameClient() {
   const [selectedPlant, setSelectedPlant] = useState<Plant>(plants[0]);
-  const [selectedLanguage, setSelectedLanguage] = useState(selectedPlant.tribalNames[0]);
-  const [gameState, setGameState] = useState<GameState>('idle');
+  const [selectedLanguage, setSelectedLanguage] = useState(tribalLanguages[0]);
+  const [translation, setTranslation] = useState<TranslatePlantNameOutput | null>(null);
+  const [gameState, setGameState] = useState<GameState>('fetching');
   const [userTranscript, setUserTranscript] = useState('');
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [score, setScore] = useState(0);
   const [progressData, setProgressData] = useLocalStorage('user-progress', { points: 0, languageTests: {} });
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const { toast } = useToast();
 
-  const handleSpeak = useCallback(() => {
-    if (typeof window === 'undefined' || !window.speechSynthesis) {
-      toast({ variant: 'destructive', title: 'Browser not supported', description: 'Speech synthesis is not supported in your browser.' });
-      return;
+  const fetchTranslation = useCallback(async (plantName: string, languageName: string) => {
+    setGameState('fetching');
+    setTranslation(null);
+    try {
+      const result = await translatePlantName({ plantName, languageName });
+      setTranslation(result);
+    } catch (error) {
+      console.error("Translation error:", error);
+      toast({
+        variant: "destructive",
+        title: "Translation Failed",
+        description: "Could not fetch the translation for the selected language.",
+      });
+    } finally {
+      setGameState('idle');
     }
-    const utterance = new SpeechSynthesisUtterance(selectedLanguage.name);
-    // You might need to select a specific voice if available
-    // utterance.voice = window.speechSynthesis.getVoices().find(v => v.lang === 'hi-IN');
-    window.speechSynthesis.speak(utterance);
-  }, [selectedLanguage, toast]);
+  }, [toast]);
+
+  useEffect(() => {
+    fetchTranslation(selectedPlant.englishName, selectedLanguage.name);
+  }, [selectedPlant, selectedLanguage, fetchTranslation]);
+
+
+  const handleSpeak = useCallback(async () => {
+    if (!translation || isSpeaking) return;
+
+    setIsSpeaking(true);
+    try {
+      const response = await textToSpeech({ text: translation.translatedName });
+      const audio = new Audio(response.audioDataUri);
+      audioRef.current = audio;
+      audio.play();
+      audio.onended = () => setIsSpeaking(false);
+    } catch (error) {
+      console.error('TTS Error:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Audio Error',
+        description: 'Could not play audio.',
+      });
+      setIsSpeaking(false);
+    }
+  }, [translation, isSpeaking, toast]);
 
   const handleListen = () => {
     if (typeof window === 'undefined' || !('webkitSpeechRecognition' in window)) {
@@ -43,7 +83,7 @@ export default function LanguageGameClient() {
     }
     
     const recognition = new (window as any).webkitSpeechRecognition();
-    recognition.lang = 'en-US'; // Change language based on what you expect
+    recognition.lang = 'en-US'; 
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
@@ -72,11 +112,12 @@ export default function LanguageGameClient() {
   };
   
   const evaluate = (transcript: string) => {
+    if(!translation) return;
+
     setGameState('evaluating');
     setTimeout(() => {
-        const target = selectedLanguage.name.toLowerCase().trim();
+        const target = translation.translatedName.toLowerCase().trim();
         const spoken = transcript.toLowerCase().trim();
-        // Simple similarity check. For better results, use a library like `string-similarity`.
         const similarity = target === spoken;
         setIsCorrect(similarity);
         setGameState('result');
@@ -93,19 +134,19 @@ export default function LanguageGameClient() {
     setGameState('idle');
     setUserTranscript('');
     setIsCorrect(null);
+    fetchTranslation(selectedPlant.englishName, selectedLanguage.name);
   };
   
   const handlePlantChange = (plantId: string) => {
       const plant = plants.find(p => p.id === parseInt(plantId));
       if(plant) {
         setSelectedPlant(plant);
-        setSelectedLanguage(plant.tribalNames[0] || {language: '', name: '', pronunciation: ''});
         resetRound();
       }
   }
 
   const handleLanguageChange = (languageName: string) => {
-      const lang = selectedPlant.tribalNames.find(l => l.language === languageName);
+      const lang = tribalLanguages.find(l => l.name === languageName);
       if(lang) {
         setSelectedLanguage(lang);
         resetRound();
@@ -122,40 +163,50 @@ export default function LanguageGameClient() {
                     {plants.map(p => <SelectItem key={p.id} value={String(p.id)}>{p.englishName}</SelectItem>)}
                 </SelectContent>
             </Select>
-            <Select onValueChange={handleLanguageChange} value={selectedLanguage.language}>
+            <Select onValueChange={handleLanguageChange} value={selectedLanguage.name}>
                 <SelectTrigger><SelectValue placeholder="Select a Language" /></SelectTrigger>
                 <SelectContent>
-                    {selectedPlant.tribalNames.map(l => <SelectItem key={l.language} value={l.language}>{l.language}</SelectItem>)}
+                    {tribalLanguages.map(l => <SelectItem key={l.id} value={l.name}>{l.name}</SelectItem>)}
                 </SelectContent>
             </Select>
        </div>
 
-      <Card className="text-center p-8 bg-muted/50">
-        <h2 className="text-4xl font-bold font-headline">{selectedLanguage.name}</h2>
-        <p className="font-code text-muted-foreground">{selectedLanguage.pronunciation}</p>
-        <Button variant="ghost" size="icon" onClick={handleSpeak} className="mt-4">
-          <Volume2 className="h-6 w-6" />
-        </Button>
+      <Card className="text-center p-8 bg-muted/50 min-h-[170px] flex flex-col justify-center">
+        {gameState === 'fetching' ? (
+          <div className="flex justify-center items-center">
+            <Loader2 className="h-8 w-8 animate-spin" />
+          </div>
+        ) : translation ? (
+          <>
+            <h2 className="text-4xl font-bold font-headline">{translation.translatedName}</h2>
+            <p className="font-code text-muted-foreground">{translation.pronunciation}</p>
+            <Button variant="ghost" size="icon" onClick={handleSpeak} className="mt-4 mx-auto" disabled={isSpeaking}>
+              {isSpeaking ? <Loader2 className="h-6 w-6 animate-spin" /> : <Volume2 className="h-6 w-6" />}
+            </Button>
+          </>
+        ) : (
+          <p className="text-muted-foreground">Could not find a translation.</p>
+        )}
       </Card>
 
       <div className="text-center">
         <h3 className="text-lg font-semibold mb-4">Test your pronunciation!</h3>
-        <Button size="lg" className="rounded-full w-24 h-24" onClick={handleListen} disabled={gameState !== 'idle'}>
+        <Button size="lg" className="rounded-full w-24 h-24" onClick={handleListen} disabled={gameState !== 'idle' || !translation}>
             {gameState === 'idle' && <Mic className="h-8 w-8" />}
             {gameState === 'listening' && <div className="h-8 w-8 bg-red-500 rounded-full animate-pulse" />}
-            {gameState === 'evaluating' && <Loader2 className="h-8 w-8 animate-spin" />}
+            {(gameState === 'evaluating' || gameState === 'fetching') && <Loader2 className="h-8 w-8 animate-spin" />}
             {gameState === 'result' && (isCorrect ? <Check className="h-8 w-8"/> : <X className="h-8 w-8"/>)}
         </Button>
       </div>
 
-        {gameState === 'result' && (
+        {gameState === 'result' && translation && (
             <Card className={`p-4 text-center animate-in fade-in ${isCorrect ? 'bg-green-100 border-green-200' : 'bg-red-100 border-red-200'}`}>
                 <h4 className="font-bold text-lg">{isCorrect ? "Excellent!" : "Not Quite"}</h4>
                 <p>You said: <em className="font-semibold">{userTranscript}</em></p>
-                {!isCorrect && <p>Correct pronunciation: <strong className="font-headline">{selectedLanguage.name}</strong></p>}
+                {!isCorrect && <p>Correct pronunciation: <strong className="font-headline">{translation.translatedName}</strong></p>}
                 <Button variant="outline" size="sm" onClick={resetRound} className="mt-4">
                     <RefreshCw className="h-4 w-4 mr-2"/>
-                    Try Again
+                    Try Another
                 </Button>
             </Card>
         )}
@@ -170,3 +221,4 @@ export default function LanguageGameClient() {
     </div>
   );
 }
+
