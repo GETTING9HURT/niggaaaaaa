@@ -72,12 +72,12 @@ export default function TeamPage() {
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-6 text-center">
              <Image
-                src="https://picsum.photos/seed/samir/120/120"
+                src="https://images.unsplash.com/photo-1649783466121-b5c5dc1d67de?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxM3x8dmVjdG9yfGVufDB8fHx8MTc2MTU2MzA1Nnww&ixlib=rb-4.1.0&q=80&w=1080"
                 alt="Samir Ansari"
                 width={120}
                 height={120}
                 className="rounded-full border-4 border-primary/20 shadow-lg"
-                data-ai-hint="male portrait"
+                data-ai-hint="vector illustration"
               />
             <div>
               <h3 className="text-xl font-bold">Samir Ansari</h3>
