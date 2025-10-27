@@ -12,7 +12,8 @@ import {
   Users,
   Info,
   MessageCircle,
-  Bot
+  Bot,
+  GalleryThumbnails,
 } from "lucide-react";
 import {
   Collapsible,
@@ -37,13 +38,20 @@ const links = [
 ];
 
 const aiBotLinks = [
-    { href: "/knowledge-base", label: "Medicinal Knowledge", icon: BookOpen },
-    { href: "/language-bot", label: "Tribal Languages", icon: Languages },
+    { href: "/knowledge-base", label: "Medicinal Chatbot", icon: BookOpen },
+    { href: "/knowledge-base/gallery", label: "Plant Gallery", icon: GalleryThumbnails },
+    { href: "/language-bot", label: "Language Chatbot", icon: Languages },
 ]
 
 export function SidebarNav() {
   const pathname = usePathname();
-  const [isAiBotOpen, setIsAiBotOpen] = React.useState(pathname.startsWith('/knowledge-base') || pathname.startsWith('/language-bot'));
+  const isAiBotRoute = aiBotLinks.some(link => pathname.startsWith(link.href));
+  const [isAiBotOpen, setIsAiBotOpen] = React.useState(isAiBotRoute);
+
+  React.useEffect(() => {
+    const isAiBotRoute = aiBotLinks.some(link => pathname.startsWith(link.href));
+    setIsAiBotOpen(isAiBotRoute);
+  }, [pathname]);
 
 
   return (
@@ -74,7 +82,7 @@ export function SidebarNav() {
         <SidebarMenuItem>
             <CollapsibleTrigger asChild>
                 <SidebarMenuButton
-                    tooltip={{ children: "AI Bot" }}
+                    tooltip={{ children: "Knowledge Base" }}
                     className="w-full"
                     >
                     <Bot
@@ -83,7 +91,7 @@ export function SidebarNav() {
                             isAiBotOpen ? "text-sidebar-primary" : "text-sidebar-foreground/70"
                         )}
                     />
-                    <span>AI Bot</span>
+                    <span>Knowledge Base</span>
                 </SidebarMenuButton>
             </CollapsibleTrigger>
         </SidebarMenuItem>

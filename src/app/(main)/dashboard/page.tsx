@@ -17,6 +17,7 @@ import {
   ArrowRight,
   Trophy,
   Info,
+  GalleryThumbnails,
 } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 
@@ -31,9 +32,16 @@ const features = [
   {
     icon: BookOpen,
     title: "Medicinal Knowledge",
-    description: "Explore uses, preparations, and precautions.",
+    description: "Ask our AI chatbot about uses, preparations, and precautions.",
     link: "/knowledge-base",
     image: PlaceHolderImages.find(img => img.id === "medicinal-knowledge-card"),
+  },
+  {
+    icon: GalleryThumbnails,
+    title: "Plant Gallery",
+    description: "Explore our database of known medicinal plants.",
+    link: "/knowledge-base/gallery",
+    image: PlaceHolderImages.find(img => img.id === "plant-gallery-card"),
   },
   {
     icon: Languages,
