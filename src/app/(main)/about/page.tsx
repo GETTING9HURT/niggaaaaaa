@@ -4,7 +4,7 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Leaf, Cpu, GitBranch, HeartHandshake } from "lucide-react";
 
 export default function AboutPage() {
-  const aboutImage = PlaceHolderImages.find(p => p.id === 'about-us-image');
+  const heroImage = PlaceHolderImages.find(p => p.id === 'about-us-image');
 
   return (
     <div className="container mx-auto p-4 md:p-8 space-y-8">
