@@ -291,7 +291,7 @@ export default function PlantIdentifierClient() {
               </AlertDescription>
             </Alert>
 
-            <Link href={`/knowledge-base?query=Tell me more about ${result.commonName}`}>
+            <Link href={`/knowledge-base?query=Tell me more about ${result.commonName}`} className="block">
               <StarBorder as="div">
                 <HelpCircle className="mr-2 h-4 w-4" /> Ask AI about it
               </StarBorder>
