@@ -1,13 +1,16 @@
 import Link from "next/link";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Logo } from "@/components/icons/logo";
+import { PanelLeft } from "lucide-react";
 
 export function Header() {
   return (
     <header className="sticky top-0 z-20 flex h-16 w-full items-center gap-4 border-b bg-background/95 px-4 backdrop-blur-sm md:px-6">
       <div className="flex items-center gap-2">
-        <SidebarTrigger className="md:hidden" />
-        <Link href="/" className="flex items-center gap-2">
+        <SidebarTrigger className="md:hidden">
+          <PanelLeft />
+        </SidebarTrigger>
+        <Link href="/" className="hidden items-center gap-2 md:flex">
           <Logo className="h-7 w-7 text-primary" />
           <span className="text-lg font-bold text-primary">PharmaVaidya</span>
         </Link>

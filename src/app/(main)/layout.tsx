@@ -11,6 +11,7 @@ import { Header } from "@/components/layout/header";
 import { SidebarNav } from "@/components/layout/sidebar-nav";
 import { Logo } from "@/components/icons/logo";
 import { Separator } from "@/components/ui/separator";
+import { PanelLeft } from "lucide-react";
 
 export default function MainLayout({
   children,
@@ -19,24 +20,30 @@ export default function MainLayout({
 }) {
   return (
     <SidebarProvider>
-      <Sidebar>
-        <SidebarHeader className="p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Logo className="text-sidebar-primary" />
-              <span className="text-xl font-semibold text-sidebar-foreground">
-                PharmaVaidya
-              </span>
+      <Sidebar collapsible="icon">
+        <SidebarHeader className="p-2">
+            <div className="flex h-12 items-center justify-center p-2 group-data-[collapsible=icon]:hidden">
+               <div className="flex items-center gap-2">
+                <Logo className="text-sidebar-primary size-7" />
+                <span className="text-xl font-semibold text-sidebar-foreground">
+                  PharmaVaidya
+                </span>
+              </div>
             </div>
-            <SidebarTrigger className="text-sidebar-foreground" />
-          </div>
+            <div className="hidden items-center justify-center p-2 group-data-[collapsible=icon]:flex">
+               <Logo className="text-sidebar-primary size-7" />
+            </div>
         </SidebarHeader>
         <SidebarContent>
           <SidebarNav />
         </SidebarContent>
         <SidebarFooter>
           <Separator className="my-2 bg-sidebar-border" />
-           <p className="px-4 text-xs text-sidebar-foreground/60">© 2024 PharmaVaidya</p>
+           <div className="flex items-center justify-center p-2">
+              <SidebarTrigger>
+                <PanelLeft />
+              </SidebarTrigger>
+            </div>
         </SidebarFooter>
       </Sidebar>
       <SidebarInset className="flex flex-col">
