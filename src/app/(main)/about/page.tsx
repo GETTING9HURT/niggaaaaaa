@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { Leaf, Cpu, GitBranch, HeartHandshake } from "lucide-react";
+import { Leaf, Cpu, GitBranch, HeartHandshake, Book, Users } from "lucide-react";
 
 export default function AboutPage() {
   const heroImage = PlaceHolderImages.find(p => p.id === 'about-us-image');
@@ -17,17 +17,17 @@ export default function AboutPage() {
 
       <Card className="shadow-lg overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-2">
-          <div className="p-8 space-y-6">
+          <div className="p-8 space-y-6 flex flex-col justify-center">
             <h2 className="text-2xl font-bold font-headline">Our Mission</h2>
             <p>
-              PharmaVaidya is born from a desire to preserve and revitalize the rich heritage of traditional medicinal knowledge, particularly from the diverse tribal communities of India. In a world of rapid modernization, this invaluable wisdom is at risk of being lost. Our mission is to build a bridge between this ancient knowledge and modern technology, making it accessible, verifiable, and useful for a new generation.
+              PharmaVaidya is born from a desire to preserve and revitalize the rich heritage of traditional medicinal knowledge, particularly from the diverse tribal communities of India. In a world of rapid modernization, this invaluable wisdom is at risk of being lost.
             </p>
             <p>
-              By leveraging AI, we aim to create a platform that not only identifies plants and their uses but also helps in learning and preserving the languages that are intrinsically linked to this knowledge.
+              Our mission is to build a bridge between this ancient knowledge and modern technology, making it accessible, verifiable, and useful for a new generation. By leveraging AI, we aim to create a platform that not only identifies plants but also helps in learning and preserving the languages intrinsically linked to this knowledge.
             </p>
           </div>
           {heroImage && (
-            <div className="relative min-h-[300px]">
+            <div className="relative min-h-[300px] lg:min-h-[400px]">
               <Image
                 src={heroImage.imageUrl}
                 alt={heroImage.description}
@@ -47,7 +47,25 @@ export default function AboutPage() {
             <CardTitle>Technology</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>Built with Next.js and Firebase Genkit, this app runs powerful AI models for plant identification and knowledge queries. All processing happens on the client-side or through secure serverless functions, ensuring privacy and speed.</p>
+            <p>Built with Next.js and powered by advanced AI, this app runs powerful models for plant identification and knowledge queries, ensuring privacy and speed through secure serverless functions.</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center gap-4">
+            <Book className="w-8 h-8 text-primary" />
+            <CardTitle>Indian Heritage</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>Our platform is deeply rooted in the traditional knowledge of India (Bharat), including Ayurveda and folk medicine. We strive to honor and digitize this ancient wisdom for all.</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center gap-4">
+            <Users className="w-8 h-8 text-primary" />
+            <CardTitle>Community Focused</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>We believe in the power of collective wisdom. Our app allows users to contribute their own remedies, creating a living, breathing database of community knowledge.</p>
           </CardContent>
         </Card>
         <Card>
@@ -56,7 +74,7 @@ export default function AboutPage() {
             <CardTitle>Open Source</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>PharmaVaidya is designed as a hackathon project, emphasizing rapid development and deployment. The code is intended to be open and modular, encouraging collaboration and further development from the community.</p>
+            <p>PharmaVaidya is designed as a hackathon project, emphasizing rapid development. The code is intended to be open, encouraging collaboration and further development.</p>
           </CardContent>
         </Card>
         <Card>
@@ -65,7 +83,7 @@ export default function AboutPage() {
             <CardTitle>Attribution</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>This project is a tribute to the indigenous communities who have been custodians of this knowledge for centuries. We are committed to ethical data handling and aim to create a platform that benefits these communities.</p>
+            <p>This project is a tribute to the indigenous communities who have been custodians of this knowledge for centuries. We are committed to ethical data handling and community benefit.</p>
           </CardContent>
         </Card>
       </div>
