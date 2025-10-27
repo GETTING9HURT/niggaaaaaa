@@ -16,6 +16,7 @@ import { SidebarNav } from "@/components/layout/sidebar-nav";
 import { Logo } from "@/components/icons/logo";
 import { Separator } from "@/components/ui/separator";
 import { PanelLeft } from "lucide-react";
+import Link from "next/link";
 
 function MainLayoutContent({
   children,
@@ -34,17 +35,17 @@ function MainLayoutContent({
     <>
       <Sidebar collapsible="icon">
         <SidebarHeader className="p-2">
-            <div className="flex h-12 items-center justify-center p-2 group-data-[collapsible=icon]:hidden">
+            <Link href="/dashboard" className="flex h-12 items-center justify-center p-2 group-data-[collapsible=icon]:hidden">
                <div className="flex items-center gap-2">
-                <Logo className="size-7" />
+                <Logo className="size-8" />
                 <span className="text-xl font-semibold text-sidebar-foreground">
                   PharmaVaidya
                 </span>
               </div>
-            </div>
-            <div className="hidden items-center justify-center p-2 group-data-[collapsible=icon]:flex">
-               <Logo className="size-7" />
-            </div>
+            </Link>
+            <Link href="/dashboard" className="hidden items-center justify-center p-2 group-data-[collapsible=icon]:flex">
+               <Logo className="size-8" />
+            </Link>
         </SidebarHeader>
         <SidebarContent>
           <SidebarNav />

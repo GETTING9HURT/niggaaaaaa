@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Logo } from "@/components/icons/logo";
@@ -11,7 +12,7 @@ export function Header() {
           <PanelLeft />
         </SidebarTrigger>
         <Link href="/dashboard" className="hidden items-center gap-2 lg:flex">
-          <Logo className="h-7 w-7" />
+          <Logo className="size-8" />
           <span className="text-lg font-bold">PharmaVaidya</span>
         </Link>
       </div>

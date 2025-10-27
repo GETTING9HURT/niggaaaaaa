@@ -1,4 +1,5 @@
 
+
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -34,7 +35,7 @@ export default function LandingPage() {
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm">
         <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center gap-2 font-bold">
-            <Logo className="h-7 w-7" />
+            <Logo className="size-8" />
             <span className="text-xl">PharmaVaidya</span>
           </Link>
           <nav className="hidden items-center gap-6 md:flex">
@@ -212,10 +213,10 @@ export default function LandingPage() {
         <div className="container mx-auto px-6 py-8">
             <div className="grid grid-cols-1 gap-8 text-center md:grid-cols-3 md:text-left">
                 <div>
-                    <div className="flex items-center justify-center md:justify-start gap-2">
-                        <Logo className="h-7 w-7" />
-                        <span className="text-xl font-bold">PharmaVaidya</span>
-                    </div>
+                  <Link href="/" className="flex items-center justify-center md:justify-start gap-2">
+                      <Logo className="size-8" />
+                      <span className="text-xl font-bold">PharmaVaidya</span>
+                  </Link>
                     <p className="mt-2 max-w-xs mx-auto md:mx-0 text-muted-foreground">Preserving traditional medicinal knowledge and tribal languages through AI.</p>
                 </div>
                 <div className="md:col-span-2">
