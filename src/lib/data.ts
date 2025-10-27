@@ -75,7 +75,7 @@ export const plants: Plant[] = [
       'Tinctures.',
     ],
     precautions: ['Avoid during pregnancy. Can cause stomach upset in large doses.'],
-    imageUrl: "https://picsum.photos/seed/108/400/300",
+    imageUrl: "https://images.unsplash.com/photo-1565113423207-a492a62a70fe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhc2h3YWdhbmRoYSUyMHBsYW50fGVufDB8fHx8MTc2MTQ1NzUxM3ww&ixlib=rb-4.1.0&q=80&w=1080",
     imageHint: "ashwagandha plant"
   },
 ];
