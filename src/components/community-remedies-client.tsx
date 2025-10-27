@@ -129,12 +129,9 @@ export default function CommunityRemediesClient() {
 
     try {
         if (photoFile) {
-            // Upload to Firebase Storage
             const storageRef = ref(storage, `remedy-photos/${Date.now()}_${photoFile.name}`);
             const snapshot = await uploadBytes(storageRef, photoFile);
             photoUrl = await getDownloadURL(snapshot.ref);
-            
-            // Create data URI for AI verification only
             photoDataUriForVerification = await fileToDataUri(photoFile);
         }
 
@@ -167,7 +164,12 @@ export default function CommunityRemediesClient() {
         form.reset();
         setShowForm(false);
     } catch (error) {
-        console.error(error);
+        console.error("Could not verify or submit remedy:", error);
+        toast({
+            variant: 'destructive',
+            title: 'Submission Failed',
+            description: 'Could not verify the remedy. Please try again later.',
+        });
     } finally {
         setIsVerifying(false);
     }
@@ -396,3 +398,5 @@ export default function CommunityRemediesClient() {
     </div>
   );
 }
+
+    
