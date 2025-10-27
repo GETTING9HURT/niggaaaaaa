@@ -2,7 +2,8 @@
 
 import { useState, useCallback, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { Camera, File, Upload, X, Loader2, Sparkles, ShieldCheck, Info, Leaf, BookOpen } from 'lucide-react';
+import Link from 'next/link';
+import { Camera, File, Upload, X, Loader2, Sparkles, ShieldCheck, Info, Leaf, BookOpen, MessageSquareQuestion } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -221,6 +222,13 @@ export default function PlantIdentifierClient() {
                   {result.warnings}
                 </AlertDescription>
               </Alert>
+
+              <Button asChild>
+                <Link href={`/knowledge-base?query=Tell me more about ${result.commonName}`}>
+                  <MessageSquareQuestion className="mr-2 h-4 w-4" /> Ask AI about it
+                </Link>
+              </Button>
+
             </div>
           </CardContent>
            <CardFooter>
@@ -332,7 +340,7 @@ export default function PlantIdentifierClient() {
           <AlertTitle>Privacy First</AlertTitle>
           <AlertDescription>
             Your images are processed by our AI and are not stored. Your data remains private.
-          </AlertDescription>
+          </Description>
         </Alert>
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect, use } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { CornerDownLeft, Loader2, Mic, User, Bot, Sparkles } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -21,24 +22,18 @@ export function KnowledgeChatbot() {
   const [isLoading, setIsLoading] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const searchParams = useSearchParams();
 
-  useEffect(() => {
-    if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
-    }
-  }, [messages]);
+  const handleQuery = async (query: string) => {
+    if (!query.trim() || isLoading) return;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim() || isLoading) return;
-
-    const userMessage: Message = { role: 'user', content: input };
+    const userMessage: Message = { role: 'user', content: query };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
 
     try {
-      const response = await medicinalKnowledgeChatbot({ query: input });
+      const response = await medicinalKnowledgeChatbot({ query });
       const botMessage: Message = { role: 'bot', content: response.answer };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
@@ -48,13 +43,32 @@ export function KnowledgeChatbot() {
         title: 'An error occurred',
         description: 'Failed to get a response from the chatbot. Please try again.',
       });
-      // Optionally remove the user's message or add an error message to the chat
       const errorMessage: Message = { role: 'bot', content: "Sorry, I couldn't process that. Please try again." };
       setMessages(prev => [...prev, errorMessage]);
-
     } finally {
       setIsLoading(false);
     }
+  };
+
+  useEffect(() => {
+    const query = searchParams.get('query');
+    if (query) {
+      handleQuery(query);
+      // Optional: clean up the URL
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+  }, [searchParams]);
+
+
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    handleQuery(input);
   };
 
   return (
