@@ -86,7 +86,7 @@ export default function LandingPage() {
                   Enter App <ArrowRight className="ml-2" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-white text-white backdrop-blur-sm hover:bg-white/10">
+              <Button asChild size="lg" variant="outline" className="border-white/20 text-white bg-black/20 backdrop-blur-md hover:bg-white/20">
                 <Link href="#problem">
                   Learn More
                 </Link>
