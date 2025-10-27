@@ -19,7 +19,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { plants, tribalLanguages } from '@/lib/data';
 import type { CommunityRemedy } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
-import { verifyRemedy } from '@/ai/flows/community-remedy-verification';
+import { verifyRemedy, VerifyRemedyOutput } from '@/ai/flows/community-remedy-verification';
 import { Alert, AlertDescription, AlertTitle } from './ui/alert';
 import { db, storage } from '@/lib/firebase';
 import { Skeleton } from './ui/skeleton';
@@ -123,51 +123,79 @@ export default function CommunityRemediesClient() {
   async function onSubmit(values: z.infer<typeof remedySchema>) {
     setIsSubmitting(true);
     let photoUrl = '';
-    
-    const photoFile = values.photo?.[0];
+    let verificationResult: VerifyRemedyOutput = {
+      isPlausible: true,
+      verificationNotes: 'AI verification was not performed.',
+    };
 
     try {
-        if (photoFile) {
-            const storageRef = ref(storage, `remedy-photos/${Date.now()}_${photoFile.name}`);
-            const snapshot = await uploadBytes(storageRef, photoFile);
-            photoUrl = await getDownloadURL(snapshot.ref);
-        }
+      const photoFile = values.photo?.[0];
 
-        // Temporarily bypass AI verification
-        const newRemedy: Omit<CommunityRemedy, 'id'> = {
+      // 1. Upload photo if it exists
+      if (photoFile) {
+        const storageRef = ref(storage, `remedy-photos/${Date.now()}_${photoFile.name}`);
+        const snapshot = await uploadBytes(storageRef, photoFile);
+        photoUrl = await getDownloadURL(snapshot.ref);
+
+        // 2. Try to verify with AI, but don't block if it fails
+        try {
+          const dataUri = await fileToDataUri(photoFile);
+          verificationResult = await verifyRemedy({
             ...values,
-            photoUrl,
-            submittedAt: new Date().toISOString(),
-            upvotes: 0,
-            downvotes: 0,
-            isPlausible: true, // Default to plausible
-            verificationNotes: "AI verification temporarily bypassed.", // Add a note
-        };
-        
-        const docRef = await addDoc(collection(db, "remedies"), {
-            ...newRemedy,
-            submittedAt: new Date(),
-        });
-        
-        setRemedies(prev => [{...newRemedy, id: docRef.id}, ...prev]);
+            photoDataUri: dataUri,
+          });
+        } catch (aiError) {
+          console.error("AI Verification failed, but proceeding with submission:", aiError);
+          verificationResult = {
+            isPlausible: true, // Default to plausible to not block user
+            verificationNotes: 'AI verification could not be completed. The remedy has been submitted for community review.',
+          };
+          toast({
+            variant: 'default',
+            title: 'AI Check Skipped',
+            description: 'Could not reach the AI verifier, but your remedy was submitted!',
+          });
+        }
+      }
 
-        toast({
-            title: 'Remedy Submitted!',
-            description: 'Thank you for sharing your knowledge with the community.',
-        });
-        form.reset();
-        setShowForm(false);
+      // 3. Create the remedy object
+      const newRemedy: Omit<CommunityRemedy, 'id'> = {
+        ...values,
+        photoUrl,
+        submittedAt: new Date().toISOString(),
+        upvotes: 0,
+        downvotes: 0,
+        isPlausible: verificationResult.isPlausible,
+        verificationNotes: verificationResult.verificationNotes,
+      };
+
+      // 4. Save to Firestore
+      const docRef = await addDoc(collection(db, "remedies"), {
+        ...newRemedy,
+        submittedAt: new Date(),
+      });
+
+      // 5. Update UI
+      setRemedies(prev => [{ ...newRemedy, id: docRef.id }, ...prev]);
+      toast({
+        title: 'Remedy Submitted!',
+        description: 'Thank you for sharing your knowledge with the community.',
+      });
+      form.reset();
+      setShowForm(false);
+
     } catch (error) {
-        console.error("Could not submit remedy:", error);
-        toast({
-            variant: 'destructive',
-            title: 'Submission Failed',
-            description: 'Could not save the remedy. Please try again later.',
-        });
+      console.error("Could not submit remedy:", error);
+      toast({
+        variant: 'destructive',
+        title: 'Submission Failed',
+        description: 'Could not save the remedy. Please check your connection and try again.',
+      });
     } finally {
-        setIsSubmitting(false);
+      setIsSubmitting(false);
     }
   }
+
 
   const handleVote = async (id: string, type: 'up' | 'down') => {
     if (id.startsWith('initial-')) {
@@ -392,3 +420,5 @@ export default function CommunityRemediesClient() {
     </div>
   );
 }
+
+    
