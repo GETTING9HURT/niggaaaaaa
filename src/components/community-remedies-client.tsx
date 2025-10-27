@@ -20,6 +20,7 @@ import { useToast } from '@/hooks/use-toast';
 import useLocalStorage from '@/hooks/use-local-storage';
 import { verifyRemedy } from '@/ai/flows/community-remedy-verification';
 import { Alert, AlertDescription, AlertTitle } from './ui/alert';
+import { initialRemedies } from '@/lib/initial-remedies';
 
 const remedySchema = z.object({
   plantName: z.string().min(1, 'Plant name is required'),
@@ -47,7 +48,7 @@ const TimeAgo = ({ date }: { date: string }) => {
 
 
 export default function CommunityRemediesClient() {
-  const [remedies, setRemedies] = useLocalStorage<CommunityRemedy[]>('community-remedies', []);
+  const [remedies, setRemedies] = useLocalStorage<CommunityRemedy[]>('community-remedies', initialRemedies);
   const [showForm, setShowForm] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [sortOrder, setSortOrder] = useState<'rating' | 'recency'>('recency');
@@ -264,7 +265,7 @@ export default function CommunityRemediesClient() {
               <Card key={remedy.id} className="flex flex-col">
                 <CardHeader>
                   <CardTitle>{remedy.plantName}</CardTitle>
-                   {remedy.photoDataUri && remedy.photoDataUri.startsWith('data:image/') && (
+                   {remedy.photoDataUri && remedy.photoDataUri.startsWith('data:') && (
                       <div className="relative aspect-video mt-2">
                           <img src={remedy.photoDataUri} alt={`Remedy for ${remedy.plantName}`} className="rounded-md object-cover w-full h-full" />
                       </div>
