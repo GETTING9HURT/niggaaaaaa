@@ -23,6 +23,7 @@ import { verifyRemedy } from '@/ai/flows/community-remedy-verification';
 import { Alert, AlertDescription, AlertTitle } from './ui/alert';
 import { db, storage } from '@/lib/firebase';
 import { Skeleton } from './ui/skeleton';
+import { initialRemedies } from '@/lib/initial-remedies';
 
 
 const remedySchema = z.object({
@@ -40,6 +41,8 @@ const TimeAgo = ({ date }: { date: any }) => {
     useEffect(() => {
         if (date && typeof date.toDate === 'function') {
             setTimeAgo(formatDistanceToNow(date.toDate(), { addSuffix: true }));
+        } else if (typeof date === 'string') {
+            setTimeAgo(formatDistanceToNow(new Date(date), { addSuffix: true }));
         }
     }, [date]);
   
@@ -74,24 +77,43 @@ export default function CommunityRemediesClient() {
     const fetchRemedies = async () => {
       setIsLoading(true);
       try {
-        const q = query(collection(db, "remedies"), orderBy(sortOrder === 'recency' ? 'submittedAt' : 'upvotes', 'desc'));
+        const q = query(collection(db, "remedies"), orderBy('submittedAt', 'desc'));
         const querySnapshot = await getDocs(q);
-        const remediesData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as CommunityRemedy));
-        setRemedies(remediesData);
+        const firestoreRemedies = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as CommunityRemedy));
+
+        const allRemedies = [...initialRemedies.map((r, i) => ({ ...r, id: `initial-${i}`})), ...firestoreRemedies];
+        
+        setRemedies(allRemedies);
+
       } catch (error) {
         console.error("Error fetching remedies: ", error);
         toast({
           variant: "destructive",
           title: "Error",
-          description: "Could not fetch remedies from the database.",
+          description: "Could not fetch remedies. Displaying initial data.",
         });
+        setRemedies(initialRemedies.map((r, i) => ({...r, id: `initial-${i}`})));
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchRemedies();
-  }, [sortOrder, toast]);
+  }, [toast]);
+
+  useEffect(() => {
+    const sortedRemedies = [...remedies].sort((a, b) => {
+        if (sortOrder === 'recency') {
+            const dateA = a.submittedAt.toDate ? a.submittedAt.toDate() : new Date(a.submittedAt);
+            const dateB = b.submittedAt.toDate ? b.submittedAt.toDate() : new Date(b.submittedAt);
+            return dateB.getTime() - dateA.getTime();
+        } else { // rating
+            return b.upvotes - a.upvotes;
+        }
+    });
+    setRemedies(sortedRemedies);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortOrder]);
 
 
   const fileToDataUri = (file: File): Promise<string> => {
@@ -141,7 +163,7 @@ export default function CommunityRemediesClient() {
             submittedAt: new Date(),
         });
         
-        setRemedies([{...newRemedy, id: docRef.id}, ...remedies]);
+        setRemedies(prev => [{...newRemedy, id: docRef.id}, ...prev]);
 
         toast({
             title: 'Remedy Submitted!',
@@ -162,6 +184,14 @@ export default function CommunityRemediesClient() {
   }
 
   const handleVote = async (id: string, type: 'up' | 'down') => {
+    if (id.startsWith('initial-')) {
+        toast({
+            title: "Can't Vote",
+            description: 'This is a pre-built remedy and cannot be voted on.',
+        });
+        return;
+    }
+
     const remedyRef = doc(db, 'remedies', id);
     try {
         await updateDoc(remedyRef, {
@@ -353,10 +383,10 @@ export default function CommunityRemediesClient() {
                 </CardContent>
                 <CardFooter className="flex justify-between items-center">
                   <div className="flex gap-2">
-                    <Button variant="outline" size="sm" onClick={() => handleVote(remedy.id, 'up')}>
+                    <Button variant="outline" size="sm" onClick={() => handleVote(remedy.id, 'up')} disabled={remedy.id.startsWith('initial-')}>
                       <ThumbsUp className="h-4 w-4 mr-2" /> {remedy.upvotes}
                     </Button>
-                    <Button variant="outline" size="sm" onClick={() => handleVote(remedy.id, 'down')}>
+                    <Button variant="outline" size="sm" onClick={() => handleVote(remedy.id, 'down')} disabled={remedy.id.startsWith('initial-')}>
                       <ThumbsDown className="h-4 w-4 mr-2" /> {remedy.downvotes}
                     </Button>
                   </div>

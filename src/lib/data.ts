@@ -285,6 +285,73 @@ export const plants: Plant[] = [
     precautions: ['Very bitter taste. Can cause dizziness and stomach upset in high doses.'],
     imageUrl: "https://images.unsplash.com/photo-1707923483320-94f48a17387a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxBbmRyb2dyYXBoaXMlMjBwYW5pY3VsYXRhfGVufDB8fHx8MTc2MjE5ODcxOHww&ixlib=rb-4.1.0&q=80&w=1080",
     imageHint: "kalmegh plant"
+  },
+  {
+    id: 13,
+    englishName: 'Ginger',
+    hindiName: 'अदरक',
+    scientificName: 'Zingiber officinale',
+    family: 'Zingiberaceae',
+    isMedicinal: true,
+    isEndangered: false,
+    tribalNames: [],
+    medicinalUses: [
+      'Relieves nausea and indigestion.',
+      'Anti-inflammatory, can help with joint pain.',
+      'Soothes sore throats.'
+    ],
+    preparationMethods: [
+      'Brewed as a tea from fresh rhizome.',
+      'Used fresh or dried in cooking.',
+      'Juice mixed with honey for coughs.'
+    ],
+    precautions: ['Can act as a blood thinner. May cause heartburn in large quantities.'],
+    imageUrl: "https://images.unsplash.com/photo-1620989339031-a3875320516a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxnaW5nZXIlMjByb290fGVufDB8fHx8MTc2MjE5OTQ0Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+    imageHint: "ginger root"
+  },
+  {
+    id: 14,
+    englishName: 'Peppermint',
+    hindiName: 'पुदीना',
+    scientificName: 'Mentha piperita',
+    family: 'Lamiaceae',
+    isMedicinal: true,
+    isEndangered: false,
+    tribalNames: [],
+    medicinalUses: [
+      'Soothes digestive issues like bloating and gas.',
+      'Relieves tension headaches when applied topically (oil).',
+      'Acts as a decongestant for colds.'
+    ],
+    preparationMethods: [
+      'Leaves brewed as a tea.',
+      'Essential oil used in aromatherapy or diluted for topical application.',
+      'Fresh leaves used as a garnish.'
+    ],
+    precautions: ['Should not be given to infants. Can worsen acid reflux in some people.'],
+    imageUrl: "https://images.unsplash.com/photo-1596495691452-f2acedfd808c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwZXBwZXJtaW50JTIwbGVhdmVzfGVufDB8fHx8MTc2MjE5OTQ4OHww&ixlib=rb-4.1.0&q=80&w=1080",
+    imageHint: "peppermint leaves"
+  },
+  {
+    id: 15,
+    englishName: 'Tomato',
+    hindiName: 'टमाटर',
+    scientificName: 'Solanum lycopersicum',
+    family: 'Solanaceae',
+    isMedicinal: false,
+    isEndangered: false,
+    tribalNames: [],
+    medicinalUses: [
+      'Rich in lycopene, an antioxidant that supports heart health.',
+      'Good source of Vitamin C and K.'
+    ],
+    preparationMethods: [
+      'Eaten raw in salads.',
+      'Cooked into sauces, soups, and curries.'
+    ],
+    precautions: ['Highly acidic and may cause issues for people with acid reflux.'],
+    imageUrl: "https://images.unsplash.com/photo-1582284540020-8acbe03fec79?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0b21hdG9lcyUyMG9uJTIwdmluZXxlbnwwfHx8fDE3NjIyMDAyOTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    imageHint: "tomatoes on vine"
   }
 ];
 
