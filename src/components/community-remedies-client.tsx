@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -27,6 +28,23 @@ const remedySchema = z.object({
   effectivenessRating: z.coerce.number().min(1).max(5),
   photo: z.any().optional(),
 });
+
+// A new client component to handle the time display
+const TimeAgo = ({ date }: { date: string }) => {
+    const [timeAgo, setTimeAgo] = useState('');
+  
+    useEffect(() => {
+      setTimeAgo(formatDistanceToNow(new Date(date), { addSuffix: true }));
+    }, [date]);
+  
+    return (
+      <div className="flex items-center gap-1">
+        <Clock className="h-3 w-3" />
+        {timeAgo}
+      </div>
+    );
+};
+
 
 export default function CommunityRemediesClient() {
   const [remedies, setRemedies] = useLocalStorage<CommunityRemedy[]>('community-remedies', []);
@@ -263,10 +281,7 @@ export default function CommunityRemediesClient() {
                   )}
                   <div className="text-xs text-muted-foreground flex items-center justify-between">
                     <span>Language: {remedy.language}</span>
-                    <div className="flex items-center gap-1">
-                      <Clock className="h-3 w-3" />
-                      {formatDistanceToNow(new Date(remedy.submittedAt), { addSuffix: true })}
-                    </div>
+                    <TimeAgo date={remedy.submittedAt} />
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-between items-center">
@@ -299,3 +314,5 @@ export default function CommunityRemediesClient() {
     </div>
   );
 }
+
+    
