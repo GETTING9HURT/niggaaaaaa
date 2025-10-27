@@ -4,7 +4,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Camera, File, Upload, X, Loader2, Sparkles, ShieldCheck, Info, Leaf, BookOpen, MessageSquareQuestion, Volume2 } from 'lucide-react';
+import { Camera, File, Upload, X, Loader2, Sparkles, ShieldCheck, Info, Leaf, BookOpen, HelpCircle, Volume2 } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -269,7 +269,7 @@ export default function PlantIdentifierClient() {
 
             <Button asChild>
               <Link href={`/knowledge-base?query=Tell me more about ${result.commonName}`}>
-                <MessageSquareQuestion className="mr-2 h-4 w-4" /> Ask AI about it
+                <HelpCircle className="mr-2 h-4 w-4" /> Ask AI about it
               </Link>
             </Button>
 
