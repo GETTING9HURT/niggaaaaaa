@@ -36,14 +36,14 @@ function MainLayoutContent({
         <SidebarHeader className="p-2">
             <div className="flex h-12 items-center justify-center p-2 group-data-[collapsible=icon]:hidden">
                <div className="flex items-center gap-2">
-                <Logo className="text-sidebar-primary size-7" />
+                <Logo className="size-7" />
                 <span className="text-xl font-semibold text-sidebar-foreground">
                   PharmaVaidya
                 </span>
               </div>
             </div>
             <div className="hidden items-center justify-center p-2 group-data-[collapsible=icon]:flex">
-               <Logo className="text-sidebar-primary size-7" />
+               <Logo className="size-7" />
             </div>
         </SidebarHeader>
         <SidebarContent>

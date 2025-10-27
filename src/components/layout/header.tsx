@@ -11,7 +11,7 @@ export function Header() {
           <PanelLeft />
         </SidebarTrigger>
         <Link href="/dashboard" className="hidden items-center gap-2 lg:flex">
-          <Logo className="h-7 w-7 text-primary" />
+          <Logo className="h-7 w-7" />
           <span className="text-lg font-bold">PharmaVaidya</span>
         </Link>
       </div>
