@@ -233,7 +233,7 @@ export default function LandingPage() {
                     The knowledge of medicinal plants is a treasure shared by indigenous communities across the world. Our mission is to connect and preserve this wisdom on a global scale.
                   </p>
               </div>
-              <div className="relative flex h-72 w-full items-center justify-center overflow-hidden rounded-lg border bg-background/50 md:h-96 md:w-1/2 md:shadow-xl">
+              <div className="relative flex h-96 w-full items-center justify-center overflow-hidden rounded-lg border bg-background/50 md:w-1/2 md:shadow-xl">
                   <Globe />
                   <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]" />
               </div>
