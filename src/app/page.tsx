@@ -21,6 +21,7 @@ import {
   UploadCloud,
   Heart,
   Search,
+  Info,
 } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Logo } from "@/components/icons/logo";
@@ -62,9 +63,9 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative w-full h-[60vh]">
-          {heroImage && (
-            <>
+        <section className="relative w-full h-[60vh] flex items-center justify-center text-center">
+          <div className="absolute inset-0">
+            {heroImage && (
               <Image
                 src={heroImage.imageUrl}
                 alt={heroImage.description}
@@ -74,10 +75,10 @@ export default function LandingPage() {
                 quality={100}
                 data-ai-hint={heroImage.imageHint}
               />
-              <div className="absolute inset-0 bg-black/50" />
-            </>
-          )}
-          <div className="relative z-10 h-full flex flex-col items-center justify-center text-center text-white p-4">
+            )}
+            <div className="absolute inset-0 bg-black/50" />
+          </div>
+          <div className="relative z-10 text-white p-4">
             <h1 className="text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl font-headline">
               Preserve Medicinal Plants & Tribal Languages
             </h1>
@@ -150,7 +151,7 @@ export default function LandingPage() {
                 An integrated platform for knowledge, language, and community.
               </p>
             </div>
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
               <Card className="flex flex-col text-center items-center p-6">
                 <Leaf className="h-12 w-12 text-primary" />
                 <h3 className="mt-4 text-xl font-bold font-headline">Plant Identification</h3>
@@ -173,6 +174,14 @@ export default function LandingPage() {
                 <p className="mt-2 text-muted-foreground flex-grow">Share and discover traditional remedies, building a collective wisdom database verified by the community.</p>
                 <Button variant="link" asChild className="mt-4">
                   <Link href="/community-remedies">Explore <ChevronRight className="ml-1 h-4 w-4" /></Link>
+                </Button>
+              </Card>
+               <Card className="flex flex-col text-center items-center p-6">
+                <Info className="h-12 w-12 text-primary" />
+                <h3 className="mt-4 text-xl font-bold font-headline">About Us</h3>
+                <p className="mt-2 text-muted-foreground flex-grow">Learn about our mission, the developer behind the project, and the technology that powers PharmaVaidya.</p>
+                <Button variant="link" asChild className="mt-4">
+                  <Link href="/about">Explore <ChevronRight className="ml-1 h-4 w-4" /></Link>
                 </Button>
               </Card>
             </div>
@@ -265,6 +274,7 @@ export default function LandingPage() {
                             <ul className="mt-4 space-y-2">
                                 <li><Link href="/about" className="text-muted-foreground hover:text-foreground">Our Mission</Link></li>
                                 <li><Link href="#features" className="text-muted-foreground hover:text-foreground">Features</Link></li>
+                                <li><Link href="/about" className="text-muted-foreground hover:text-foreground">Team</Link></li>
                             </ul>
                         </div>
                     </div>

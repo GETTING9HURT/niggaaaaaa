@@ -38,9 +38,9 @@
     },
     {
       "id": "about-us-image",
-      "description": "A diverse team of people collaborating around a table with laptops and plants, in a modern, bright setting.",
-      "imageUrl": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0ZWFtJTIwY29sbGFib3JhdGlvbnxlbnwwfHx8fDE3NjE1MTg5MTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "team collaboration"
+      "description": "A portrait of Aabid Hasan, the student developer who created the project.",
+      "imageUrl": "https://i.ibb.co/6bsZJbY/Whats-App-Image-2024-08-01-at-20-41-45-70335804.jpg",
+      "imageHint": "developer portrait"
     },
     {
       "id": "leaderboard-card",
