@@ -45,6 +45,14 @@ export default function TeamPage() {
             <CardDescription>Valuable insights that helped shape the project.</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-6 text-center">
+            <Image
+                src="https://picsum.photos/seed/shayank/120/120"
+                alt="Shayank Yadav"
+                width={120}
+                height={120}
+                className="rounded-full border-4 border-primary/20 shadow-lg"
+                data-ai-hint="male portrait"
+              />
             <div>
               <h3 className="text-xl font-bold">Shayank Yadav</h3>
               <p className="text-muted-foreground flex items-center justify-center gap-2 mt-1">
