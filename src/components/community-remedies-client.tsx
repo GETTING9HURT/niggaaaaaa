@@ -5,14 +5,14 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { ArrowDown, ArrowUp, CheckCircle, Clock, File, Image as ImageIcon, Loader2, PlusCircle, ThumbsDown, ThumbsUp, XCircle } from 'lucide-react';
+import { ArrowDown, ArrowUp, CheckCircle, Clock, File, Image as ImageIcon, Loader2, PlusCircle, Sparkles, ThumbsDown, ThumbsUp, XCircle } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { collection, addDoc, getDocs, query, orderBy, doc, updateDoc, increment } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -20,6 +20,7 @@ import { plants, tribalLanguages } from '@/lib/data';
 import type { CommunityRemedy } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 import { verifyRemedy, VerifyRemedyOutput } from '@/ai/flows/community-remedy-verification';
+import { suggestRemedyFromImage } from '@/ai/flows/remedy-suggestion-flow';
 import { Alert, AlertDescription, AlertTitle } from './ui/alert';
 import { db, storage } from '@/lib/firebase';
 import { Skeleton } from './ui/skeleton';
@@ -60,6 +61,7 @@ export default function CommunityRemediesClient() {
   const [isLoading, setIsLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isScanning, setIsScanning] = useState(false);
   const [sortOrder, setSortOrder] = useState<'rating' | 'recency'>('recency');
   const { toast } = useToast();
 
@@ -120,6 +122,55 @@ export default function CommunityRemediesClient() {
     });
   };
 
+  const handleAiScan = async () => {
+    const photoFile = form.getValues('photo')?.[0];
+    const plantName = form.getValues('plantName');
+
+    if (!photoFile) {
+      toast({
+        variant: 'destructive',
+        title: 'No Photo Uploaded',
+        description: 'Please upload a photo of the plant first.',
+      });
+      return;
+    }
+    if (!plantName) {
+      toast({
+        variant: 'destructive',
+        title: 'No Plant Selected',
+        description: 'Please select the plant name before scanning.',
+      });
+      return;
+    }
+
+    setIsScanning(true);
+    try {
+      const dataUri = await fileToDataUri(photoFile);
+      const result = await suggestRemedyFromImage({
+        photoDataUri: dataUri,
+        plantName: plantName,
+      });
+
+      form.setValue('remedyDescription', result.suggestedDescription);
+      form.setValue('effectivenessRating', result.suggestedEffectiveness);
+
+      toast({
+        title: 'AI Suggestion Complete!',
+        description: 'The remedy details have been filled in for you. Please review and submit.',
+      });
+    } catch (error) {
+      console.error('AI Scan failed:', error);
+      toast({
+        variant: 'destructive',
+        title: 'AI Scan Failed',
+        description: 'Could not generate AI suggestions at this time. Please try again.',
+      });
+    } finally {
+      setIsScanning(false);
+    }
+  };
+
+
   async function onSubmit(values: z.infer<typeof remedySchema>) {
     setIsSubmitting(true);
     let photoUrl = '';
@@ -131,13 +182,11 @@ export default function CommunityRemediesClient() {
     try {
       const photoFile = values.photo?.[0];
 
-      // 1. Upload photo if it exists
       if (photoFile) {
         const storageRef = ref(storage, `remedy-photos/${Date.now()}_${photoFile.name}`);
         const snapshot = await uploadBytes(storageRef, photoFile);
         photoUrl = await getDownloadURL(snapshot.ref);
 
-        // 2. Try to verify with AI, but don't block if it fails
         try {
           const dataUri = await fileToDataUri(photoFile);
           verificationResult = await verifyRemedy({
@@ -147,8 +196,8 @@ export default function CommunityRemediesClient() {
         } catch (aiError) {
           console.error("AI Verification failed, but proceeding with submission:", aiError);
           verificationResult = {
-            isPlausible: true, // Default to plausible to not block user
-            verificationNotes: 'AI verification could not be completed. The remedy has been submitted for community review.',
+            isPlausible: true,
+            verificationNotes: 'AI verification could not be completed, but the remedy was submitted for community review.',
           };
           toast({
             variant: 'default',
@@ -158,7 +207,6 @@ export default function CommunityRemediesClient() {
         }
       }
 
-      // 3. Create the remedy object
       const newRemedy: Omit<CommunityRemedy, 'id'> = {
         ...values,
         photoUrl,
@@ -169,13 +217,11 @@ export default function CommunityRemediesClient() {
         verificationNotes: verificationResult.verificationNotes,
       };
 
-      // 4. Save to Firestore
       const docRef = await addDoc(collection(db, "remedies"), {
         ...newRemedy,
         submittedAt: new Date(),
       });
 
-      // 5. Update UI
       setRemedies(prev => [{ ...newRemedy, id: docRef.id }, ...prev]);
       toast({
         title: 'Remedy Submitted!',
@@ -240,11 +286,27 @@ export default function CommunityRemediesClient() {
         <Card className="shadow-lg">
           <CardHeader>
             <CardTitle>Share Your Knowledge</CardTitle>
-            <CardDescription>Fill out the form to submit a new remedy.</CardDescription>
+            <CardDescription>Fill out the form below, or use our AI to scan a photo and suggest a remedy for you.</CardDescription>
           </CardHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <CardContent className="space-y-6">
+                 <FormField
+                  control={form.control}
+                  name="photo"
+                  render={({ field: { onChange, value, ...rest } }) => (
+                    <FormItem>
+                      <FormLabel>Photo of Plant/Remedy</FormLabel>
+                      <FormControl>
+                         <Input type="file" accept="image/*" onChange={(e) => onChange(e.target.files)} {...rest} />
+                      </FormControl>
+                      <FormDescription>
+                        Upload a photo and let our AI suggest the remedy details for you!
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={form.control}
                   name="plantName"
@@ -267,6 +329,14 @@ export default function CommunityRemediesClient() {
                     </FormItem>
                   )}
                 />
+                
+                <div className="text-center my-4">
+                  <Button type="button" variant="outline" onClick={handleAiScan} disabled={isScanning}>
+                    {isScanning ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+                    {isScanning ? 'Scanning...' : 'Scan with AI to Suggest Remedy'}
+                  </Button>
+                </div>
+
                 <FormField
                   control={form.control}
                   name="remedyDescription"
@@ -309,22 +379,9 @@ export default function CommunityRemediesClient() {
                   name="effectivenessRating"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Effectiveness Rating (1-5)</FormLabel>
+                      <FormLabel>Effectiveness Rating (Current: {field.value})</FormLabel>
                       <FormControl>
                         <Input type="range" min="1" max="5" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="photo"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Photo of Plant/Remedy</FormLabel>
-                      <FormControl>
-                         <Input type="file" accept="image/*" onChange={(e) => field.onChange(e.target.files)} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -420,5 +477,3 @@ export default function CommunityRemediesClient() {
     </div>
   );
 }
-
-    
