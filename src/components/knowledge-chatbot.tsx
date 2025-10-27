@@ -4,6 +4,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { CornerDownLeft, Loader2, Mic, User, Bot, Sparkles } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -93,12 +94,18 @@ export function KnowledgeChatbot() {
                 </Avatar>
               )}
               <div
-                className={`p-2 rounded-lg max-w-md ${
-                  message.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'
+                className={`prose prose-sm max-w-md p-2 rounded-lg ${
+                  message.role === 'user' ? 'bg-primary text-primary-foreground prose-invert' : 'bg-muted'
                 }`}
               >
-                {message.role === 'bot' && <p className="font-semibold text-sm">PharmaVaidya Bot</p>}
-                <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                {message.role === 'bot' && <p className="font-semibold text-sm not-prose">PharmaVaidya Bot</p>}
+                 <ReactMarkdown
+                  components={{
+                    p: ({node, ...props}) => <p className="text-sm" {...props} />,
+                  }}
+                >
+                  {message.content}
+                </ReactMarkdown>
               </div>
               {message.role === 'user' && (
                 <Avatar className="h-8 w-8">
