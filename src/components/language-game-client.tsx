@@ -45,6 +45,7 @@ export default function LanguageGameClient() {
         title: "Translation Failed",
         description: "Could not fetch the translation for the selected language.",
       });
+      setTranslation({ translatedName: 'Not Available', pronunciation: '' });
     } finally {
       setGameState('idle');
     }
@@ -56,7 +57,7 @@ export default function LanguageGameClient() {
 
 
   const handleSpeak = useCallback(async () => {
-    if (!translation || isSpeaking) return;
+    if (!translation || !translation.translatedName || translation.translatedName === 'Not Available' || isSpeaking) return;
 
     setIsSpeaking(true);
     try {
@@ -134,14 +135,17 @@ export default function LanguageGameClient() {
     setGameState('idle');
     setUserTranscript('');
     setIsCorrect(null);
-    fetchTranslation(selectedPlant.englishName, selectedLanguage.name);
+    const newPlant = plants[Math.floor(Math.random() * plants.length)];
+    const newLang = tribalLanguages[Math.floor(Math.random() * tribalLanguages.length)];
+    setSelectedPlant(newPlant);
+    setSelectedLanguage(newLang);
+    fetchTranslation(newPlant.englishName, newLang.name);
   };
   
   const handlePlantChange = (plantId: string) => {
       const plant = plants.find(p => p.id === parseInt(plantId));
       if(plant) {
         setSelectedPlant(plant);
-        resetRound();
       }
   }
 
@@ -149,7 +153,6 @@ export default function LanguageGameClient() {
       const lang = tribalLanguages.find(l => l.name === languageName);
       if(lang) {
         setSelectedLanguage(lang);
-        resetRound();
       }
   }
 
@@ -171,12 +174,13 @@ export default function LanguageGameClient() {
             </Select>
        </div>
 
-      <Card className="text-center p-8 bg-muted/50 min-h-[170px] flex flex-col justify-center">
+      <Card className="text-center p-8 bg-muted/50 min-h-[170px] flex flex-col justify-center items-center">
         {gameState === 'fetching' ? (
-          <div className="flex justify-center items-center">
+          <div className="flex flex-col items-center gap-2">
             <Loader2 className="h-8 w-8 animate-spin" />
+            <p className="text-muted-foreground">Translating...</p>
           </div>
-        ) : translation ? (
+        ) : translation && translation.translatedName !== 'Not Available' ? (
           <>
             <h2 className="text-4xl font-bold font-headline">{translation.translatedName}</h2>
             <p className="font-code text-muted-foreground">{translation.pronunciation}</p>
@@ -185,13 +189,13 @@ export default function LanguageGameClient() {
             </Button>
           </>
         ) : (
-          <p className="text-muted-foreground">Could not find a translation.</p>
+          <p className="text-muted-foreground">Could not find a translation for this combination.</p>
         )}
       </Card>
 
       <div className="text-center">
         <h3 className="text-lg font-semibold mb-4">Test your pronunciation!</h3>
-        <Button size="lg" className="rounded-full w-24 h-24" onClick={handleListen} disabled={gameState !== 'idle' || !translation}>
+        <Button size="lg" className="rounded-full w-24 h-24" onClick={handleListen} disabled={gameState !== 'idle' || !translation || translation.translatedName === 'Not Available'}>
             {gameState === 'idle' && <Mic className="h-8 w-8" />}
             {gameState === 'listening' && <div className="h-8 w-8 bg-red-500 rounded-full animate-pulse" />}
             {(gameState === 'evaluating' || gameState === 'fetching') && <Loader2 className="h-8 w-8 animate-spin" />}

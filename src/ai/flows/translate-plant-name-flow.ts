@@ -9,7 +9,7 @@
  */
 
 import { ai } from '@/ai/genkit';
-import { z } from 'genkit';
+import { z } from 'zod';
 
 const TranslatePlantNameInputSchema = z.object({
   plantName: z.string().describe('The common English name of the plant.'),
@@ -37,7 +37,7 @@ Your task is to translate the name of a plant into a specified tribal language.
 Provide the most accurate translation for the plant name.
 Also, provide a simple, easy-to-understand phonetic pronunciation guide.
 
-If a direct translation is not available or widely known, provide the most commonly used local name for that plant in that language community. If no name is known, state "Not Available".
+If a direct translation is not available or widely known, provide the most commonly used local name for that plant in that language community. If no name is known, try to find the name in a closely related language from the same region and specify that. For example, "Not available in Gondi, but in related Halbi it is...". If all else fails, and you cannot find any suitable translation, you must respond with "Not Available" for the translatedName.
 
 Plant to translate: {{{plantName}}}
 Translate to: {{{languageName}}}`,
