@@ -39,7 +39,7 @@
     {
       "id": "leaderboard-card",
       "description": "A stylized image of a golden trophy with a leaf emblem, glowing against a dark background.",
-      "imageUrl": "https://images.unsplash.com/photo-1598453482229-8732598c48a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxnb2xkZW4lMjB0cm9waHl8ZW58MHx8fHwxNzYyMjk0OTkxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/flagged/photo-1578928534298-9747fc52ec97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxyYW5rfGVufDB8fHx8MTc2MTU1NzUwMXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "golden trophy"
     },
     {
@@ -51,7 +51,7 @@
     {
       "id": "tulsi-plant",
       "description": "A holy basil (tulsi) plant in a pot.",
-      "imageUrl": "https://images.unsplash.com/photo-1696397279839-a2b8785c2113?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx0dWxzaSUyMHBsYW50fGVufDB8fHx8MTc2MTUyODA3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1696397279839-a2b8785c2113?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx0dWxzaSUyMHBsYW50fGVufDB8fHx8MTc2MTUyODA3Mnww&ixlibrb-4.1.0&q=80&w=1080",
       "imageHint": "tulsi plant"
     },
     {
