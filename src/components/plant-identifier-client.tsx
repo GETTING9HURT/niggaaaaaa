@@ -81,17 +81,28 @@ export default function PlantIdentifierClient() {
     });
   };
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
+  const onDrop = useCallback((acceptedFiles: File[], fileRejections: any[]) => {
+    if (fileRejections.length > 0) {
+      const message = fileRejections[0].errors[0].message;
+      toast({
+        variant: 'destructive',
+        title: 'File Upload Error',
+        description: message,
+      });
+      return;
+    }
+    
     if (acceptedFiles.length > 0) {
       const selectedFile = acceptedFiles[0];
       handleFile(selectedFile);
     }
-  }, []);
+  }, [toast]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: { 'image/*': ['.jpeg', '.jpg', '.png', '.webp'] },
+    accept: { 'image/*': [] },
     multiple: false,
+    maxSize: 20971520, // 20MB
   });
 
   const handleFile = (selectedFile: File) => {
