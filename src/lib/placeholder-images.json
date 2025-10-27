@@ -37,6 +37,12 @@
       "imageHint": "team collaboration"
     },
     {
+      "id": "leaderboard-card",
+      "description": "A stylized image of a trophy or a winners' podium.",
+      "imageUrl": "https://images.unsplash.com/photo-1591292095935-378f33d456b3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "trophy award"
+    },
+    {
       "id": "neem-plant",
       "description": "A healthy neem tree with lush green leaves.",
       "imageUrl": "https://images.unsplash.com/photo-1704380881202-ead38b580d9a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxuZWVtJTIwdHJlZXxlbnwwfHx8fDE3NjE0NTc1MTR8MA&ixlib=rb-4.1.0&q=80&w=1080",

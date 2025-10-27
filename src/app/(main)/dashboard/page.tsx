@@ -54,12 +54,14 @@ const features = [
     title: "Leaderboard",
     description: "Check your progress and earned badges.",
     link: "/leaderboard",
+    image: PlaceHolderImages.find(img => img.id === "leaderboard-card"),
   },
   {
     icon: Info,
     title: "About PharmaVaidya",
     description: "Learn more about our mission and technology.",
     link: "/about",
+    image: PlaceHolderImages.find(img => img.id === "about-us-image"),
   },
 ];
 
