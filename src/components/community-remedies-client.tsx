@@ -32,11 +32,17 @@ const remedySchema = z.object({
 // A new client component to handle the time display
 const TimeAgo = ({ date }: { date: string }) => {
     const [timeAgo, setTimeAgo] = useState('');
+    const [isClient, setIsClient] = useState(false);
   
     useEffect(() => {
+      setIsClient(true);
       setTimeAgo(formatDistanceToNow(new Date(date), { addSuffix: true }));
     }, [date]);
   
+    if (!isClient) {
+        return null;
+    }
+
     return (
       <div className="flex items-center gap-1">
         <Clock className="h-3 w-3" />
@@ -314,5 +320,3 @@ export default function CommunityRemediesClient() {
     </div>
   );
 }
-
-    
