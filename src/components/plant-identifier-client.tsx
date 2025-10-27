@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from 'react';
@@ -210,83 +211,82 @@ export default function PlantIdentifierClient() {
 
   if (result) {
     return (
-        <Card className="animate-in fade-in-50">
-          <CardHeader>
-            <div className="flex justify-between items-start">
-              <div>
-                <CardTitle className="font-headline text-3xl">{result.commonName}</CardTitle>
-                <p className="text-muted-foreground font-code">{result.scientificName}</p>
-              </div>
-              <Button variant="outline" onClick={handleReset}>
-                <Upload className="mr-2 h-4 w-4" /> New Scan
-              </Button>
+      <Card className="animate-in fade-in-50">
+        <CardHeader>
+          <div className="flex justify-between items-start">
+            <div>
+              <CardTitle className="font-headline text-3xl">{result.commonName}</CardTitle>
+              <p className="text-muted-foreground font-code">{result.scientificName}</p>
             </div>
-          </CardHeader>
-          <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="relative aspect-video">
-               {preview && <Image src={preview} alt={result.commonName} fill className="rounded-lg object-cover shadow-md" />}
+            <Button variant="outline" onClick={handleReset}>
+              <Upload className="mr-2 h-4 w-4" /> New Scan
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="relative aspect-video">
+             {preview && <Image src={preview} alt={result.commonName} fill className="rounded-lg object-cover shadow-md" />}
+          </div>
+          <div className="space-y-4">
+            <div className="flex flex-wrap gap-2">
+              {result.isMedicinal && <Badge className="bg-green-100 text-green-800 border-green-200">Medicinal</Badge>}
+              {result.isPoisonous && <Badge variant="destructive">Poisonous</Badge>}
+              <Badge variant="secondary">{result.family}</Badge>
             </div>
-            <div className="space-y-4">
-              <div className="flex flex-wrap gap-2">
-                {result.isMedicinal && <Badge className="bg-green-100 text-green-800 border-green-200">Medicinal</Badge>}
-                {result.isPoisonous && <Badge variant="destructive">Poisonous</Badge>}
-                <Badge variant="secondary">{result.family}</Badge>
-              </div>
-              <div>
-                <strong className="flex items-center gap-2">
-                  Also Known As:
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handlePlayAudio(result.otherNames.join(', '))}
-                    disabled={isSpeaking !== null}
-                    className="h-6 w-6"
-                  >
-                    {isSpeaking === result.otherNames.join(', ') ? <Loader2 className="animate-spin" /> : <Volume2 />}
-                  </Button>
-                </strong>
-                <span>{result.otherNames.join(', ')}</span>
-              </div>
-               <div>
-                <h4 className="font-semibold flex items-center gap-2"><Leaf /> Plant Description</h4>
-                <p className="text-sm mt-1">{result.description}</p>
-              </div>
+            <div>
+              <strong className="flex items-center gap-2">
+                Also Known As:
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handlePlayAudio(result.otherNames.join(', '))}
+                  disabled={isSpeaking !== null}
+                  className="h-6 w-6"
+                >
+                  {isSpeaking === result.otherNames.join(', ') ? <Loader2 className="animate-spin" /> : <Volume2 />}
+                </Button>
+              </strong>
+              <span>{result.otherNames.join(', ')}</span>
             </div>
-            <div className="md:col-span-2 space-y-4">
-              <div>
-                <h4 className="font-semibold text-lg flex items-center gap-2"><BookOpen /> Medicinal Uses</h4>
-                <p className="mt-2 text-sm">{result.medicinalUses}</p>
-              </div>
-             
-              <Alert variant="default" className="border-yellow-500/50 text-yellow-700">
-                <Info className="h-4 w-4 !text-yellow-700" />
-                <AlertTitle>Precautions & Warnings</AlertTitle>
-                <AlertDescription>
-                  {result.warnings}
-                </AlertDescription>
-              </Alert>
-
-              <Button asChild>
-                <Link href={`/knowledge-base?query=Tell me more about ${result.commonName}`}>
-                  <MessageSquareQuestion className="mr-2 h-4 w-4" /> Ask AI about it
-                </Link>
-              </Button>
-
+             <div>
+              <h4 className="font-semibold flex items-center gap-2"><Leaf /> Plant Description</h4>
+              <p className="text-sm mt-1">{result.description}</p>
             </div>
-          </CardContent>
-           <CardFooter>
-             <Alert className="w-full text-xs">
-              <Sparkles className="h-4 w-4" />
-              <AlertTitle>AI-Generated Information</AlertTitle>
+          </div>
+          <div className="md:col-span-2 space-y-4">
+            <div>
+              <h4 className="font-semibold text-lg flex items-center gap-2"><BookOpen /> Medicinal Uses</h4>
+              <p className="mt-2 text-sm">{result.medicinalUses}</p>
+            </div>
+           
+            <Alert variant="default" className="border-yellow-500/50 text-yellow-700">
+              <Info className="h-4 w-4 !text-yellow-700" />
+              <AlertTitle>Precautions & Warnings</AlertTitle>
               <AlertDescription>
-                This information is generated by AI and has not been verified by a medical professional. Always consult with a qualified expert before using any plant for medicinal purposes.
-              </Aler_description>
+                {result.warnings}
+              </AlertDescription>
             </Alert>
-           </CardFooter>
-        </Card>
+
+            <Button asChild>
+              <Link href={`/knowledge-base?query=Tell me more about ${result.commonName}`}>
+                <MessageSquareQuestion className="mr-2 h-4 w-4" /> Ask AI about it
+              </Link>
+            </Button>
+
+          </div>
+        </CardContent>
+         <CardFooter>
+           <Alert className="w-full text-xs">
+            <Sparkles className="h-4 w-4" />
+            <AlertTitle>AI-Generated Information</AlertTitle>
+            <AlertDescription>
+              This information is generated by AI and has not been verified by a medical professional. Always consult with a qualified expert before using any plant for medicinal purposes.
+            </AlertDescription>
+          </Alert>
+         </CardFooter>
+      </Card>
     );
   }
-
 
   return (
     <div className="space-y-6">
