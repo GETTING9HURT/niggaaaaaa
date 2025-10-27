@@ -277,11 +277,9 @@ export default function LandingPage() {
                             </ul>
                         </div>
                          <div>
-                            <h3 className="font-semibold tracking-wider">Contact Us</h3>
+                            <h3 className="font-semibold tracking-wider">Legal</h3>
                             <ul className="mt-4 space-y-2">
-                                <li><a href="mailto:aabidnot@gmail.com" className="text-muted-foreground hover:text-foreground">Email</a></li>
-                                <li><a href="https://www.instagram.com/aabid.9_" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">Instagram</a></li>
-                                 <li><Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact Page</Link></li>
+                                 <li><Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link></li>
                             </ul>
                         </div>
                     </div>
