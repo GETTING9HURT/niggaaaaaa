@@ -52,10 +52,7 @@ export function Globe({
 
   const onRender = useCallback(
     (state: Record<string, any>) => {
-      // This prevents rotation while dragging
       if (!pointerInteracting.current) {
-        // Called on every animation frame.
-        // `state` will be an empty object, return updated params.
         state.phi = state.phi + 0.002
       }
       state.phi += r.get()
@@ -89,7 +86,7 @@ export function Globe({
       ...config,
       width: width * 2,
       height: width * 2,
-      onRender,
+      onRender: onRender,
     })
 
     setTimeout(() => {
@@ -104,7 +101,7 @@ export function Globe({
       globe.destroy()
       window.removeEventListener("resize", onResize)
     }
-  }, [])
+  }, [config, onRender])
 
   return (
     <div
