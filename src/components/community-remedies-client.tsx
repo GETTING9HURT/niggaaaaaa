@@ -14,7 +14,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/componentsui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { plants, tribalLanguages } from '@/lib/data';
 import type { CommunityRemedy } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
@@ -107,17 +107,20 @@ export default function CommunityRemediesClient() {
     const photoFile = form.getValues('photo')?.[0];
     const plantName = form.getValues('plantName');
 
-    if (!photoFile) {
+    if (!plantName) {
       toast({
-        title: 'No Photo Uploaded',
-        description: 'Please upload a photo of the plant first.',
+        variant: "default",
+        title: 'Plant Not Selected',
+        description: 'Please select a plant name before using the AI scanner.',
       });
       return;
     }
-    if (!plantName) {
+    
+    if (!photoFile) {
       toast({
-        title: 'No Plant Selected',
-        description: 'Please select the plant name before scanning.',
+        variant: "default",
+        title: 'No Photo Uploaded',
+        description: 'Please upload a photo of the plant first.',
       });
       return;
     }
@@ -140,6 +143,7 @@ export default function CommunityRemediesClient() {
     } catch (error) {
       console.error('AI Scan failed:', error);
       toast({
+        variant: "default",
         title: 'AI Scan Failed',
         description: 'Could not generate AI suggestions at this time. Please try again.',
       });
@@ -152,17 +156,18 @@ export default function CommunityRemediesClient() {
   async function onSubmit(values: z.infer<typeof remedySchema>) {
     setIsSubmitting(true);
     
-    try {
-      const photoFile = values.photo?.[0];
-      if (!photoFile) {
-        toast({
-          title: 'Photo Required',
-          description: 'Please upload a photo to submit a remedy.',
-        });
-        setIsSubmitting(false);
-        return;
-      }
+    const photoFile = values.photo?.[0];
+    if (!photoFile) {
+      toast({
+        variant: "default",
+        title: 'Photo Required',
+        description: 'Please upload a photo to submit a remedy.',
+      });
+      setIsSubmitting(false);
+      return;
+    }
 
+    try {
       const photoUrl = await fileToDataUri(photoFile);
       
       const verificationInput = {
@@ -177,6 +182,7 @@ export default function CommunityRemediesClient() {
 
       if (!verificationResult.isPlausible) {
         toast({
+          variant: "default",
           title: 'Submission Rejected by AI',
           description: `Reason: ${verificationResult.verificationNotes}`,
         });
@@ -184,11 +190,12 @@ export default function CommunityRemediesClient() {
         return;
       }
       
-      const { photo, ...restOfValues } = values;
-
       const newRemedy: CommunityRemedy = {
         id: uuidv4(),
-        ...restOfValues,
+        plantName: values.plantName,
+        remedyDescription: values.remedyDescription,
+        language: values.language,
+        effectivenessRating: values.effectivenessRating,
         photoUrl,
         submittedAt: new Date().toISOString(),
         upvotes: 0,
@@ -210,6 +217,7 @@ export default function CommunityRemediesClient() {
     } catch (error) {
       console.error("Could not submit remedy:", error);
       toast({
+        variant: "default",
         title: 'Submission Failed',
         description: 'An unexpected error occurred. Please try again.',
       });
@@ -446,5 +454,3 @@ export default function CommunityRemediesClient() {
     </div>
   );
 }
-
-    
