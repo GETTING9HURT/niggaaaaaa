@@ -279,7 +279,7 @@ export default function LandingPage() {
                          <div>
                             <h3 className="font-semibold tracking-wider">Legal</h3>
                             <ul className="mt-4 space-y-2">
-                                 <li><Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link></li>
+                                 <li><Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact Page</Link></li>
                             </ul>
                         </div>
                     </div>
