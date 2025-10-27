@@ -11,6 +11,7 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { tribalLanguageChatbot } from '@/ai/flows/tribal-language-chatbot';
 import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 type Message = {
   role: 'user' | 'bot';
@@ -21,8 +22,41 @@ export function TribalLanguageChatbotClient() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const recognitionRef = useRef<any>(null);
   const { toast } = useToast();
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'webkitSpeechRecognition' in window) {
+      const recognition = new (window as any).webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+
+      recognition.onresult = (event: any) => {
+        const transcript = event.results[0][0].transcript;
+        setInput(transcript);
+        setIsRecording(false);
+      };
+
+      recognition.onerror = (event: any) => {
+        console.error('Speech recognition error:', event.error);
+        toast({
+          variant: 'destructive',
+          title: 'Speech Recognition Error',
+          description: event.error === 'not-allowed' ? 'Microphone access denied.' : 'Could not understand audio. Please try again.',
+        });
+        setIsRecording(false);
+      };
+
+      recognition.onend = () => {
+        setIsRecording(false);
+      };
+
+      recognitionRef.current = recognition;
+    }
+  }, [toast]);
 
   const handleQuery = async (query: string) => {
     if (!query.trim() || isLoading) return;
@@ -59,6 +93,19 @@ export function TribalLanguageChatbotClient() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     handleQuery(input);
+  };
+  
+  const handleMicClick = () => {
+    if (!recognitionRef.current) {
+      toast({ variant: 'destructive', title: 'Browser Not Supported', description: 'Speech recognition is not available in your browser.' });
+      return;
+    }
+    if (isRecording) {
+      recognitionRef.current.stop();
+    } else {
+      recognitionRef.current.start();
+      setIsRecording(true);
+    }
   };
 
   return (
@@ -129,8 +176,8 @@ export function TribalLanguageChatbotClient() {
             disabled={isLoading}
           />
           <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
-            <Button type="button" size="icon" variant="ghost" disabled={isLoading}>
-              <Mic className="h-4 w-4" />
+            <Button type="button" size="icon" variant="ghost" onClick={handleMicClick} disabled={isLoading}>
+              <Mic className={cn("h-4 w-4", isRecording && "text-red-500")} />
             </Button>
             <Button type="submit" size="icon" disabled={isLoading || !input.trim()}>
               <CornerDownLeft className="h-4 w-4" />
