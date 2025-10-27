@@ -27,7 +27,7 @@ export default function AboutPage() {
             </p>
           </div>
           {heroImage && (
-            <div className="relative min-h-[250px] md:min-h-[300px] lg:min-h-[400px]">
+            <div className="relative min-h-[300px] lg:min-h-[400px]">
               <Image
                 src={heroImage.imageUrl}
                 alt={heroImage.description}

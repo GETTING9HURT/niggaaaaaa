@@ -15,6 +15,7 @@ import {
   Bot,
   GalleryThumbnails,
   Group,
+  Contact,
 } from "lucide-react";
 import {
   Collapsible,
@@ -36,6 +37,8 @@ const links = [
   { href: "/community-remedies", label: "Community", icon: Users },
   { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
   { href: "/about", label: "About", icon: Info },
+  { href: "/team", label: "Team", icon: Group },
+  { href: "/contact", label: "Contact", icon: Contact },
 ];
 
 const aiBotLinks = [

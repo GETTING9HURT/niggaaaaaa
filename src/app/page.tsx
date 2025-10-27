@@ -50,6 +50,9 @@ export default function LandingPage() {
             <Link href="/team" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
               Team
             </Link>
+             <Link href="/contact" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+              Contact
+            </Link>
             <Button asChild>
               <Link href="/dashboard">
                 Dashboard <ArrowRight className="ml-2 h-4 w-4" />
@@ -273,6 +276,14 @@ export default function LandingPage() {
                                 <li><Link href="/team" className="text-muted-foreground hover:text-foreground">Team</Link></li>
                             </ul>
                         </div>
+                         <div>
+                            <h3 className="font-semibold tracking-wider">Contact Us</h3>
+                            <ul className="mt-4 space-y-2">
+                                <li><a href="mailto:aabidnot@gmail.com" className="text-muted-foreground hover:text-foreground">Email</a></li>
+                                <li><a href="https://www.instagram.com/aabid.9_" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">Instagram</a></li>
+                                 <li><Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact Page</Link></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -286,11 +297,3 @@ export default function LandingPage() {
   );
 }
     
-
-    
-
-    
-
-
-
-  
