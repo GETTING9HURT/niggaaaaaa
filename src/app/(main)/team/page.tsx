@@ -46,7 +46,7 @@ export default function TeamPage() {
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-6 text-center">
             <Image
-                src="https://picsum.photos/seed/shayank/120/120"
+                src="https://i.ibb.co/Jw7QR9wr/Screenshot-2025-10-27-163028.png"
                 alt="Shayank Yadav"
                 width={120}
                 height={120}
