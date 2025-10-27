@@ -8,6 +8,7 @@ import * as z from 'zod';
 import { ArrowDown, ArrowUp, CheckCircle, Clock, File, Image as ImageIcon, Loader2, PlusCircle, ThumbsDown, ThumbsUp, XCircle } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { collection, addDoc, getDocs, query, orderBy, doc, updateDoc, increment } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -20,7 +21,7 @@ import type { CommunityRemedy } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 import { verifyRemedy } from '@/ai/flows/community-remedy-verification';
 import { Alert, AlertDescription, AlertTitle } from './ui/alert';
-import { db } from '@/lib/firebase';
+import { db, storage } from '@/lib/firebase';
 import { Skeleton } from './ui/skeleton';
 
 
@@ -104,22 +105,30 @@ export default function CommunityRemediesClient() {
 
   async function onSubmit(values: z.infer<typeof remedySchema>) {
     setIsVerifying(true);
-    let photoDataUri: string | undefined;
-    if (values.photo && values.photo.length > 0) {
-      photoDataUri = await fileToDataUri(values.photo[0]);
-    } else {
-        photoDataUri = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
-    }
+    let photoUrl = '';
+    let photoDataUriForVerification = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+    
+    const photoFile = values.photo?.[0];
 
     try {
+        if (photoFile) {
+            // Upload to Firebase Storage
+            const storageRef = ref(storage, `remedy-photos/${Date.now()}_${photoFile.name}`);
+            const snapshot = await uploadBytes(storageRef, photoFile);
+            photoUrl = await getDownloadURL(snapshot.ref);
+            
+            // Create data URI for AI verification only
+            photoDataUriForVerification = await fileToDataUri(photoFile);
+        }
+
         const verificationResult = await verifyRemedy({
             ...values,
-            photoDataUri,
+            photoDataUri: photoDataUriForVerification,
         });
 
         const newRemedy: Omit<CommunityRemedy, 'id'> = {
             ...values,
-            photoDataUri,
+            photoUrl,
             submittedAt: new Date().toISOString(),
             upvotes: 0,
             downvotes: 0,
@@ -322,9 +331,9 @@ export default function CommunityRemediesClient() {
               <Card key={remedy.id} className="flex flex-col">
                 <CardHeader>
                   <CardTitle>{remedy.plantName}</CardTitle>
-                   {remedy.photoDataUri && remedy.photoDataUri.startsWith('data:') && (
+                   {remedy.photoUrl && (
                       <div className="relative aspect-video mt-2">
-                          <img src={remedy.photoDataUri} alt={`Remedy for ${remedy.plantName}`} className="rounded-md object-cover w-full h-full" />
+                          <img src={remedy.photoUrl} alt={`Remedy for ${remedy.plantName}`} className="rounded-md object-cover w-full h-full" />
                       </div>
                     )}
                 </CardHeader>

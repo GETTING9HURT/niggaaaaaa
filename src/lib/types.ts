@@ -33,7 +33,7 @@ export interface CommunityRemedy {
   submittedAt: any;
   upvotes: number;
   downvotes: number;
-  photoDataUri?: string; // Optional as it might be large
+  photoUrl?: string;
   isPlausible?: boolean;
   verificationNotes?: string;
 }
