@@ -40,7 +40,7 @@ export interface CommunityRemedy {
 
 export interface UserProgress {
   points: number;
-  identifiedPlants: number[];
+  identifiedPlants: string[];
   remediesContributed: number;
   languageTests: {
     [plantId: number]: {
