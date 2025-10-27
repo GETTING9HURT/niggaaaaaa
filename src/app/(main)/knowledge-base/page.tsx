@@ -8,8 +8,8 @@ import { ArrowRight } from 'lucide-react';
 
 export default function KnowledgeBasePage() {
   return (
-    <div className="grid lg:grid-cols-3 gap-8 p-4 md:p-8 h-full">
-      <div className="lg:col-span-2 flex flex-col">
+    <div className="flex flex-col h-full p-4 md:p-8 gap-8">
+      <div className="flex-grow flex flex-col">
         <Card className="flex-1 flex flex-col shadow-lg">
           <CardHeader>
             <CardTitle className="font-headline text-3xl">Medicinal Knowledge Chatbot</CardTitle>
@@ -23,12 +23,12 @@ export default function KnowledgeBasePage() {
         </Card>
       </div>
 
-      <div className="flex flex-col gap-4 h-full">
+      <div className="flex flex-col gap-4">
         <h2 className="text-2xl font-bold font-headline">Browse Plants</h2>
-        <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {plants.map(plant => (
           <Card key={plant.id} className="overflow-hidden hover:shadow-md transition-shadow">
-            <div className="relative h-32 w-full">
+            <div className="relative h-40 w-full">
               <Image src={plant.imageUrl} alt={plant.englishName} fill className="object-cover" data-ai-hint={plant.imageHint} />
             </div>
             <CardHeader>
