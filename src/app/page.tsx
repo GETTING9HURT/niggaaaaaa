@@ -226,14 +226,14 @@ export default function LandingPage() {
         {/* Globe Section */}
         <section className="w-full py-16 md:py-24 bg-muted">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="relative flex flex-col md:flex-row items-center justify-center w-full max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-4xl mx-auto">
               <div className="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
                   <h2 className="text-3xl font-bold font-headline">A Global Heritage</h2>
                   <p className="mt-2 text-muted-foreground">
                     The knowledge of medicinal plants is a treasure shared by indigenous communities across the world. Our mission is to connect and preserve this wisdom on a global scale.
                   </p>
               </div>
-              <div className="relative flex h-96 w-full items-center justify-center overflow-hidden rounded-lg border bg-background/50 md:w-1/2 md:shadow-xl">
+              <div className="relative flex h-80 w-full items-center justify-center overflow-hidden rounded-lg border bg-background/50 md:h-96 md:w-1/2 md:shadow-xl">
                 <Globe className="top-8" />
               </div>
             </div>
@@ -289,4 +289,3 @@ export default function LandingPage() {
     
 
     
-
