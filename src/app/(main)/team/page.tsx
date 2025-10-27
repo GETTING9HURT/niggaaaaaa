@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { GraduationCap, User, Megaphone } from "lucide-react";
@@ -45,12 +46,11 @@ export default function TeamPage() {
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-6 text-center">
              <Image
-                src="https://images.unsplash.com/photo-1626705343685-eb1e06c9271f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNXx8dmVjdG9yJTIwfGVufDB8fHx8MTc2MTU2MjY3Mnww&ixlib=rb-4.1.0&q=80&w=1080"
+                src="https://i.ibb.co/Jw7QR9wr/Screenshot-2025-10-27-163028.png"
                 alt="Shayank Yadav"
                 width={120}
                 height={120}
                 className="rounded-full border-4 border-primary/20 shadow-lg"
-                data-ai-hint="male portrait"
               />
             <div>
               <h3 className="text-xl font-bold">Shayank Yadav</h3>
