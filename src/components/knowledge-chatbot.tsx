@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
@@ -72,7 +73,7 @@ export function KnowledgeChatbot() {
   };
 
   return (
-    <div className="h-full flex flex-col border rounded-lg shadow-inner">
+    <div className="h-[60vh] flex flex-col border rounded-lg shadow-inner">
       <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
         <div className="space-y-6">
           <div className="flex items-start gap-3">
