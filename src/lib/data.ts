@@ -1,3 +1,4 @@
+
 import type { Plant, TribalLanguage } from './types';
 
 export const plants: Plant[] = [
@@ -146,7 +147,7 @@ export const plants: Plant[] = [
         'Used in medicated oils for head massage.'
     ],
     precautions: ['Can cause stomach cramps and nausea on an empty stomach.'],
-    imageUrl: "https://images.unsplash.com/photo-1599228525049-55531a894a48?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxiYWNvcGElMjBtb25uaWVyaXxlbnwwfHx8fDE3NjIxOTY1NDl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    imageUrl: "https://images.unsplash.com/photo-1693380140795-745c219de8c3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxicmFobWl8ZW58MHx8fHwxNzYxNTQyMDU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
     imageHint: "brahmi plant"
   },
   {
