@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import {
   BookOpen,
-  Home,
+  LayoutDashboard,
   Languages,
   Leaf,
   Trophy,
@@ -20,7 +20,7 @@ import {
 import { cn } from "@/lib/utils";
 
 const links = [
-  { href: "/", label: "Home", icon: Home },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/identify", label: "Identify Plant", icon: Leaf },
   { href: "/knowledge-base", label: "Knowledge Base", icon: BookOpen },
   { href: "/language-learning", label: "Language Hub", icon: Languages },
