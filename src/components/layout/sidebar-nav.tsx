@@ -14,6 +14,7 @@ import {
   MessageCircle,
   Bot,
   GalleryThumbnails,
+  Group,
 } from "lucide-react";
 import {
   Collapsible,
@@ -35,6 +36,7 @@ const links = [
   { href: "/community-remedies", label: "Community", icon: Users },
   { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
   { href: "/about", label: "About", icon: Info },
+  { href: "/team", label: "Team", icon: Group },
 ];
 
 const aiBotLinks = [

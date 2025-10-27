@@ -47,6 +47,9 @@ export default function LandingPage() {
             <Link href="/about" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
               About
             </Link>
+            <Link href="/team" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+              Team
+            </Link>
             <Button asChild>
               <Link href="/dashboard">
                 Dashboard <ArrowRight className="ml-2 h-4 w-4" />
@@ -151,7 +154,7 @@ export default function LandingPage() {
                 An integrated platform for knowledge, language, and community.
               </p>
             </div>
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
               <Card className="flex flex-col text-center items-center p-6">
                 <Leaf className="h-12 w-12 text-primary" />
                 <h3 className="mt-4 text-xl font-bold font-headline">Plant Identification</h3>
@@ -174,14 +177,6 @@ export default function LandingPage() {
                 <p className="mt-2 text-muted-foreground flex-grow">Share and discover traditional remedies, building a collective wisdom database verified by the community.</p>
                 <Button variant="link" asChild className="mt-4">
                   <Link href="/community-remedies">Explore <ChevronRight className="ml-1 h-4 w-4" /></Link>
-                </Button>
-              </Card>
-               <Card className="flex flex-col text-center items-center p-6">
-                <Info className="h-12 w-12 text-primary" />
-                <h3 className="mt-4 text-xl font-bold font-headline">About Us</h3>
-                <p className="mt-2 text-muted-foreground flex-grow">Learn about our mission, the developer behind the project, and the technology that powers PharmaVaidya.</p>
-                <Button variant="link" asChild className="mt-4">
-                  <Link href="/about">Explore <ChevronRight className="ml-1 h-4 w-4" /></Link>
                 </Button>
               </Card>
             </div>
@@ -260,7 +255,7 @@ export default function LandingPage() {
                     <p className="mt-2 max-w-xs mx-auto md:mx-0 text-muted-foreground">Preserving traditional medicinal knowledge and tribal languages through AI.</p>
                 </div>
                 <div className="md:col-span-2">
-                    <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+                    <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
                         <div>
                             <h3 className="font-semibold tracking-wider">Explore</h3>
                             <ul className="mt-4 space-y-2">
@@ -274,7 +269,7 @@ export default function LandingPage() {
                             <ul className="mt-4 space-y-2">
                                 <li><Link href="/about" className="text-muted-foreground hover:text-foreground">Our Mission</Link></li>
                                 <li><Link href="#features" className="text-muted-foreground hover:text-foreground">Features</Link></li>
-                                <li><Link href="/about" className="text-muted-foreground hover:text-foreground">Team</Link></li>
+                                <li><Link href="/team" className="text-muted-foreground hover:text-foreground">Team</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -294,3 +289,4 @@ export default function LandingPage() {
     
 
     
+

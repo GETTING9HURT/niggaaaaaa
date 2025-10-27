@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { Leaf, Cpu, GitBranch, HeartHandshake, Code, User, GraduationCap } from "lucide-react";
+import { Leaf, Cpu, GitBranch, HeartHandshake } from "lucide-react";
 
 export default function AboutPage() {
   const aboutImage = PlaceHolderImages.find(p => p.id === 'about-us-image');
@@ -26,46 +26,18 @@ export default function AboutPage() {
               By leveraging AI, we aim to create a platform that not only identifies plants and their uses but also helps in learning and preserving the languages that are intrinsically linked to this knowledge.
             </p>
           </div>
-          {aboutImage && (
+          {heroImage && (
             <div className="relative min-h-[300px]">
               <Image
-                src={aboutImage.imageUrl}
-                alt={aboutImage.description}
+                src={heroImage.imageUrl}
+                alt={heroImage.description}
                 fill
                 className="object-cover"
-                data-ai-hint={aboutImage.imageHint}
+                data-ai-hint={heroImage.imageHint}
               />
             </div>
           )}
         </div>
-      </Card>
-      
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-3">
-            <User className="w-8 h-8 text-primary" />
-            <span className="font-headline">The Developer</span>
-          </CardTitle>
-          <CardDescription>This project was brought to life by a passionate student developer.</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col md:flex-row items-center gap-6">
-           <Image
-              src="https://i.ibb.co/6bsZJbY/Whats-App-Image-2024-08-01-at-20-41-45-70335804.jpg"
-              alt="Aabid Hasan"
-              width={120}
-              height={120}
-              className="rounded-full border-4 border-primary/20 shadow-lg"
-            />
-          <div>
-            <h3 className="text-xl font-bold">Aabid Hasan</h3>
-            <p className="text-muted-foreground flex items-center gap-2 mt-1">
-              <GraduationCap className="w-5 h-5"/> 11th Grade Student, Govt. co - ed sarvodaya school New delhi -71
-            </p>
-            <p className="mt-2">
-              Aabid developed PharmaVaidya for the Viksit Bharat Buildathon with the goal of using AI to preserve and share India's rich medicinal heritage for future generations.
-            </p>
-          </div>
-        </CardContent>
       </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
