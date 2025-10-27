@@ -30,6 +30,7 @@ import React from "react";
 const links = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/identify", label: "Identify Plant", icon: Leaf },
+  { href: "/language-learning", label: "Language Hub", icon: Languages },
   { href: "/community-remedies", label: "Community", icon: Users },
   { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
   { href: "/about", label: "About", icon: Info },
