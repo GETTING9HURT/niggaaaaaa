@@ -169,10 +169,15 @@ export default function CommunityRemediesClient() {
 
       const photoUrl = await fileToDataUri(photoFile);
       
-      const verificationResult = await verifyRemedy({
-        ...values,
+      const verificationInput = {
+        plantName: values.plantName,
+        remedyDescription: values.remedyDescription,
+        language: values.language,
+        effectivenessRating: values.effectivenessRating,
         photoDataUri: photoUrl,
-      });
+      };
+
+      const verificationResult = await verifyRemedy(verificationInput);
 
       if (!verificationResult.isPlausible) {
         toast({
@@ -447,5 +452,3 @@ export default function CommunityRemediesClient() {
     </div>
   );
 }
-
-    
