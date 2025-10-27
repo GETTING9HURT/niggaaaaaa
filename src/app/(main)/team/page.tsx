@@ -1,7 +1,7 @@
 
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { GraduationCap, User, Megaphone } from "lucide-react";
+import { GraduationCap, User, Megaphone, Code } from "lucide-react";
 
 export default function TeamPage() {
   return (
@@ -29,6 +29,9 @@ export default function TeamPage() {
               />
             <div>
               <h3 className="text-xl font-bold">Aabid Hasan</h3>
+              <p className="text-muted-foreground flex items-center justify-center gap-2 mt-1">
+                <Code className="w-5 h-5"/> Developer
+              </p>
               <p className="mt-2 text-sm">
                 Aabid developed PharmaVaidya for the Viksit Bharat Buildathon with the goal of using AI to preserve and share India's rich medicinal heritage for future generations.
               </p>
