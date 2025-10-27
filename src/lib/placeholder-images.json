@@ -3,14 +3,14 @@
     {
       "id": "hero-image",
       "description": "A vibrant, sunlit image of various medicinal herbs and plants, with a focus on Indian botanicals.",
-      "imageUrl": "https://images.unsplash.com/photo-1600155792942-7d2a58872f7d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxpbmRpYW4lMjBoZXJic3xlbnwwfHx8fDE3NjIyOTQ1OTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1598555763564-28a0a86f9168?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjBoZXJicyUyMGF5dXJ2ZWRhfGVufDB8fHx8MTc2MjI5NTM5N3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "indian herbs"
     },
     {
       "id": "plant-identification-card",
       "description": "Close-up of a person's hand holding a lush green leaf, symbolizing nature and care.",
-      "imageUrl": "https://images.unsplash.com/photo-1596238257211-e18a478a5b28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwbGFudCUyMGlkZW50aWZpY2F0aW9uJTIwaGFuZHxlbnwwfHx8fDE3NjIyOTQ3MjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "plant identification"
+      "imageUrl": "https://images.unsplash.com/photo-1518621736915-f3b1c41bfd6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxncmVlbiUyMGxlYWYlMjBoYW5kfGVufDB8fHx8MTc2MjI5NTU1Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "leaf hand"
     },
     {
       "id": "medicinal-knowledge-card",
@@ -27,7 +27,7 @@
     {
       "id": "community-remedies-card",
       "description": "A group of diverse people from an Indian village sitting together, sharing knowledge and looking at plants.",
-      "imageUrl": "https://images.unsplash.com/photo-1629210289697-85b20f384c98?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjB2aWxsYWdlJTIwY29tbXVuaXR5fGVufDB8fHx8MTc2MjI5NDkyMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://plus.unsplash.com/premium_photo-1661962354924-f7243c21827c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjBjb21tdW5pdHklMjBzaGFyaW5nfGVufDB8fHx8MTc2MjI5NTYwM3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "indian community"
     },
     {
@@ -57,7 +57,7 @@
     {
       "id": "ashwagandha-plant",
       "description": "Ashwagandha plant with its roots visible.",
-      "imageUrl": "https://images.unsplash.com/photo-1565113423207-a492a62a70fe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhc2h3YWdhbmRoYSUyMHBsYW50fGVufDB8fHx8MTc2MTQ1NzUxM3ww&ixlibrb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1565113423207-a492a62a70fe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhc2h3YWdhbmRoYSUyMHBsYW50fGVufDB8fHx8MTc2MTQ1NzUxM3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "ashwagandha plant"
     }
   ]
