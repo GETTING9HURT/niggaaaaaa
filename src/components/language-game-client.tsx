@@ -2,7 +2,8 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Volume2, Mic, Check, X, RefreshCw, Loader2, ChevronsUpDown, CheckCircle } from 'lucide-react';
+import Link from 'next/link';
+import { Volume2, Mic, Check, X, RefreshCw, Loader2, ChevronsUpDown, CheckCircle, HelpCircle } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -16,6 +17,7 @@ import { textToSpeech } from '@/ai/flows/text-to-speech-flow';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { cn } from '@/lib/utils';
+import { StarBorder } from './ui/star-border';
 
 
 type GameState = 'idle' | 'listening' | 'evaluating' | 'result' | 'fetching';
@@ -267,8 +269,12 @@ export default function LanguageGameClient() {
             <Progress value={(score % 100)} className="mt-2" />
         </CardContent>
       </Card>
+
+      <Link href="/language-bot" className="block">
+        <StarBorder as="div">
+          <HelpCircle className="mr-2 h-4 w-4" /> Ask AI about Languages
+        </StarBorder>
+      </Link>
     </div>
   );
 }
-
-    

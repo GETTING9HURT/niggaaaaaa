@@ -10,6 +10,7 @@ import {
   Trophy,
   Users,
   Info,
+  MessageCircle,
 } from "lucide-react";
 
 import {
@@ -24,6 +25,7 @@ const links = [
   { href: "/identify", label: "Identify Plant", icon: Leaf },
   { href: "/knowledge-base", label: "Knowledge Base", icon: BookOpen },
   { href: "/language-learning", label: "Language Hub", icon: Languages },
+  { href: "/language-bot", label: "Language Bot", icon: MessageCircle },
   { href: "/community-remedies", label: "Community", icon: Users },
   { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
   { href: "/about", label: "About", icon: Info },
