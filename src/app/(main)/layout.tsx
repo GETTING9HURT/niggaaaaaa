@@ -5,6 +5,7 @@ import {
   SidebarInset,
   SidebarProvider,
   SidebarFooter,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Header } from "@/components/layout/header";
 import { SidebarNav } from "@/components/layout/sidebar-nav";
@@ -20,11 +21,14 @@ export default function MainLayout({
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader className="p-4">
-          <div className="flex items-center gap-2">
-            <Logo className="text-sidebar-primary" />
-            <span className="text-xl font-semibold text-sidebar-foreground">
-              PharmaVaidya
-            </span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Logo className="text-sidebar-primary" />
+              <span className="text-xl font-semibold text-sidebar-foreground">
+                PharmaVaidya
+              </span>
+            </div>
+            <SidebarTrigger className="text-sidebar-foreground" />
           </div>
         </SidebarHeader>
         <SidebarContent>
