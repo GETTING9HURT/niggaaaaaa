@@ -233,8 +233,8 @@ export default function LandingPage() {
                     The knowledge of medicinal plants is a treasure shared by indigenous communities across the world. Our mission is to connect and preserve this wisdom on a global scale.
                   </p>
               </div>
-              <div className="relative flex h-80 w-full items-center justify-center overflow-hidden rounded-lg border bg-background/50 md:h-96 md:w-1/2 md:shadow-xl">
-                <Globe className="top-8" />
+              <div className="relative flex h-64 w-full items-center justify-center overflow-hidden rounded-lg border bg-background/50 md:h-96 md:w-1/2 md:shadow-xl">
+                <Globe className="top-8 md:top-0" />
               </div>
             </div>
           </div>
@@ -289,3 +289,4 @@ export default function LandingPage() {
     
 
     
+
