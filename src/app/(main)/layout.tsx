@@ -43,8 +43,8 @@ function MainLayoutContent({
                 </span>
               </div>
             </Link>
-            <Link href="/dashboard" className="hidden items-center justify-center p-2 group-data-[collapsible=icon]:flex">
-               <Logo className="size-10" />
+            <Link href="/dashboard" className="hidden h-12 w-12 items-center justify-center p-2 group-data-[collapsible=icon]:flex">
+               <Logo className="size-12" />
             </Link>
         </SidebarHeader>
         <SidebarContent>
