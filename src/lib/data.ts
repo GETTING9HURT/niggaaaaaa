@@ -124,7 +124,7 @@ export const plants: Plant[] = [
         'Used in hair oils and masks.'
     ],
     precautions: ['May increase acidity in some individuals.'],
-    imageUrl: "https://images.unsplash.com/photo-1626543136275-565550244675?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhbWxhJTIwZnJ1aXR8ZW58MHx8fHwxNzYyMTk2NTIxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    imageUrl: "https://images.unsplash.com/photo-1676043967557-2b70d9facd71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhbWxhfGVufDB8fHx8MTc2MTU0MjA3M3ww&ixlib=rb-4.1.0&q=80&w=1080",
     imageHint: "amla fruit"
   },
   {
