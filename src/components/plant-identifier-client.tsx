@@ -17,6 +17,7 @@ import { textToSpeech } from '@/ai/flows/text-to-speech-flow';
 import useLocalStorage from '@/hooks/use-local-storage';
 import { UserProgress } from '@/lib/types';
 import { toast } from '@/hooks/use-toast';
+import { StarBorder } from './ui/star-border';
 
 export default function PlantIdentifierClient() {
   const [file, setFile] = useState<File | null>(null);
@@ -290,11 +291,11 @@ export default function PlantIdentifierClient() {
               </AlertDescription>
             </Alert>
 
-            <Button asChild>
-              <Link href={`/knowledge-base?query=Tell me more about ${result.commonName}`}>
+            <Link href={`/knowledge-base?query=Tell me more about ${result.commonName}`}>
+              <StarBorder as="div">
                 <HelpCircle className="mr-2 h-4 w-4" /> Ask AI about it
-              </Link>
-            </Button>
+              </StarBorder>
+            </Link>
 
           </div>
         </CardContent>
