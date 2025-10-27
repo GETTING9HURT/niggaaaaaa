@@ -19,13 +19,13 @@ import {
   Users,
   Feather,
   UploadCloud,
-  ListTree,
   Heart,
   Search,
 } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Logo } from "@/components/icons/logo";
 import { VelocityScroll } from "@/components/ui/scroll-based-velocity";
+import { Globe } from "@/components/ui/globe";
 
 export default function LandingPage() {
   const heroImage = PlaceHolderImages.find(p => p.id === 'hero-image');
@@ -62,18 +62,20 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative w-full h-[50vh] flex items-center justify-center">
-           {heroImage && (
-            <Image
-              src={heroImage.imageUrl}
-              alt="Lush green leaves representing nature and health"
-              fill
-              className="object-cover"
-              priority
-              data-ai-hint="medicinal herbs"
-            />
+        <section className="relative w-full h-[60vh] flex items-center justify-center">
+          {heroImage && (
+            <div className="absolute inset-0">
+              <Image
+                src={heroImage.imageUrl}
+                alt={heroImage.description}
+                fill
+                className="object-cover"
+                priority
+                data-ai-hint={heroImage.imageHint}
+              />
+              <div className="absolute inset-0 bg-black/50" />
+            </div>
           )}
-          <div className="absolute inset-0 bg-black/50" />
           <div className="container relative z-10 mx-auto px-4 text-center text-white">
             <h1 className="text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl font-headline">
               Preserve Medicinal Plants & Tribal Languages
@@ -216,6 +218,24 @@ export default function LandingPage() {
             />
         </section>
 
+        {/* Globe Section */}
+        <section className="w-full py-16 md:py-24 bg-muted">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="relative flex flex-col md:flex-row items-center justify-center w-full max-w-4xl mx-auto">
+              <div className="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
+                  <h2 className="text-3xl font-bold font-headline">A Global Heritage</h2>
+                  <p className="mt-2 text-muted-foreground">
+                    The knowledge of medicinal plants is a treasure shared by indigenous communities across the world. Our mission is to connect and preserve this wisdom on a global scale.
+                  </p>
+              </div>
+              <div className="relative flex h-96 w-full items-center justify-center overflow-hidden rounded-lg border bg-background/50 md:w-1/2 md:shadow-xl">
+                <Globe className="top-8" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+
       </main>
 
       {/* Footer */}
@@ -258,6 +278,4 @@ export default function LandingPage() {
     </div>
   );
 }
-    
-
     
