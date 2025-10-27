@@ -224,7 +224,7 @@ export default function LandingPage() {
         </section>
 
         {/* Globe Section */}
-        <section className="w-full py-16 md:py-24 bg-muted">
+        <section className="w-full py-12 md:py-24 bg-muted">
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-4xl mx-auto">
               <div className="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
@@ -234,7 +234,7 @@ export default function LandingPage() {
                   </p>
               </div>
               <div className="relative flex h-64 w-full items-center justify-center overflow-hidden rounded-lg border bg-background/50 md:h-96 md:w-1/2 md:shadow-xl">
-                <Globe className="top-8 md:top-0" />
+                <Globe className="top-12 md:top-0" />
               </div>
             </div>
           </div>
@@ -289,4 +289,3 @@ export default function LandingPage() {
     
 
     
-
