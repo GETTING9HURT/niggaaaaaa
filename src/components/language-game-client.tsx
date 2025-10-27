@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Volume2, Mic, Check, X, RefreshCw, Loader2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -221,4 +221,3 @@ export default function LanguageGameClient() {
     </div>
   );
 }
-
