@@ -22,7 +22,7 @@ export function KnowledgeChatbot() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const scrollViewportRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const searchParams = useSearchParams();
 
@@ -63,8 +63,10 @@ export function KnowledgeChatbot() {
 
 
   useEffect(() => {
-    if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
+    if (scrollViewportRef.current) {
+        setTimeout(() => {
+            scrollViewportRef.current!.scrollTop = scrollViewportRef.current!.scrollHeight;
+        }, 100);
     }
   }, [messages]);
 
@@ -74,8 +76,8 @@ export function KnowledgeChatbot() {
   };
 
   return (
-    <div className="h-[70vh] flex flex-col border rounded-lg shadow-inner">
-      <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
+    <div className="flex-1 flex flex-col border rounded-lg shadow-inner min-h-0">
+      <ScrollArea className="flex-1 p-4" viewportRef={scrollViewportRef}>
         <div className="space-y-4">
           <div className="flex items-start gap-3">
             <Avatar className="h-8 w-8">
