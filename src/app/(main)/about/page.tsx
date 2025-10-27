@@ -20,10 +20,10 @@ export default function AboutPage() {
           <div className="p-8 space-y-6 flex flex-col justify-center">
             <h2 className="text-2xl font-bold font-headline">Our Mission</h2>
             <p>
-              PharmaVaidya is born from a desire to preserve and revitalize the rich heritage of traditional medicinal knowledge, particularly from the diverse tribal communities of India. In a world of rapid modernization, this invaluable wisdom is at risk of being lost.
+              PharmaVaidya, powered by Aurora Flow, is born from a mission to illuminate the path to our ancestral wisdom. Like the dawn, we aim to cast a new light on the rich heritage of traditional medicine, especially from India's diverse tribal communities, ensuring this invaluable knowledge is not lost to the shadows of modernization.
             </p>
             <p>
-              Our mission is to build a bridge between this ancient knowledge and modern technology, making it accessible, verifiable, and useful for a new generation. By leveraging AI, we aim to create a platform that not only identifies plants but also helps in learning and preserving the languages intrinsically linked to this knowledge.
+              Our purpose is to be a guiding light, bridging ancient practices with modern technology. We make this wisdom accessible, verifiable, and useful for a new generation, creating a platform that not only identifies nature's remedies but also helps preserve the languages that are the very soul of this knowledge.
             </p>
           </div>
           {heroImage && (
