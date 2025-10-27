@@ -62,9 +62,9 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative w-full h-[60vh] flex items-center justify-center">
+        <section className="relative w-full h-[60vh]">
           {heroImage && (
-            <div className="absolute inset-0">
+            <>
               <Image
                 src={heroImage.imageUrl}
                 alt={heroImage.description}
@@ -74,9 +74,9 @@ export default function LandingPage() {
                 data-ai-hint={heroImage.imageHint}
               />
               <div className="absolute inset-0 bg-black/50" />
-            </div>
+            </>
           )}
-          <div className="container relative z-10 mx-auto px-4 text-center text-white">
+          <div className="relative z-10 h-full flex flex-col items-center justify-center text-center text-white p-4">
             <h1 className="text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl font-headline">
               Preserve Medicinal Plants & Tribal Languages
             </h1>
@@ -278,6 +278,8 @@ export default function LandingPage() {
     </div>
   );
 }
+    
+
     
 
     
