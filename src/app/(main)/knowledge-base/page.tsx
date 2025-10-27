@@ -57,7 +57,7 @@ export default function KnowledgeBasePage() {
             </CardHeader>
             <CardFooter>
               <Button variant="link" asChild className="p-0 h-auto">
-                <Link href="#">
+                <Link href={`/knowledge-base/${plant.id}`}>
                   View Details <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
