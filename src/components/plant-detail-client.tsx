@@ -10,14 +10,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { ChevronLeft, HelpCircle, Leaf, BookOpen, AlertTriangle } from 'lucide-react';
 import { StarBorder } from '@/components/ui/star-border';
 import type { Plant } from '@/lib/types';
-import { useState, useEffect } from 'react';
 
 export default function PlantDetailClient({ plant }: { plant: Plant }) {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   return (
     <div className="container mx-auto p-4 md:p-8">
@@ -29,8 +23,8 @@ export default function PlantDetailClient({ plant }: { plant: Plant }) {
               <CardDescription className="font-code">{plant.scientificName} ({plant.family})</CardDescription>
             </div>
             <Button asChild variant="outline">
-              <Link href="/knowledge-base">
-                <ChevronLeft className="mr-2" /> Back
+              <Link href="/knowledge-base/gallery">
+                <ChevronLeft className="mr-2" /> Back to Gallery
               </Link>
             </Button>
           </div>
@@ -73,13 +67,11 @@ export default function PlantDetailClient({ plant }: { plant: Plant }) {
             </Alert>
             
             <div className="min-h-[44px]">
-              {isClient && (
-                <Link href={`/knowledge-base?query=Tell me more about ${plant.englishName}`} className="block">
-                  <StarBorder as="div">
-                    <HelpCircle className="mr-2 h-4 w-4" /> Ask AI about this plant
-                  </StarBorder>
-                </Link>
-              )}
+              <Link href={`/knowledge-base?query=Tell me more about ${plant.englishName}`} className="block">
+                <StarBorder as="div">
+                  <HelpCircle className="mr-2 h-4 w-4" /> Ask AI about this plant
+                </StarBorder>
+              </Link>
             </div>
           </div>
         </CardContent>
