@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -17,7 +17,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { plants, tribalLanguages } from '@/lib/data';
 import type { CommunityRemedy } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
-import { verifyRemedy, VerifyRemedyOutput } from '@/ai/flows/community-remedy-verification';
+import { verifyRemedy } from '@/ai/flows/community-remedy-verification';
 import { suggestRemedyFromImage } from '@/ai/flows/remedy-suggestion-flow';
 import { Alert, AlertDescription, AlertTitle } from './ui/alert';
 import { Skeleton } from './ui/skeleton';
@@ -56,24 +56,21 @@ export default function CommunityRemediesClient() {
 
    useEffect(() => {
     setIsLoading(true);
+    // Combine initial (static) remedies with user-submitted remedies from local storage
     const allRemedies = [...initialRemedies.map((r, i) => ({ ...r, id: `initial-${i}`})), ...storedRemedies];
-    setRemedies(allRemedies);
-    setIsLoading(false);
-  }, [storedRemedies]);
-
-  useEffect(() => {
-    const sortedRemedies = [...remedies].sort((a, b) => {
+    
+    // Initial sort
+    const sorted = allRemedies.sort((a, b) => {
         if (sortOrder === 'recency') {
-            const dateA = new Date(a.submittedAt);
-            const dateB = new Date(b.submittedAt);
-            return dateB.getTime() - dateA.getTime();
+            return new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime();
         } else { // rating
             return b.upvotes - a.upvotes;
         }
     });
-    setRemedies(sortedRemedies);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortOrder]);
+
+    setRemedies(sorted);
+    setIsLoading(false);
+  }, [storedRemedies, sortOrder]);
 
 
   const fileToDataUri = (file: File): Promise<string> => {
@@ -91,7 +88,7 @@ export default function CommunityRemediesClient() {
 
     if (!plantName) {
       toast({
-        variant: "default",
+        variant: "destructive",
         title: 'Plant Not Selected',
         description: 'Please select a plant name before using the AI scanner.',
       });
@@ -100,7 +97,7 @@ export default function CommunityRemediesClient() {
     
     if (!photoFile) {
       toast({
-        variant: "default",
+        variant: "destructive",
         title: 'No Photo Uploaded',
         description: 'Please upload a photo of the plant first.',
       });
@@ -125,7 +122,7 @@ export default function CommunityRemediesClient() {
     } catch (error) {
       console.error('AI Scan failed:', error);
       toast({
-        variant: "default",
+        variant: "destructive",
         title: 'AI Scan Failed',
         description: 'Could not generate AI suggestions at this time. Please try again.',
       });
@@ -141,7 +138,7 @@ export default function CommunityRemediesClient() {
     const photoFile = values.photo?.[0];
     if (!photoFile) {
       toast({
-        variant: "default",
+        variant: "destructive",
         title: 'Photo Required',
         description: 'Please upload a photo to submit a remedy.',
       });
@@ -164,7 +161,7 @@ export default function CommunityRemediesClient() {
 
       if (!verificationResult.isPlausible) {
         toast({
-          variant: "default",
+          variant: "destructive",
           title: 'Submission Rejected by AI',
           description: `Reason: ${verificationResult.verificationNotes}`,
         });
@@ -199,7 +196,7 @@ export default function CommunityRemediesClient() {
     } catch (error) {
       console.error("Could not submit remedy:", error);
       toast({
-        variant: "default",
+        variant: "destructive",
         title: 'Submission Failed',
         description: 'An unexpected error occurred. Please try again.',
       });
@@ -436,3 +433,5 @@ export default function CommunityRemediesClient() {
     </div>
   );
 }
+
+    

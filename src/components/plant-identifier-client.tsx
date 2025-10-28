@@ -54,6 +54,7 @@ export default function PlantIdentifierClient() {
           console.error('Error accessing camera:', error);
           setHasCameraPermission(false);
           toast({
+            variant: "destructive",
             title: 'Camera Access Denied',
             description: 'Please enable camera permissions in your browser settings to use this feature.',
           });
@@ -87,6 +88,7 @@ export default function PlantIdentifierClient() {
       toast({
         title: 'File Upload Error',
         description: message,
+        variant: "destructive",
       });
       return;
     }
@@ -358,21 +360,23 @@ export default function PlantIdentifierClient() {
 
       {showCamera && (
         <div className="space-y-4">
-            <div className="relative">
-                <video ref={videoRef} className="w-full aspect-video rounded-md" autoPlay muted playsInline />
+            <div className="relative w-full aspect-video">
+                <video ref={videoRef} className="w-full h-full rounded-md object-cover" autoPlay muted playsInline />
                 <canvas ref={canvasRef} className="hidden" />
 
                 {hasCameraPermission === false && (
-                    <Alert>
-                        <AlertTitle>Camera Access Required</AlertTitle>
-                        <AlertDescription>
-                        Please allow camera access in your browser to use this feature.
-                        </AlertDescription>
-                    </Alert>
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-md">
+                        <Alert variant="destructive" className="w-auto">
+                            <AlertTitle>Camera Access Required</AlertTitle>
+                            <AlertDescription>
+                            Please allow camera access to use this feature.
+                            </AlertDescription>
+                        </Alert>
+                    </div>
                 )}
             </div>
             <div className="flex justify-center gap-4">
-                 <Button size="lg" onClick={handleCapture} disabled={hasCameraPermission === false}>
+                 <Button size="lg" onClick={handleCapture} disabled={hasCameraPermission !== true}>
                     <Camera className="mr-2" /> Capture
                 </Button>
                 <Button size="lg" variant="outline" onClick={() => setShowCamera(false)}>
@@ -391,7 +395,7 @@ export default function PlantIdentifierClient() {
       )}
       
       {error && (
-        <Alert>
+         <Alert variant="destructive">
           <AlertTitle>Identification Failed</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>

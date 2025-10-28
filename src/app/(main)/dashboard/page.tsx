@@ -85,7 +85,7 @@ export default function DashboardPage() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {features.map((feature) => (
-          <Link href={feature.link} key={feature.title} className="flex" prefetch={false}>
+          <Link href={feature.link} key={feature.title} className="flex" prefetch={true}>
             <Card className="w-full overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
               {feature.image && (
                   <div className="relative h-40 w-full">
@@ -119,3 +119,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
