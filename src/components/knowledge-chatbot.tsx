@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { CornerDownLeft, Loader2, Mic, User, Bot, Sparkles } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
@@ -19,7 +19,7 @@ type Message = {
   content: string;
 };
 
-export function KnowledgeChatbot() {
+function ChatbotComponent() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -194,4 +194,10 @@ export function KnowledgeChatbot() {
   );
 }
 
-    
+export function KnowledgeChatbot() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ChatbotComponent />
+    </Suspense>
+  )
+}

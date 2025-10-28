@@ -1,8 +1,24 @@
 
-"use client";
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { KnowledgeChatbot } from '@/components/knowledge-chatbot';
+import { Suspense } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
+
+function KnowledgeChatbotFallback() {
+  return (
+     <div className="flex-1 flex flex-col border rounded-lg shadow-inner min-h-0">
+        <div className="p-4 flex-1">
+          <Skeleton className="h-16 w-1/2" />
+          <div className="flex justify-end mt-4">
+             <Skeleton className="h-16 w-1/2" />
+          </div>
+        </div>
+        <div className="p-4 border-t">
+          <Skeleton className="h-10 w-full" />
+        </div>
+    </div>
+  )
+}
 
 export default function KnowledgeBasePage() {
 
@@ -17,7 +33,9 @@ export default function KnowledgeBasePage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex-1 flex flex-col min-h-0">
-            <KnowledgeChatbot />
+            <Suspense fallback={<KnowledgeChatbotFallback />}>
+              <KnowledgeChatbot />
+            </Suspense>
           </CardContent>
         </Card>
       </div>
