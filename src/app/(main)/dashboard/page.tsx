@@ -85,35 +85,35 @@ export default function DashboardPage() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {features.map((feature) => (
-          <Card key={feature.title} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
-            {feature.image && (
-                <div className="relative h-40 w-full">
-                <Image
-                    src={feature.image.imageUrl}
-                    alt={feature.image.description}
-                    fill
-                    className="object-cover"
-                    data-ai-hint={feature.image.imageHint}
-                />
+          <Link href={feature.link} key={feature.title} className="flex" prefetch={false}>
+            <Card className="w-full overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
+              {feature.image && (
+                  <div className="relative h-40 w-full">
+                  <Image
+                      src={feature.image.imageUrl}
+                      alt={feature.image.description}
+                      fill
+                      className="object-cover"
+                      data-ai-hint={feature.image.imageHint}
+                  />
+                  </div>
+              )}
+              <CardHeader className={!feature.image ? 'pt-6' : ''}>
+                <CardTitle className="flex items-center gap-3">
+                  <feature.icon className="w-7 h-7 text-primary" />
+                  <span className="font-headline">{feature.title}</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <CardDescription>{feature.description}</CardDescription>
+              </CardContent>
+              <CardFooter>
+                <div className="flex items-center w-full text-sm font-medium text-primary">
+                  Go to {feature.title} <ArrowRight className="ml-2 h-4 w-4" />
                 </div>
-            )}
-            <CardHeader className={!feature.image ? 'pt-6' : ''}>
-              <CardTitle className="flex items-center gap-3">
-                <feature.icon className="w-7 h-7 text-primary" />
-                <span className="font-headline">{feature.title}</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <CardDescription>{feature.description}</CardDescription>
-            </CardContent>
-            <CardFooter>
-              <Button asChild variant="outline" className="w-full text-primary border-primary hover:bg-primary/10 hover:text-primary">
-                <Link href={feature.link} prefetch={false}>
-                  Go to {feature.title} <ArrowRight className="ml-2" />
-                </Link>
-              </Button>
-            </CardFooter>
-          </Card>
+              </CardFooter>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>
