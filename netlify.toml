@@ -1,11 +1,12 @@
-# This file is configured to allow the Netlify Next.js
-# plugin to handle the build and deployment of your site.
-# The plugin automatically configures the correct settings.
+# This file is configured for deploying a Next.js app to Netlify.
 
 [build]
-  # The build command is automatically handled by the plugin.
-  # The publish directory is also handled by the plugin.
+  # The command to build the Next.js application.
+  command = "npm run build"
+  # The directory that contains the deploy-ready assets.
+  publish = ".next"
 
 [[plugins]]
   # This is the essential plugin for deploying Next.js on Netlify.
+  # It correctly handles Next.js features like server-side rendering, API routes, and image optimization.
   package = "@netlify/plugin-nextjs"
