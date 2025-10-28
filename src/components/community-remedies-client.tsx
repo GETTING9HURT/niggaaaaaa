@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { ArrowDown, ArrowUp, CheckCircle, Clock, File, Image as ImageIcon, Loader2, PlusCircle, Sparkles, ThumbsDown, ThumbsUp, XCircle } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Button } from '@/components/ui/button';
@@ -24,6 +23,7 @@ import { Alert, AlertDescription, AlertTitle } from './ui/alert';
 import { Skeleton } from './ui/skeleton';
 import { initialRemedies } from '@/lib/initial-remedies';
 import useLocalStorage from '@/hooks/use-local-storage';
+import { TimeAgo } from './time-ago';
 
 const remedySchema = z.object({
   plantName: z.string().min(1, 'Plant name is required'),
@@ -32,24 +32,6 @@ const remedySchema = z.object({
   effectivenessRating: z.coerce.number().min(1).max(5),
   photo: z.any().optional(),
 });
-
-// A new client component to handle the time display
-const TimeAgo = ({ date }: { date: any }) => {
-    const [timeAgo, setTimeAgo] = useState('...');
-  
-    useEffect(() => {
-        if (date) {
-            setTimeAgo(formatDistanceToNow(new Date(date), { addSuffix: true }));
-        }
-    }, [date]);
-  
-    return (
-      <div className="flex items-center gap-1">
-        <Clock className="h-3 w-3" />
-        {timeAgo}
-      </div>
-    );
-};
 
 
 export default function CommunityRemediesClient() {
