@@ -51,7 +51,7 @@ const verifyRemedyPrompt = ai.definePrompt({
   name: 'verifyRemedyPrompt',
   input: {schema: VerifyRemedyInputSchema},
   output: {schema: VerifyRemedyOutputSchema},
-  model: 'gemini-1.5-flash',
+  model: 'gemini-2.5-flash',
   prompt: `You are an AI assistant tasked with verifying the plausibility of plant-based remedies submitted by users.
 
 You will receive information about the plant, a description of the remedy, and an effectiveness rating.
