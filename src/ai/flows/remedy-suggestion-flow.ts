@@ -52,7 +52,7 @@ const remedySuggestionPrompt = ai.definePrompt({
   name: 'remedySuggestionPrompt',
   input: {schema: SuggestRemedyFromImageInputSchema},
   output: {schema: SuggestRemedyFromImageOutputSchema},
-  model: 'gemini-2.5-flash',
+  model: 'gemini-1.5-flash',
   prompt: `You are an expert in traditional Indian herbal medicine (Ayurveda, folk medicine).
 Analyze the provided image of a plant, identified as "{{plantName}}".
 
