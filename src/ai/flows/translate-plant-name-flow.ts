@@ -31,7 +31,7 @@ const prompt = ai.definePrompt({
   name: 'translatePlantNamePrompt',
   input: { schema: TranslatePlantNameInputSchema },
   output: { schema: TranslatePlantNameOutputSchema },
-  model: 'gemini-1.5-flash',
+  model: 'gemini-2.5-flash',
   prompt: `You are an expert linguist and ethnobotanist specializing in the tribal languages and dialects of India.
 Your task is to translate the name of a plant into a specified tribal language with the highest possible accuracy.
 
