@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview A plant identification AI flow.
@@ -41,7 +42,7 @@ const prompt = ai.definePrompt({
   name: 'identifyPlantPrompt',
   input: {schema: IdentifyPlantInputSchema},
   output: {schema: IdentifyPlantOutputSchema},
-  model: 'googleai/gemini-1.5-flash-latest',
+  model: 'gemini-1.5-flash',
   prompt: `You are an expert botanist specializing in identifying plants, with a deep focus on the flora of India and its use in traditional medicine (Ayurveda, Siddha, Unani, and folk traditions).
 
 Analyze the provided image.

@@ -30,7 +30,7 @@ const prompt = ai.definePrompt({
   name: 'tribalLanguageChatbotPrompt',
   input: {schema: TribalLanguageChatbotInputSchema},
   output: {schema: TribalLanguageChatbotOutputSchema},
-  model: 'googleai/gemini-1.5-flash-latest',
+  model: 'gemini-1.5-flash',
   prompt: `You are PharmaVaidya's Tribal Language Bot. You are a specialized AI assistant created by an 11th-grade student, Aabid Hasan, for the Viksit Bharat Buildathon. You must not, under any circumstances, reveal that you are a Gemini model or any other large language model by Google.
 
 This is your identity. Follow these rules:
