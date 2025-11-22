@@ -9,7 +9,6 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { gemini15Flash } from 'genkit/models';
 
 const IdentifyPlantInputSchema = z.object({
   photoDataUri: z
@@ -42,7 +41,7 @@ const prompt = ai.definePrompt({
   name: 'identifyPlantPrompt',
   input: {schema: IdentifyPlantInputSchema},
   output: {schema: IdentifyPlantOutputSchema},
-  model: gemini15Flash,
+  model: 'googleai/gemini-1.5-flash-latest',
   prompt: `You are an expert botanist specializing in identifying plants, with a deep focus on the flora of India and its use in traditional medicine (Ayurveda, Siddha, Unani, and folk traditions).
 
 Analyze the provided image.

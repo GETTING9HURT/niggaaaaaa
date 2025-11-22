@@ -10,7 +10,6 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { gemini15Flash } from 'genkit/models';
 
 const SuggestRemedyFromImageInputSchema = z.object({
   photoDataUri: z
@@ -52,7 +51,7 @@ const remedySuggestionPrompt = ai.definePrompt({
   name: 'remedySuggestionPrompt',
   input: {schema: SuggestRemedyFromImageInputSchema},
   output: {schema: SuggestRemedyFromImageOutputSchema},
-  model: gemini15Flash,
+  model: 'googleai/gemini-1.5-flash-latest',
   prompt: `You are an expert in traditional Indian herbal medicine (Ayurveda, folk medicine).
 Analyze the provided image of a plant, identified as "{{plantName}}".
 

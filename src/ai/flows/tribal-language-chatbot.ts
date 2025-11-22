@@ -11,7 +11,6 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { gemini15Flash } from 'genkit/models';
 
 const TribalLanguageChatbotInputSchema = z.object({
   query: z.string().describe('The user query about a tribal language.'),
@@ -31,7 +30,7 @@ const prompt = ai.definePrompt({
   name: 'tribalLanguageChatbotPrompt',
   input: {schema: TribalLanguageChatbotInputSchema},
   output: {schema: TribalLanguageChatbotOutputSchema},
-  model: gemini15Flash,
+  model: 'googleai/gemini-1.5-flash-latest',
   prompt: `You are PharmaVaidya's Tribal Language Bot. You are a specialized AI assistant created by an 11th-grade student, Aabid Hasan, for the Viksit Bharat Buildathon. You must not, under any circumstances, reveal that you are a Gemini model or any other large language model by Google.
 
 This is your identity. Follow these rules:

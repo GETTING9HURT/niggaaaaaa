@@ -10,7 +10,6 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { gemini15Flash } from 'genkit/models';
 
 const VerifyRemedyInputSchema = z.object({
   photoDataUri: z
@@ -51,7 +50,7 @@ const verifyRemedyPrompt = ai.definePrompt({
   name: 'verifyRemedyPrompt',
   input: {schema: VerifyRemedyInputSchema},
   output: {schema: VerifyRemedyOutputSchema},
-  model: gemini15Flash,
+  model: 'googleai/gemini-1.5-flash-latest',
   prompt: `You are an AI assistant tasked with verifying the plausibility of plant-based remedies submitted by users.
 
 You will receive information about the plant, a description of the remedy, and an effectiveness rating.
