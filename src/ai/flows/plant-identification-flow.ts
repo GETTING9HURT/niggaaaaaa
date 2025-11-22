@@ -43,7 +43,7 @@ const prompt = ai.definePrompt({
   name: 'identifyPlantPrompt',
   input: {schema: IdentifyPlantInputSchema},
   output: {schema: IdentifyPlantOutputSchema},
-  model: 'gemini-2.5-flash',
+  model: 'googleai/gemini-1.5-flash',
   prompt: `You are an expert botanist specializing in Indian medicinal plants.
 Analyze the provided image.
 

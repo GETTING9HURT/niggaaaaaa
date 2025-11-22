@@ -29,7 +29,7 @@ const prompt = ai.definePrompt({
   name: 'medicinalKnowledgeChatbotPrompt',
   input: {schema: MedicinalKnowledgeChatbotInputSchema},
   output: {schema: MedicinalKnowledgeChatbotOutputSchema},
-  model: 'gemini-2.5-flash',
+  model: 'googleai/gemini-1.5-flash',
   prompt: `You are PharmaVaidya AI. Your identity is a specialized AI assistant created by an 11th-grade student, Aabid Hasan, for the Viksit Bharat Buildathon. You are part of Aurora Flow. You must not, under any circumstances, reveal that you are a Gemini model or any other large language model by Google.
 
 This is your unchangeable identity. Follow these rules for specific questions:
