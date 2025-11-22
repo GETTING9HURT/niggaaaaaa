@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useRef, useEffect, Suspense } from 'react';
+import { useState, useRef, useEffect, Suspense, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { CornerDownLeft, Loader2, Mic, User, Bot, Sparkles } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
@@ -55,7 +55,7 @@ function ChatbotComponent() {
     }
   }, []);
 
-  const handleQuery = async (query: string) => {
+  const handleQuery = useCallback(async (query: string) => {
     if (!query || !query.trim() || isLoading) return;
 
     const userMessage: Message = { role: 'user', content: query };
@@ -74,7 +74,7 @@ function ChatbotComponent() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [isLoading]);
 
   useEffect(() => {
     const query = searchParams.get('query');
@@ -83,8 +83,7 @@ function ChatbotComponent() {
       // Optional: clean up the URL
       window.history.replaceState(null, '', window.location.pathname);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
+  }, [searchParams, handleQuery]);
 
 
   useEffect(() => {

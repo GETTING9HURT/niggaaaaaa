@@ -9,6 +9,7 @@
  */
 
 import { ai } from '@/ai/genkit';
+import { gemini15Flash } from 'genkit/models';
 import { z } from 'zod';
 
 const TranslatePlantNameInputSchema = z.object({
@@ -31,6 +32,7 @@ const prompt = ai.definePrompt({
   name: 'translatePlantNamePrompt',
   input: { schema: TranslatePlantNameInputSchema },
   output: { schema: TranslatePlantNameOutputSchema },
+  model: gemini15Flash,
   prompt: `You are an expert linguist and ethnobotanist specializing in the tribal languages and dialects of India.
 Your task is to translate the name of a plant into a specified tribal language with the highest possible accuracy.
 
@@ -57,5 +59,3 @@ const translatePlantNameFlow = ai.defineFlow(
     return output!;
   }
 );
-
-    
